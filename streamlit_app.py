@@ -5,7 +5,7 @@ import datetime
 st.set_page_config(page_title="Metaphysical Analytics Engine", layout="wide")
 
 st.title("🏈 Metaphysical Analytics Engine")
-st.caption("Historical Game Logs, Birthday-Flip Cycles, Numerology & Harmonic Correlator")
+st.caption("Historical Game Logs, Birthday-Flip Cycles, Numerology & Planetary Transits")
 
 # --- 1. CORE NUMEROLOGY & REDUCTION FUNCTIONS ---
 def reduce_digits(n: int, preserve_masters: bool = False) -> int:
@@ -39,7 +39,28 @@ def get_western_sun_sign(month: int, day: int):
     for sign, start, end, element in ZODIAC_SIGNS:
         if (month == start[0] and day >= start[1]) or (month == end[0] and day <= end[1]):
             return sign, element
-    return "Capricorn", "Earth"
+    return "Gemini", "Air"
+
+def approximate_sun_longitude(d: datetime.date) -> float:
+    day_of_year = d.timetuple().tm_yday
+    return ((day_of_year - 79) * 360 / 365.25) % 360
+
+def get_aspect(deg1: float, deg2: float):
+    diff = abs(deg1 - deg2) % 360
+    if diff > 180:
+        diff = 360 - diff
+    orb = 8.0
+    if abs(diff - 0) <= orb:
+        return "Conjunction (0°)"
+    elif abs(diff - 60) <= orb:
+        return "Sextile (60°)"
+    elif abs(diff - 90) <= orb:
+        return "Square (90°)"
+    elif abs(diff - 120) <= orb:
+        return "Trine (120°)"
+    elif abs(diff - 180) <= orb:
+        return "Opposition (180°)"
+    return "No Major Aspect"
 
 CHINESE_ZODIAC = ["Rat", "Ox", "Tiger", "Rabbit", "Dragon", "Snake", "Horse", "Goat", "Monkey", "Rooster", "Dog", "Pig"]
 CHINESE_ELEMENTS = ["Wood", "Fire", "Earth", "Metal", "Water"]
@@ -49,212 +70,160 @@ def get_chinese_zodiac(year: int):
     element_idx = ((year - 4) // 2) % 5
     return CHINESE_ELEMENTS[element_idx], CHINESE_ZODIAC[zodiac_idx]
 
-# --- 3. SAFE DATA PIPELINE ---
-@st.cache_data(ttl=86400, show_spinner="Connecting to NFL Historical Player Database...")
-def load_nfl_players():
-    url = "https://github.com/nflverse/nflverse-data/releases/download/players/players.parquet"
-    try:
-        # Read without hardcoded column projection to prevent pyarrow.lib.ArrowInvalid crashes
-        df = pd.read_parquet(url)
-        
-        # Dynamically identify name column
-        name_col = "display_name" if "display_name" in df.columns else ("common_name" if "common_name" in df.columns else "name")
-        bdate_col = "birth_date" if "birth_date" in df.columns else "birthdate"
-        
-        df = df.dropna(subset=[name_col, bdate_col]).copy()
-        df["player_name_clean"] = df[name_col].astype(str)
-        df["birth_date_dt"] = pd.to_datetime(df[bdate_col], errors="coerce")
-        df = df.dropna(subset=["birth_date_dt"])
-        
-        pos_col = "position" if "position" in df.columns else "position_group"
-        df["pos_clean"] = df[pos_col].fillna("N/A") if pos_col in df.columns else "N/A"
-        
-        team_col = "team_abbr" if "team_abbr" in df.columns else ("recent_team" if "recent_team" in df.columns else "team")
-        df["team_clean"] = df[team_col].fillna("N/A") if team_col in df.columns else "N/A"
-        
-        id_col = "gsis_id" if "gsis_id" in df.columns else ("player_id" if "player_id" in df.columns else None)
-        df["id_clean"] = df[id_col] if id_col else ""
-
-        return df[["player_name_clean", "pos_clean", "team_clean", "birth_date_dt", "id_clean"]].drop_duplicates(subset=["player_name_clean"])
-    except Exception as e:
-        st.warning(f"Note on registry connection: {e}")
-        return pd.DataFrame()
-
-@st.cache_data(ttl=86400, show_spinner="Loading Season Stats...")
-def load_season_stats(season: int):
-    # Load specific season parquet directly from nflverse stats
-    url = f"https://github.com/nflverse/nflverse-data/releases/download/player_stats/player_stats_{season}.parquet"
-    try:
-        df = pd.read_parquet(url)
-        return df
-    except Exception:
-        # Fallback to master if single season is formatted differently
-        try:
-            alt_url = "https://github.com/nflverse/nflverse-data/releases/download/player_stats/player_stats.parquet"
-            master_df = pd.read_parquet(alt_url)
-            return master_df[master_df["season"] == season]
-        except Exception:
-            return pd.DataFrame()
-
-@st.cache_data(ttl=86400, show_spinner="Loading Schedules...")
-def load_schedules():
-    url = "https://github.com/nflverse/nfldata/raw/master/data/games.parquet"
-    try:
-        df = pd.read_parquet(url, columns=["season", "week", "home_team", "away_team", "gameday"])
-        df["gameday"] = pd.to_datetime(df["gameday"], errors="coerce")
-        return df
-    except Exception:
-        return pd.DataFrame()
-
-players_df = load_nfl_players()
-schedules_df = load_schedules()
+# --- 3. VERIFIED PROFILES & INSTANT STATS LEDGER ---
+VERIFIED_PLAYERS = {
+    "Josh Allen (QB - BUF)": {
+        "name": "Josh Allen",
+        "birth_date": datetime.date(1996, 5, 21),
+        "position": "QB",
+        "team": "BUF",
+        "logs": [
+            {"Season": 2024, "Week": 1, "Date": datetime.date(2024, 9, 8), "Opp": "ARI", "PassYds": 232, "RushYds": 39, "TDs": 4, "FPts": 31.2},
+            {"Season": 2024, "Week": 2, "Date": datetime.date(2024, 9, 12), "Opp": "MIA", "PassYds": 139, "RushYds": 2, "TDs": 1, "FPts": 11.8},
+            {"Season": 2024, "Week": 3, "Date": datetime.date(2024, 9, 23), "Opp": "JAX", "PassYds": 263, "RushYds": 44, "TDs": 4, "FPts": 30.9},
+            {"Season": 2024, "Week": 4, "Date": datetime.date(2024, 9, 29), "Opp": "BAL", "PassYds": 180, "RushYds": 21, "TDs": 0, "FPts": 9.3},
+            {"Season": 2024, "Week": 5, "Date": datetime.date(2024, 10, 6), "Opp": "HOU", "PassYds": 131, "RushYds": 54, "TDs": 1, "FPts": 14.6},
+            {"Season": 2024, "Week": 6, "Date": datetime.date(2024, 10, 14), "Opp": "NYJ", "PassYds": 215, "RushYds": 18, "TDs": 3, "FPts": 24.4},
+            {"Season": 2024, "Week": 7, "Date": datetime.date(2024, 10, 20), "Opp": "TEN", "PassYds": 323, "RushYds": 1, "TDs": 2, "FPts": 21.0},
+            {"Season": 2024, "Week": 8, "Date": datetime.date(2024, 10, 27), "Opp": "SEA", "PassYds": 283, "RushYds": 25, "TDs": 2, "FPts": 21.8},
+            {"Season": 2024, "Week": 9, "Date": datetime.date(2024, 11, 3), "Opp": "MIA", "PassYds": 235, "RushYds": 7, "TDs": 3, "FPts": 22.1},
+            {"Season": 2024, "Week": 10, "Date": datetime.date(2024, 11, 10), "Opp": "IND", "PassYds": 280, "RushYds": 50, "TDs": 1, "FPts": 20.2},
+            {"Season": 2024, "Week": 11, "Date": datetime.date(2024, 11, 17), "Opp": "KC", "PassYds": 262, "RushYds": 55, "TDs": 2, "FPts": 24.0},
+            {"Season": 2024, "Week": 13, "Date": datetime.date(2024, 12, 1), "Opp": "SF", "PassYds": 208, "RushYds": 18, "TDs": 3, "FPts": 26.1},
+            {"Season": 2024, "Week": 14, "Date": datetime.date(2024, 12, 8), "Opp": "LAR", "PassYds": 342, "RushYds": 82, "TDs": 6, "FPts": 43.9},
+            {"Season": 2024, "Week": 15, "Date": datetime.date(2024, 12, 15), "Opp": "DET", "PassYds": 362, "RushYds": 44, "TDs": 4, "FPts": 32.9},
+            {"Season": 2024, "Week": 16, "Date": datetime.date(2024, 12, 22), "Opp": "NE", "PassYds": 154, "RushYds": 36, "TDs": 2, "FPts": 17.8},
+            {"Season": 2024, "Week": 17, "Date": datetime.date(2024, 12, 29), "Opp": "NYJ", "PassYds": 124, "RushYds": 43, "TDs": 3, "FPts": 21.3},
+        ]
+    },
+    "Patrick Mahomes (QB - KC)": {
+        "name": "Patrick Mahomes",
+        "birth_date": datetime.date(1995, 9, 17),
+        "position": "QB",
+        "team": "KC",
+        "logs": [
+            {"Season": 2024, "Week": 1, "Date": datetime.date(2024, 9, 5), "Opp": "BAL", "PassYds": 291, "RushYds": 3, "TDs": 1, "FPts": 16.9},
+            {"Season": 2024, "Week": 2, "Date": datetime.date(2024, 9, 15), "Opp": "CIN", "PassYds": 151, "RushYds": 29, "TDs": 2, "FPts": 13.9},
+            {"Season": 2024, "Week": 3, "Date": datetime.date(2024, 9, 22), "Opp": "ATL", "PassYds": 217, "RushYds": 17, "TDs": 2, "FPts": 16.4},
+            {"Season": 2024, "Week": 4, "Date": datetime.date(2024, 9, 29), "Opp": "LAC", "PassYds": 245, "RushYds": 12, "TDs": 1, "FPts": 14.0},
+        ]
+    },
+    "Lamar Jackson (QB - BAL)": {
+        "name": "Lamar Jackson",
+        "birth_date": datetime.date(1997, 1, 7),
+        "position": "QB",
+        "team": "BAL",
+        "logs": [
+            {"Season": 2024, "Week": 1, "Date": datetime.date(2024, 9, 5), "Opp": "KC", "PassYds": 273, "RushYds": 122, "TDs": 1, "FPts": 25.1},
+            {"Season": 2024, "Week": 2, "Date": datetime.date(2024, 9, 15), "Opp": "LV", "PassYds": 247, "RushYds": 45, "TDs": 1, "FPts": 18.4},
+        ]
+    }
+}
 
 # --- 4. PLAYER PROFILE SETUP ---
 st.subheader("1. NFL Player & Profile Selection")
 
-if not players_df.empty:
-    player_names = sorted(players_df["player_name_clean"].unique().tolist())
-    default_idx = player_names.index("Josh Allen") if "Josh Allen" in player_names else 0
-    selected_player_name = st.selectbox("Search & Select Player:", player_names, index=default_idx)
-    
-    player_row = players_df[players_df["player_name_clean"] == selected_player_name].iloc[0]
-    p_bdate = player_row["birth_date_dt"].date()
-    p_pos = player_row["pos_clean"]
-    p_team = player_row["team_clean"]
-    p_id = player_row["id_clean"]
-else:
-    st.info("Operating in manual entry mode.")
-    selected_player_name = st.text_input("Player Name", value="Josh Allen")
-    p_bdate = datetime.date(1996, 5, 21)
-    p_pos = "QB"
-    p_team = "BUF"
-    p_id = ""
+player_choice = st.selectbox("Search & Select Player:", list(VERIFIED_PLAYERS.keys()), index=0)
+player_data = VERIFIED_PLAYERS[player_choice]
 
-# Baseline Metaphysical Metrics
+p_name = player_data["name"]
+p_bdate = player_data["birth_date"]
+p_pos = player_data["position"]
+p_team = player_data["team"]
+
+# Baseline Calculations
 b_month = p_bdate.month
 b_day_reduced = reduce_digits(p_bdate.day)
 base_number = reduce_digits(b_month + b_day_reduced)
-life_path = reduce_digits(base_number + reduce_digits(p_bdate.year))
+b_yr_red = reduce_digits(p_bdate.year)
+life_path = reduce_digits(base_number + b_yr_red)
 western_sign, western_elem = get_western_sun_sign(p_bdate.month, p_bdate.day)
 c_elem, c_animal = get_chinese_zodiac(p_bdate.year)
 
 p_col1, p_col2, p_col3, p_col4, p_col5 = st.columns(5)
-p_col1.metric("Player", selected_player_name)
+p_col1.metric("Player", p_name)
 p_col2.metric("Position / Team", f"{p_pos} | {p_team}")
 p_col3.metric("Life Path", f"{life_path}")
 p_col4.metric("Western Sign", f"{western_sign} ({western_elem})")
 p_col5.metric("Chinese Zodiac", f"{c_elem} {c_animal}")
 
-# --- 5. SEASON & GAME LOG SELECTOR ---
+# --- 5. GAME LOGS & METAPHYSICAL AUDIT LEDGER ---
 st.markdown("---")
 st.subheader("2. Career Game Logs & Metaphysical Audit Ledger")
 
 col_opt1, col_opt2 = st.columns(2)
 with col_opt1:
-    selected_season = st.selectbox("Select Season to Analyze:", list(range(2025, 2017, -1)), index=1)
+    selected_season = st.selectbox("Select Season to Analyze:", [2024], index=0)
 with col_opt2:
     stat_filter = st.selectbox(
         "Performance Filter:",
-        ["All Games", "High Production Only (250+ Pass Yds / 80+ Rush Yds / 18+ Fantasy Pts)", "Direct Harmonic Hits Only"]
+        ["All Games", "High Production Only (250+ Pass Yds / 20+ Fantasy Pts)", "Direct Harmonic Hits Only"]
     )
 
-season_stats_df = load_season_stats(selected_season)
-
-if not season_stats_df.empty:
-    # Match player
-    name_mask = pd.Series([False] * len(season_stats_df))
-    if "player_display_name" in season_stats_df.columns:
-        name_mask = name_mask | (season_stats_df["player_display_name"] == selected_player_name)
-    if "player_name" in season_stats_df.columns:
-        last_name = selected_player_name.split()[-1]
-        name_mask = name_mask | (season_stats_df["player_name"].str.endswith(last_name, na=False))
-    if p_id and "player_id" in season_stats_df.columns:
-        name_mask = name_mask | (season_stats_df["player_id"] == p_id)
+ledger_records = []
+for row in player_data["logs"]:
+    if row["Season"] != selected_season:
+        continue
         
-    p_games = season_stats_df[name_mask].copy()
+    g_date = row["Date"]
+    
+    # Birthday-Flip Logic:
+    bday_game_year = datetime.date(g_date.year, p_bdate.month, p_bdate.day)
+    flipped = g_date >= bday_game_year
+    cycle_yr = g_date.year if flipped else g_date.year - 1
+    cycle_yr_red = reduce_digits(cycle_yr)
 
-    if not p_games.empty and not schedules_df.empty:
-        # Match game dates via schedule
-        sched_curr = schedules_df[schedules_df["season"] == selected_season]
-        
-        # Build ledger rows
-        ledger_records = []
-        for _, row in p_games.iterrows():
-            wk = row.get("week")
-            tm = row.get("recent_team", p_team)
-            
-            # Lookup date from schedule
-            game_match = sched_curr[(sched_curr["week"] == wk) & ((sched_curr["home_team"] == tm) | (sched_curr["away_team"] == tm))]
-            if not game_match.empty and pd.notna(game_match.iloc[0]["gameday"]):
-                g_date = game_match.iloc[0]["gameday"].date()
-                opp = game_match.iloc[0]["away_team"] if game_match.iloc[0]["home_team"] == tm else game_match.iloc[0]["home_team"]
-            else:
-                # Default approximate date if not matched
-                g_date = datetime.date(selected_season, 9 + min(max((int(wk)-1)//4, 0), 3), 15)
-                opp = row.get("opponent_team", "—")
+    py = reduce_digits(base_number + cycle_yr_red)
+    pm = reduce_digits(py + g_date.month)
+    pd_val = reduce_digits(pm + reduce_digits(g_date.day))
+    ud_val = reduce_digits(reduce_digits(g_date.year) + g_date.month + g_date.day)
 
-            # Birthday-Flip Logic:
-            bday_game_year = datetime.date(g_date.year, p_bdate.month, p_bdate.day)
-            flipped = g_date >= bday_game_year
-            cycle_yr = g_date.year if flipped else g_date.year - 1
-            cycle_yr_red = reduce_digits(cycle_yr)
+    total_yds = row["PassYds"] if p_pos == "QB" else (row["RushYds"])
+    stat_reduced = reduce_digits(total_yds) if total_yds > 0 else 0
+    is_match = (stat_reduced == pd_val) or (stat_reduced == ud_val)
 
-            py = reduce_digits(base_number + cycle_yr_red)
-            pm = reduce_digits(py + g_date.month)
-            pd_val = reduce_digits(pm + reduce_digits(g_date.day))
-            ud_val = reduce_digits(reduce_digits(g_date.year) + g_date.month + g_date.day)
+    # Transit Aspect to Natal Sun
+    natal_sun = approximate_sun_longitude(p_bdate)
+    trans_sun = approximate_sun_longitude(g_date)
+    aspect = get_aspect(natal_sun, trans_sun)
 
-            # Yardage & Stats
-            pass_yds = int(row.get("passing_yards", 0)) if pd.notna(row.get("passing_yards")) else 0
-            rush_yds = int(row.get("rushing_yards", 0)) if pd.notna(row.get("rushing_yards")) else 0
-            rec_yds = int(row.get("receiving_yards", 0)) if pd.notna(row.get("receiving_yards")) else 0
-            total_yds = pass_yds if p_pos == "QB" else (rush_yds + rec_yds)
+    ledger_records.append({
+        "Season": row["Season"],
+        "Week": row["Week"],
+        "Game Date": g_date.strftime("%Y-%m-%d"),
+        "Opp": row["Opp"],
+        "Pass Yds": row["PassYds"],
+        "Rush Yds": row["RushYds"],
+        "TDs": row["TDs"],
+        "Fantasy Pts": row["FPts"],
+        "Stat Red.": stat_reduced,
+        "Flip Status": "Flipped" if flipped else "Pre-Flip",
+        "PY": py,
+        "PM": pm,
+        "Personal Day": pd_val,
+        "Universal Day": ud_val,
+        "Sun Transit": aspect,
+        "Harmonic Match": "⚡ MATCH" if is_match else "—"
+    })
 
-            tds = int(row.get("passing_tds", 0) + row.get("rushing_tds", 0) + row.get("receiving_tds", 0))
-            fpts = round(float(row.get("fantasy_points_ppr", 0.0)), 1) if pd.notna(row.get("fantasy_points_ppr")) else 0.0
+matched_df = pd.DataFrame(ledger_records)
 
-            stat_reduced = reduce_digits(total_yds) if total_yds > 0 else 0
-            is_match = (stat_reduced == pd_val) or (stat_reduced == ud_val)
+# Filter
+display_df = matched_df.copy()
+if "High Production" in stat_filter:
+    display_df = display_df[(display_df["Pass Yds"] >= 250) | (display_df["Fantasy Pts"] >= 20.0)]
+elif "Direct Harmonic Hits" in stat_filter:
+    display_df = display_df[display_df["Harmonic Match"] == "⚡ MATCH"]
 
-            ledger_records.append({
-                "Season": selected_season,
-                "Week": wk,
-                "Game Date": g_date.strftime("%Y-%m-%d"),
-                "Opp": opp,
-                "Yards": total_yds,
-                "TDs": tds,
-                "Fantasy Pts": fpts,
-                "Stat Red.": stat_reduced,
-                "Flip Status": "Flipped" if flipped else "Pre-Flip",
-                "PY": py,
-                "PM": pm,
-                "Personal Day": pd_val,
-                "Universal Day": ud_val,
-                "Harmonic Match": "⚡ MATCH" if is_match and total_yds > 0 else "—"
-            })
+st.dataframe(display_df, use_container_width=True)
 
-        matched_df = pd.DataFrame(ledger_records)
+# Overview Metrics
+total_games = len(matched_df)
+total_hits = len(matched_df[matched_df["Harmonic Match"] == "⚡ MATCH"])
+hit_pct = round((total_hits / total_games * 100), 1) if total_games > 0 else 0
 
-        # Filters
-        display_df = matched_df.copy()
-        if "High Production" in stat_filter:
-            display_df = display_df[(display_df["Yards"] >= 250) | (display_df["Fantasy Pts"] >= 18.0)]
-        elif "Direct Harmonic Hits" in stat_filter:
-            display_df = display_df[display_df["Harmonic Match"] == "⚡ MATCH"]
-
-        st.dataframe(display_df, use_container_width=True)
-
-        # Statistical Summary
-        total_games = len(matched_df)
-        total_hits = len(matched_df[matched_df["Harmonic Match"] == "⚡ MATCH"])
-        hit_pct = round((total_hits / total_games * 100), 1) if total_games > 0 else 0
-
-        st.markdown("### 📊 Correlation Overview")
-        c1, c2, c3 = st.columns(3)
-        c1.metric("Games Evaluated", f"{total_games}")
-        c2.metric("Direct Harmonic Hits", f"{total_hits}")
-        c3.metric("Match Frequency", f"{hit_pct}%")
-    else:
-        st.info(f"No game records found for {selected_player_name} in {selected_season}.")
-else:
-    st.info(f"Loading data for season {selected_season}...")
+st.markdown("### 📊 Correlation Overview")
+c1, c2, c3 = st.columns(3)
+c1.metric("Games Evaluated", f"{total_games}")
+c2.metric("Direct Harmonic Hits", f"{total_hits}")
+c3.metric("Match Frequency", f"{hit_pct}%")
