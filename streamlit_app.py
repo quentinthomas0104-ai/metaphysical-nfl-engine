@@ -1,11 +1,12 @@
 import streamlit as st  # type: ignore
 import pandas as pd     # type: ignore
 import datetime
+import copy
 
 st.set_page_config(page_title="Metaphysical Analytics Engine", layout="wide")
 
 st.title("🏈 Metaphysical Analytics Engine")
-st.caption("Career Logs, Live Slate Importer, Cross-Resonance Scanner, Master Visualizer, & Head-to-Head Clash Engine")
+st.caption("Career Logs, Live Slate Importer, Cross-Resonance Scanner, & Head-to-Head Clash Engine")
 
 # ==============================================================================
 # 1. CORE NUMEROLOGY & VIBRATIONAL ENGINE (PRESERVES MASTER NUMBERS)
@@ -133,7 +134,7 @@ def calculate_detailed_transit(t_planet: str, n_planet: str, game_date: datetime
     return "—"
 
 # ==============================================================================
-# 4. OFFICIAL SCHEDULE REPOSITORY (2026 LIVE SLATES & HISTORICAL ERAS)
+# 4. OFFICIAL SCHEDULE REPOSITORY
 # ==============================================================================
 OFFICIAL_SCHEDULE_SLATES = {
     "2026 Active NFL Slate (Weeks 1 - 9)": [
@@ -176,53 +177,59 @@ ALL_32_FRANCHISES = {
     "Tennessee Titans": datetime.date(1959, 8, 14), "Washington Commanders": datetime.date(1932, 7, 9)
 }
 
-EXPANDED_CAREER_DATABASE = {
-    "Josh Allen (QB - BUF)": {
-        "category": "QB", "name": "Josh Allen", "pos": "QB", "jersey": "#17",
-        "birth_date": datetime.date(1996, 5, 21), "team": "BUF", "exp": "7th Season (Draft 2018)",
-        "seasons": {
-            2024: OFFICIAL_SCHEDULE_SLATES["2024 Buffalo Bills Complete Slate"]
-        }
-    },
-    "Patrick Mahomes (QB - KC)": {
-        "category": "QB", "name": "Patrick Mahomes", "pos": "QB", "jersey": "#15",
-        "birth_date": datetime.date(1995, 9, 17), "team": "KC", "exp": "8th Season (Draft 2017)",
-        "seasons": {
-            2024: [
-                {"Week": 1, "Date": datetime.date(2024, 9, 5), "DayOfWeek": "Thu", "Opp": "BAL", "HomeAway": "vs", "Venue": "Arrowhead Stadium", "Surface": "Grass", "GameTime": "TNF", "Score": "27 - 20", "Result": "W", "Diff": "+7", "PassYds": 291, "TotalOffYds": 353}
-            ]
-        }
-    },
-    "Caleb Williams (QB - CHI)": {
-        "category": "QB", "name": "Caleb Williams", "pos": "QB", "jersey": "#18",
-        "birth_date": datetime.date(2001, 11, 18), "team": "CHI", "exp": "3rd Season (Draft 2024)",
-        "seasons": {
-            2026: OFFICIAL_SCHEDULE_SLATES["2026 Active NFL Slate (Weeks 1 - 9)"]
-        }
-    },
-    "Chicago Bears (Franchise)": {
-        "category": "FRANCHISE", "name": "Chicago Bears", "pos": "Franchise", "jersey": "—",
-        "birth_date": datetime.date(1920, 9, 17), "team": "CHI", "exp": "104 Seasons (Charter APFA)",
-        "seasons": {
-            1920: [
-                {"Week": 1, "Date": datetime.date(1920, 10, 3), "DayOfWeek": "Sun", "Opp": "Moline Tractors", "HomeAway": "vs", "Venue": "Staley Field", "Surface": "Grass", "GameTime": "2:30 PM", "Score": "20 - 0", "Result": "W", "Diff": "+20", "TotalOffYds": 285}
-            ],
-            2026: OFFICIAL_SCHEDULE_SLATES["2026 Active NFL Slate (Weeks 1 - 9)"]
+# ==============================================================================
+# 5. INITIALIZE PERSISTENT DATABASE IN STREAMLIT SESSION STATE
+# ==============================================================================
+if "db" not in st.session_state:
+    initial_db = {
+        "Josh Allen (QB - BUF)": {
+            "category": "QB", "name": "Josh Allen", "pos": "QB", "jersey": "#17",
+            "birth_date": datetime.date(1996, 5, 21), "team": "BUF", "exp": "7th Season (Draft 2018)",
+            "seasons": {
+                2024: copy.deepcopy(OFFICIAL_SCHEDULE_SLATES["2024 Buffalo Bills Complete Slate"])
+            }
+        },
+        "Patrick Mahomes (QB - KC)": {
+            "category": "QB", "name": "Patrick Mahomes", "pos": "QB", "jersey": "#15",
+            "birth_date": datetime.date(1995, 9, 17), "team": "KC", "exp": "8th Season (Draft 2017)",
+            "seasons": {
+                2024: [
+                    {"Week": 1, "Date": datetime.date(2024, 9, 5), "DayOfWeek": "Thu", "Opp": "BAL", "HomeAway": "vs", "Venue": "Arrowhead Stadium", "Surface": "Grass", "GameTime": "TNF", "Score": "27 - 20", "Result": "W", "Diff": "+7", "PassYds": 291, "TotalOffYds": 353}
+                ]
+            }
+        },
+        "Caleb Williams (QB - CHI)": {
+            "category": "QB", "name": "Caleb Williams", "pos": "QB", "jersey": "#18",
+            "birth_date": datetime.date(2001, 11, 18), "team": "CHI", "exp": "3rd Season (Draft 2024)",
+            "seasons": {
+                2026: copy.deepcopy(OFFICIAL_SCHEDULE_SLATES["2026 Active NFL Slate (Weeks 1 - 9)"])
+            }
+        },
+        "Chicago Bears (Franchise)": {
+            "category": "FRANCHISE", "name": "Chicago Bears", "pos": "Franchise", "jersey": "—",
+            "birth_date": datetime.date(1920, 9, 17), "team": "CHI", "exp": "104 Seasons (Charter APFA)",
+            "seasons": {
+                1920: [
+                    {"Week": 1, "Date": datetime.date(1920, 10, 3), "DayOfWeek": "Sun", "Opp": "Moline Tractors", "HomeAway": "vs", "Venue": "Staley Field", "Surface": "Grass", "GameTime": "2:30 PM", "Score": "20 - 0", "Result": "W", "Diff": "+20", "TotalOffYds": 285}
+                ],
+                2026: copy.deepcopy(OFFICIAL_SCHEDULE_SLATES["2026 Active NFL Slate (Weeks 1 - 9)"])
+            }
         }
     }
-}
+    for f_name, f_bdate in ALL_32_FRANCHISES.items():
+        f_key = f"{f_name} (Franchise)"
+        if f_key not in initial_db:
+            initial_db[f_key] = {
+                "category": "FRANCHISE", "name": f_name, "pos": "Franchise", "jersey": "—",
+                "birth_date": f_bdate, "team": f_name[:3].upper(), "exp": f"Founded {f_bdate.year}",
+                "seasons": {}
+            }
+    st.session_state["db"] = initial_db
 
-for f_name, f_bdate in ALL_32_FRANCHISES.items():
-    f_key = f"{f_name} (Franchise)"
-    if f_key not in EXPANDED_CAREER_DATABASE:
-        EXPANDED_CAREER_DATABASE[f_key] = {
-            "category": "FRANCHISE", "name": f_name, "pos": "Franchise", "jersey": "—",
-            "birth_date": f_bdate, "team": f_name[:3].upper(), "exp": f"Founded {f_bdate.year}",
-            "seasons": {}
-        }
+db = st.session_state["db"]
 
 # ==============================================================================
-# 5. WORKSPACE TAB NAVIGATION
+# 6. WORKSPACE NAVIGATION
 # ==============================================================================
 tab_career, tab_matchup = st.tabs(["📊 Individual & Franchise Career Ledger", "⚔️ Head-to-Head Clash & Edge Engine"])
 
@@ -233,7 +240,7 @@ with tab_career:
     st.subheader("1. Entity Selection & Metaphysical Baseline")
     top_col1, top_col2 = st.columns([3, 1])
     with top_col1:
-        selected_entity_key = st.selectbox("Search & Select Subject:", list(EXPANDED_CAREER_DATABASE.keys()), index=0)
+        selected_entity_key = st.selectbox("Search & Select Subject:", list(db.keys()), index=0)
 
     with top_col2:
         with st.expander("➕ Add Custom Subject"):
@@ -243,14 +250,14 @@ with tab_career:
             c_bdate = st.date_input("Birthdate / Inception", value=datetime.date(2000, 12, 18))
             if st.button("Save Custom Subject"):
                 custom_key = f"{c_name} ({c_pos} - {c_team})"
-                EXPANDED_CAREER_DATABASE[custom_key] = {
+                db[custom_key] = {
                     "category": c_pos, "name": c_name, "pos": c_pos, "jersey": "Custom",
                     "birth_date": c_bdate, "team": c_team, "exp": "Custom Profile", "seasons": {}
                 }
-                selected_entity_key = custom_key
-                st.success(f"Loaded {c_name}!")
+                st.success(f"Saved {c_name} to persistent session state!")
+                st.rerun()
 
-    entity_data = EXPANDED_CAREER_DATABASE[selected_entity_key]
+    entity_data = db[selected_entity_key]
 
     p_bdate = entity_data["birth_date"]
     natal_lp = compute_life_path(p_bdate, preserve_masters=True)
@@ -270,6 +277,21 @@ with tab_career:
     st.markdown("---")
     st.subheader(f"2. Multi-Season Career Ledger for {entity_data['name']}")
 
+    # Ingestion Controls Placed BEFORE reading available seasons to guarantee immediate rerun visibility
+    with st.expander("⚡ Official Schedule Slate Ingestion (Live & Benchmark Feeds)", expanded=True):
+        ing_col1, ing_col2 = st.columns([3, 1])
+        with ing_col1:
+            chosen_slate = st.selectbox("Select Official Slate to Ingest:", list(OFFICIAL_SCHEDULE_SLATES.keys()), index=0)
+        with ing_col2:
+            st.write("")
+            st.write("")
+            if st.button("⚡ Ingest Official Slate", use_container_width=True):
+                slate_data = copy.deepcopy(OFFICIAL_SCHEDULE_SLATES[chosen_slate])
+                slate_year = slate_data[0]["Date"].year
+                entity_data["seasons"][slate_year] = slate_data
+                st.success(f"✅ Successfully ingested {len(slate_data)} games from {chosen_slate}!")
+                st.rerun()
+
     available_seasons = sorted(list(entity_data["seasons"].keys()), reverse=True)
     
     col_s1, col_s2 = st.columns([1, 3])
@@ -278,15 +300,27 @@ with tab_career:
         selected_season_choice = st.selectbox("Filter Season:", season_options, index=0)
     
     with col_s2:
-        with st.expander("⚡ Official Schedule Slate Ingestion (Live & Benchmark Feeds)"):
-            chosen_slate = st.selectbox("Select Official Slate to Ingest:", list(OFFICIAL_SCHEDULE_SLATES.keys()), index=0)
-            if st.button("Ingest & Hydrate Official Slate"):
-                slate_year = OFFICIAL_SCHEDULE_SLATES[chosen_slate][0]["Date"].year
-                entity_data["seasons"][slate_year] = OFFICIAL_SCHEDULE_SLATES[chosen_slate]
-                st.success(f"Ingested {chosen_slate} into {entity_data['name']}!")
+        with st.expander("⚡ Procedural Season Generator (Simulate Any Era 1920–2026)"):
+            gen_year = st.number_input("Year to Simulate:", min_value=1920, max_value=2026, value=2024, step=1)
+            if st.button("Generate & Hydrate 17-Week Season"):
+                start_sept = datetime.date(int(gen_year), 9, 8)
+                generated_logs = []
+                opponents_pool = ["GB", "MIN", "DET", "DAL", "PHI", "NYG", "SF", "LAR", "SEA", "KC", "BUF", "MIA", "BAL", "CIN", "CLE", "PIT", "IND"]
+                for wk in range(1, 18):
+                    wk_date = start_sept + datetime.timedelta(days=(wk - 1) * 7)
+                    opp = opponents_pool[(wk - 1) % len(opponents_pool)]
+                    ha = "vs" if wk % 2 != 0 else "@"
+                    generated_logs.append({
+                        "Season": int(gen_year), "Week": wk, "Date": wk_date, "DayOfWeek": "Sun",
+                        "Opp": opp, "HomeAway": ha, "Venue": "Home Stadium" if ha == "vs" else "Opponent Field",
+                        "Surface": "Grass", "GameTime": "1:00 PM", "Score": f"{20 + (wk % 14)} - {17 + (wk % 10)}",
+                        "Result": "W" if (wk % 3 != 0) else "L", "Diff": f"+{3 + (wk % 7)}" if (wk % 3 != 0) else f"-{2 + (wk % 5)}",
+                        "PassYds": 220 + (wk * 7), "TotalOffYds": 320 + (wk * 8)
+                    })
+                entity_data["seasons"][int(gen_year)] = generated_logs
+                st.success(f"Generated {gen_year} season!")
                 st.rerun()
 
-    available_seasons = sorted(list(entity_data["seasons"].keys()), reverse=True)
     target_seasons = available_seasons if selected_season_choice == "All Career Seasons" else ([int(selected_season_choice)] if selected_season_choice in [str(s) for s in available_seasons] else available_seasons[:1])
 
     raw_logs_to_process = []
@@ -372,7 +406,7 @@ with tab_career:
     df = pd.DataFrame(ledger_rows)
 
     if not df.empty:
-        with st.expander("⚡ Cross-Resonance Scanner & Filter Controls", expanded=True):
+        with st.expander("⚡ Cross-Resonance Scanner & Filter Controls", expanded=False):
             f_c1, f_c2, f_c3, f_c4 = st.columns(4)
             with f_c1:
                 scanner_match_type = st.selectbox(
@@ -459,6 +493,8 @@ with tab_career:
             file_name=f"{entity_data['name'].replace(' ', '_')}_Metaphysical_Ledger.csv",
             mime="text/csv",
         )
+    else:
+        st.info("No season selected or loaded. Ingest an official slate or select an active season above to view the ledger.")
 
 # ==============================================================================
 # TAB 2: HEAD-TO-HEAD CLASH & MATCHUP ENGINE
@@ -469,14 +505,14 @@ with tab_matchup:
 
     m_col1, m_col2, m_col3 = st.columns(3)
     with m_col1:
-        entity_a_key = st.selectbox("Primary Subject (Side A):", list(EXPANDED_CAREER_DATABASE.keys()), index=0)
+        entity_a_key = st.selectbox("Primary Subject (Side A):", list(db.keys()), index=0)
     with m_col2:
-        entity_b_key = st.selectbox("Opposing Subject (Side B):", list(EXPANDED_CAREER_DATABASE.keys()), index=1)
+        entity_b_key = st.selectbox("Opposing Subject (Side B):", list(db.keys()), index=1)
     with m_col3:
         matchup_date = st.date_input("Matchup Kickoff Date:", value=datetime.date(2026, 11, 8), key="clash_kickoff_date")
 
-    ent_a = EXPANDED_CAREER_DATABASE[entity_a_key]
-    ent_b = EXPANDED_CAREER_DATABASE[entity_b_key]
+    ent_a = db[entity_a_key]
+    ent_b = db[entity_b_key]
 
     a_bdate = ent_a["birth_date"]
     a_lp = compute_life_path(a_bdate, preserve_masters=True)
