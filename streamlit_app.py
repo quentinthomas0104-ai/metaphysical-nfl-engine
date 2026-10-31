@@ -5,7 +5,7 @@ import datetime
 st.set_page_config(page_title="Metaphysical Analytics Engine", layout="wide")
 
 st.title("🏈 Metaphysical Analytics Engine")
-st.caption("Career Logs, Cross-Resonance Scanner, Dedicated Transits, Power#, & Head-to-Head Clash Engine")
+st.caption("Career Logs, Cross-Resonance Scanner, Master Visualizer, Dedicated Transits, & Head-to-Head Clash Engine")
 
 # ==============================================================================
 # 1. CORE NUMEROLOGY & VIBRATIONAL ENGINE (PRESERVES MASTER NUMBERS)
@@ -227,7 +227,7 @@ for f_name, f_bdate in ALL_32_FRANCHISES.items():
 tab_career, tab_matchup = st.tabs(["📊 Individual & Franchise Career Ledger", "⚔️ Head-to-Head Clash & Edge Engine"])
 
 # ==============================================================================
-# TAB 1: CAREER LEDGER & CROSS-RESONANCE SCANNER
+# TAB 1: CAREER LEDGER & MASTER VISUALIZER
 # ==============================================================================
 with tab_career:
     st.subheader("1. Entity Selection & Metaphysical Baseline")
@@ -345,7 +345,6 @@ with tab_career:
             
         stat_red = reduce_digits(primary_stat, preserve_masters=False) if primary_stat > 0 else 0
         
-        # Cross-Resonance Logic (Stat matching Personal Day, Universal Day, or Power#)
         pd_hit = (stat_red == pd_val) and primary_stat > 0
         ud_hit = (stat_red == ud) and primary_stat > 0
         power_hit = (stat_red == power_num) and primary_stat > 0
@@ -373,7 +372,7 @@ with tab_career:
             "Power#": power_num, "Game Year Animal & Element": f"{g_element} {g_animal}",
             "Affinity Status": affinity, "Universal Year (UY)": uy, "Universal Month (UM)": um,
             "Universal Day (UD)": ud, "Personal Year (PY)": py, "Personal Month (PM)": pm,
-            "Personal Day (PD)": pd_val, "Stat Vibration": stat_red,
+            "Personal Day (PD)": pd_val, "Primary Stat": primary_stat, "Stat Vibration": stat_red,
             "Cross-Resonance Match": match_str,
             "Sun Transit": calculate_detailed_transit("Sun", "Sun", g_date, p_bdate),
             "Moon Transit": calculate_detailed_transit("Moon", "Sun", g_date, p_bdate),
@@ -473,6 +472,7 @@ with tab_career:
         styled_df = filtered_df.style.apply(apply_visual_highlights, axis=1)
         st.dataframe(styled_df, use_container_width=True)
 
+        # Overview Counters
         st.markdown("### 📊 Correlation Overview")
         m1, m2, m3, m4 = st.columns(4)
         total_g = len(filtered_df)
@@ -490,6 +490,55 @@ with tab_career:
             file_name=f"{entity_data['name'].replace(' ', '_')}_Metaphysical_Ledger.csv",
             mime="text/csv",
         )
+
+        # ==============================================================================
+        # 6. MASTER RESONANCE DASHBOARD & TREND VISUALIZER
+        # ==============================================================================
+        st.markdown("---")
+        st.subheader("📈 Master Resonance Dashboard & Trend Visualizer")
+        st.caption("Quantitative correlation splits comparing game production under resonance vs. non-resonance environments.")
+
+        dash_c1, dash_c2, dash_c3 = st.columns(3)
+
+        # 1. Performance Under Resonance vs. Baseline
+        with dash_c1:
+            st.markdown("##### ⚡ Resonance vs. Non-Resonance Splits")
+            has_match_mask = df["Cross-Resonance Match"] != "—"
+            match_games = df[has_match_mask]
+            no_match_games = df[~has_match_mask]
+
+            win_rate_match = round((match_games["Result"] == "W").mean() * 100, 1) if not match_games.empty else 0.0
+            win_rate_no_match = round((no_match_games["Result"] == "W").mean() * 100, 1) if not no_match_games.empty else 0.0
+
+            avg_stat_match = round(match_games["Primary Stat"].mean(), 1) if not match_games.empty else 0.0
+            avg_stat_no_match = round(no_match_games["Primary Stat"].mean(), 1) if not no_match_games.empty else 0.0
+
+            comp_df = pd.DataFrame({
+                "Metric": ["Games Count", "Win %", "Avg Primary Stat"],
+                "Resonance Hit": [len(match_games), f"{win_rate_match}%", avg_stat_match],
+                "Baseline / Non-Hit": [len(no_match_games), f"{win_rate_no_match}%", avg_stat_no_match]
+            })
+            st.dataframe(comp_df, use_container_width=True, hide_index=True)
+
+        # 2. Production by Power#
+        with dash_c2:
+            st.markdown("##### 🔋 Production Ceilings by Power#")
+            power_dist = df.groupby("Power#").agg(
+                Games=("Result", "count"),
+                Win_Rate=("Result", lambda r: f"{round((r == 'W').mean() * 100, 1)}%"),
+                Avg_Stat=("Primary Stat", lambda s: round(s.mean(), 1))
+            ).reset_index()
+            st.dataframe(power_dist, use_container_width=True, hide_index=True)
+
+        # 3. Chinese Astrology Planetary Synergy Splits
+        with dash_c3:
+            st.markdown("##### 🐉 Cycle Synergy Splits")
+            aff_dist = df.groupby("Affinity Status").agg(
+                Games=("Result", "count"),
+                Win_Rate=("Result", lambda r: f"{round((r == 'W').mean() * 100, 1)}%"),
+                Avg_Stat=("Primary Stat", lambda s: round(s.mean(), 1))
+            ).reset_index()
+            st.dataframe(aff_dist, use_container_width=True, hide_index=True)
 
 # ==============================================================================
 # TAB 2: HEAD-TO-HEAD CLASH & MATCHUP ENGINE
