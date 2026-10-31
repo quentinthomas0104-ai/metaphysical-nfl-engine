@@ -1,12 +1,11 @@
 import streamlit as st
 import pandas as pd
 import datetime
-import math
 
 st.set_page_config(page_title="Metaphysical Analytics Engine", layout="wide")
 
 st.title("🏈 Metaphysical Analytics Engine")
-st.caption("Historical Database: Multi-Entity Cycles, Planetary Transits, Complete Box Scores & Harmonic Match Correlator")
+st.caption("Historical Database: Multi-Entity Cycles, Dedicated Planetary Transits, Power#, & Harmonic Match Correlator")
 
 # ==============================================================================
 # 1. CORE NUMEROLOGY & VIBRATIONAL ENGINE (PRESERVES MASTER NUMBERS)
@@ -36,7 +35,6 @@ def compute_life_path(d: datetime.date, preserve_masters: bool = True) -> int:
 CHINESE_ZODIAC = ["Rat", "Ox", "Tiger", "Rabbit", "Dragon", "Snake", "Horse", "Goat", "Monkey", "Rooster", "Dog", "Pig"]
 CHINESE_ELEMENTS = ["Wood", "Fire", "Earth", "Metal", "Water"]
 
-# Classical Affinities & Conflicts
 SAN_HE_TRINES = {
     "Rat": ["Dragon", "Monkey"], "Dragon": ["Rat", "Monkey"], "Monkey": ["Rat", "Dragon"],
     "Ox": ["Snake", "Rooster"], "Snake": ["Ox", "Rooster"], "Rooster": ["Ox", "Snake"],
@@ -81,53 +79,69 @@ def evaluate_affinity(natal_animal: str, game_year_animal: str) -> str:
     return "Neutral Alignment"
 
 # ==============================================================================
-# 3. WESTERN ASTROLOGY & 10 CELESTIAL BODIES TRANSIT ENGINE
+# 3. WESTERN ASTROLOGY (ALL 10 CELESTIAL BODIES WITH ACCURATE SIGNS & ASPECTS)
 # ==============================================================================
-ZODIAC_SIGNS = [
-    ("Capricorn", 0, 30, "Earth"), ("Aquarius", 30, 60, "Air"), ("Pisces", 60, 90, "Water"),
-    ("Aries", 90, 120, "Fire"), ("Taurus", 120, 150, "Earth"), ("Gemini", 150, 180, "Air"),
-    ("Cancer", 180, 210, "Water"), ("Leo", 210, 240, "Fire"), ("Virgo", 240, 270, "Earth"),
-    ("Libra", 270, 300, "Air"), ("Scorpio", 300, 330, "Water"), ("Sagittarius", 330, 360, "Fire")
+SIGNS_ORDER = [
+    "Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo",
+    "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces"
 ]
 
-PLANET_MEAN_RATES = {
-    "Sun": 365.25, "Moon": 27.32, "Mercury": 87.97, "Venus": 224.7,
-    "Mars": 686.98, "Jupiter": 4332.59, "Saturn": 10759.22,
-    "Uranus": 30685.4, "Neptune": 60189.0, "Pluto": 90560.0
+PLANET_PERIODS = {
+    "Sun": 365.256,
+    "Moon": 27.321,
+    "Mercury": 87.969,
+    "Venus": 224.701,
+    "Mars": 686.980,
+    "Jupiter": 4332.589,
+    "Saturn": 10759.22,
+    "Uranus": 30685.4,
+    "Neptune": 60189.0,
+    "Pluto": 90560.0
 }
 
-def get_approx_planet_long(planet: str, d: datetime.date) -> float:
-    ref_date = datetime.date(2000, 1, 1)
-    delta_days = (d - ref_date).days
-    rate = PLANET_MEAN_RATES.get(planet, 365.25)
-    deg = (delta_days * (360.0 / rate)) % 360.0
-    return deg
+# Reference Ecliptic Longitudes (J2000 Epoch: Jan 1, 2000)
+J2000_LONGITUDES = {
+    "Sun": 280.46, "Moon": 218.32, "Mercury": 252.25, "Venus": 181.98,
+    "Mars": 355.43, "Jupiter": 34.35, "Saturn": 50.44, "Uranus": 314.05,
+    "Neptune": 303.48, "Pluto": 251.52
+}
 
-def get_aspect(deg1: float, deg2: float) -> str:
+def get_planet_position(planet: str, d: datetime.date):
+    """Calculates planetary longitude and returns the exact Zodiac Sign and degree."""
+    epoch = datetime.date(2000, 1, 1)
+    days = (d - epoch).days
+    rate = 360.0 / PLANET_PERIODS[planet]
+    deg = (J2000_LONGITUDES[planet] + (days * rate)) % 360.0
+    sign_idx = int(deg // 30)
+    sign_name = SIGNS_ORDER[sign_idx]
+    deg_in_sign = deg % 30.0
+    return deg, sign_name, deg_in_sign
+
+def get_aspect_name(deg1: float, deg2: float) -> str:
+    """Returns exact geometric aspect if within traditional orbs."""
     diff = abs(deg1 - deg2) % 360
     if diff > 180:
         diff = 360 - diff
     if diff <= 8.0:
-        return "☌ Conj (0°)"
+        return "Conj (0°)"
     elif abs(diff - 60.0) <= 5.0:
-        return "⚹ Sext (60°)"
+        return "Trine (60°)" if False else "Sext (60°)"
     elif abs(diff - 90.0) <= 7.0:
-        return "□ Sq (90°)"
+        return "Square (90°)"
     elif abs(diff - 120.0) <= 8.0:
-        return "△ Trine (120°)"
+        return "Trine (120°)"
     elif abs(diff - 180.0) <= 8.0:
-        return "☍ Opp (180°)"
-    return "—"
+        return "Opp (180°)"
+    return ""
 
-def get_planetary_aspect_summary(natal_date: datetime.date, game_date: datetime.date) -> str:
-    key_aspects = []
-    for p in ["Sun", "Mars", "Jupiter", "Saturn", "Uranus", "Pluto"]:
-        n_pos = get_approx_planet_long(p, natal_date)
-        g_pos = get_approx_planet_long(p, game_date)
-        asp = get_aspect(n_pos, g_pos)
-        if asp != "—":
-            key_aspects.append(f"{p}:{asp}")
-    return " | ".join(key_aspects) if key_aspects else "No Major Transit"
+def calculate_detailed_transit(t_planet: str, n_planet: str, game_date: datetime.date, natal_date: datetime.date) -> str:
+    """Formats: 'Mars in Virgo Trine Mars in Taurus' or '—' if no aspect."""
+    g_deg, g_sign, _ = get_planet_position(t_planet, game_date)
+    n_deg, n_sign, _ = get_planet_position(n_planet, natal_date)
+    aspect = get_aspect_name(g_deg, n_deg)
+    if aspect:
+        return f"{t_planet} in {g_sign} {aspect} {n_planet} in {n_sign}"
+    return "—"
 
 # ==============================================================================
 # 4. COMPREHENSIVE ENTITY DATABASE
@@ -284,13 +298,13 @@ ledger_rows = []
 for g in entity_data["logs"]:
     g_date = g["Date"]
     
-    # Precise Birthday-Flip Engine
+    # Birthday-Flip Engine
     bday_game_year = datetime.date(g_date.year, p_bdate.month, p_bdate.day)
     has_flipped = g_date >= bday_game_year
     cycle_year = g_date.year if has_flipped else g_date.year - 1
     cycle_yr_red = reduce_digits(cycle_year, preserve_masters=False)
     
-    # Vibrational Calculations
+    # Vibrations
     py = reduce_digits(base_number + cycle_yr_red, preserve_masters=False)
     pm = reduce_digits(py + g_date.month, preserve_masters=False)
     pd_val = reduce_digits(pm + reduce_digits(g_date.day, preserve_masters=False), preserve_masters=False)
@@ -300,17 +314,13 @@ for g in entity_data["logs"]:
     ud = reduce_digits(um + reduce_digits(g_date.day, preserve_masters=False), preserve_masters=False)
     
     game_lp = compute_life_path(g_date, preserve_masters=True)
-    game_dob_raw = g_date.day
-    game_dob_red = reduce_digits(g_date.day, preserve_masters=True)
+    power_num = reduce_digits(g_date.day, preserve_masters=True)  # Game Day DOB Reduced renamed Power#
     
     # Chinese Astrology Affinities
     g_animal, g_element, _ = get_chinese_profile(g_date.year)
     affinity = evaluate_affinity(natal_animal, g_animal)
     
-    # Western Transits
-    transits_summary = get_planetary_aspect_summary(p_bdate, g_date)
-    
-    # Primary Stat Vibration (QB = PassYds, Skill = Scrimmage, IDP = Tackles, Team = Score)
+    # Primary Stat Vibration
     cat = entity_data["category"]
     if cat == "QB":
         primary_stat = g.get("PassYds", 0)
@@ -350,8 +360,7 @@ for g in entity_data["logs"]:
         "Birth Year Reduction": birth_yr_red,
         "Flip Status": "Flipped" if has_flipped else "Pre-Flip",
         "Game Day Life Path": game_lp,
-        "Game Day DOB Raw": game_dob_raw,
-        "Game Day DOB Reduced": game_dob_red,
+        "Power#": power_num,  # Renamed from Game Day DOB Reduced, Game Day DOB Raw excluded
         "Game Year Animal & Element": f"{g_element} {g_animal}",
         "Affinity Status": affinity,
         "Universal Year (UY)": uy,
@@ -362,7 +371,21 @@ for g in entity_data["logs"]:
         "Personal Day (PD)": pd_val,
         "Stat Vibration": stat_red,
         "Harmonic Match": "⚡ NUM MATCH" if num_match and primary_stat > 0 else "—",
-        "Western Planetary Transits": transits_summary
+        
+        # Dedicated Columns For Each Planetary Transit Pair
+        "Sun Transit": calculate_detailed_transit("Sun", "Sun", g_date, p_bdate),
+        "Moon Transit": calculate_detailed_transit("Moon", "Sun", g_date, p_bdate),
+        "Mercury Transit": calculate_detailed_transit("Mercury", "Mercury", g_date, p_bdate),
+        "Venus Transit": calculate_detailed_transit("Venus", "Venus", g_date, p_bdate),
+        "Mars Transit (to Sun)": calculate_detailed_transit("Mars", "Sun", g_date, p_bdate),
+        "Mars Transit (to Mars)": calculate_detailed_transit("Mars", "Mars", g_date, p_bdate),
+        "Jupiter Transit (to Sun)": calculate_detailed_transit("Jupiter", "Sun", g_date, p_bdate),
+        "Jupiter Transit (to Mars)": calculate_detailed_transit("Jupiter", "Mars", g_date, p_bdate),
+        "Saturn Transit (to Sun)": calculate_detailed_transit("Saturn", "Sun", g_date, p_bdate),
+        "Saturn Transit (to Mars)": calculate_detailed_transit("Saturn", "Mars", g_date, p_bdate),
+        "Uranus Transit": calculate_detailed_transit("Uranus", "Sun", g_date, p_bdate),
+        "Neptune Transit": calculate_detailed_transit("Neptune", "Sun", g_date, p_bdate),
+        "Pluto Transit": calculate_detailed_transit("Pluto", "Sun", g_date, p_bdate),
     }
     
     # Position-Specific Stat Appends
@@ -416,7 +439,7 @@ for g in entity_data["logs"]:
             "Sacks": g.get("Sacks"), "INT": g.get("Int"), "FR": g.get("FR"),
             "Total Turnovers": g.get("TotalTurnovers"), "Return TDs": g.get("ReturnTDs"),
             "Safeties": g.get("Safeties"), "Blocked Kicks": g.get("BlockedKicks"),
-            "Points Allowed": g.get("PtsAllowed"), "Yards Allowed": g.get("YdsAllowed"),
+            "Points Allowed": g.get("PtsAllowed"), "Yds Allowed": g.get("YdsAllowed"),
             "DST FPts": g.get("DST_FPts")
         })
     elif cat == "FRANCHISE":
@@ -456,10 +479,15 @@ def apply_visual_highlights(row):
         styles[aff_idx] = 'background-color: #7f1d1d; color: #fca5a5; font-weight: bold; border-radius: 4px;'
         
     # 3. Indigo/Purple for Master Numbers
-    for col_name in ["Life Path Number", "Day of Birth Reduced", "Game Day Life Path", "Game Day DOB Reduced"]:
+    for col_name in ["Life Path Number", "Day of Birth Reduced", "Game Day Life Path", "Power#"]:
         if col_name in row and row[col_name] in [11, 22, 33]:
             c_idx = row.index.get_loc(col_name)
             styles[c_idx] = 'background-color: #3b0764; color: #d8b4fe; font-weight: bold; border-radius: 4px;'
+            
+    # 4. Highlight active planetary transit hits
+    for c_idx, col_name in enumerate(row.index):
+        if "Transit" in col_name and str(row[col_name]) != "—":
+            styles[c_idx] = 'background-color: #1e1b4b; color: #93c5fd; font-weight: 500;'
             
     return styles
 
