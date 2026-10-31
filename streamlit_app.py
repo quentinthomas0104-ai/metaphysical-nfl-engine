@@ -79,7 +79,7 @@ def evaluate_affinity(natal_animal: str, game_year_animal: str) -> str:
     return "Neutral Alignment"
 
 # ==============================================================================
-# 3. WESTERN ASTROLOGY (ALL 10 BODIES & DEDICATED TRANSIT PAIRS)
+# 3. WESTERN ASTROLOGY (10 CELESTIAL BODIES WITH ACCURATE SIGNS & ASPECTS)
 # ==============================================================================
 SIGNS_ORDER = [
     "Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo",
@@ -136,7 +136,7 @@ def calculate_detailed_transit(t_planet: str, n_planet: str, game_date: datetime
 # 4. COMPREHENSIVE MULTI-SEASON CAREER REPOSITORY
 # ==============================================================================
 EXPANDED_CAREER_DATABASE = {
-    # ==================== QUARTERBACKS ====================
+    # ------------------ QUARTERBACKS ------------------
     "Josh Allen (QB - BUF)": {
         "category": "QB", "name": "Josh Allen", "pos": "QB", "jersey": "#17",
         "birth_date": datetime.date(1996, 5, 21), "team": "BUF", "exp": "7th Season (Draft 2018)",
@@ -176,7 +176,7 @@ EXPANDED_CAREER_DATABASE = {
             ]
         }
     },
-    # ==================== SKILL PLAYERS ====================
+    # ------------------ SKILL PLAYERS ------------------
     "Walter Payton (RB - CHI)": {
         "category": "SKILL", "name": "Walter Payton", "pos": "RB", "jersey": "#34",
         "birth_date": datetime.date(1954, 7, 25), "team": "CHI", "exp": "13 Seasons (Hall of Fame)",
@@ -196,7 +196,7 @@ EXPANDED_CAREER_DATABASE = {
             ]
         }
     },
-    # ==================== FRANCHISES (INCEPTION LEDGERS 1920-PRESENT) ====================
+    # ------------------ FRANCHISES (INCEPTION 1920-PRESENT) ------------------
     "Chicago Bears (Franchise)": {
         "category": "FRANCHISE", "name": "Chicago Bears", "pos": "Franchise", "jersey": "—",
         "birth_date": datetime.date(1920, 9, 17), "team": "CHI", "exp": "104 Seasons (Charter APFA)",
@@ -227,7 +227,7 @@ EXPANDED_CAREER_DATABASE = {
             ]
         }
     },
-    # ==================== HEAD COACHES & STRATEGISTS ====================
+    # ------------------ HEAD COACHES & STRATEGISTS ------------------
     "George Halas (Founder & Coach - CHI)": {
         "category": "COACH", "name": "George Halas", "pos": "Head Coach", "jersey": "—",
         "birth_date": datetime.date(1895, 2, 2), "team": "CHI", "exp": "40 Coaching Seasons (318 Wins)",
@@ -271,7 +271,6 @@ c4.metric("Birthdate / Inception", entity_data["birth_date"].strftime("%B %d, %Y
 c5.metric("Team", entity_data["team"])
 c6.metric("Experience / Seasons", entity_data["exp"])
 
-# Natal Metaphysical Baselines
 p_bdate = entity_data["birth_date"]
 natal_lp = compute_life_path(p_bdate, preserve_masters=True)
 natal_dob_red = reduce_digits(p_bdate.day, preserve_masters=True)
@@ -326,7 +325,7 @@ for g in raw_logs_to_process:
     g_animal, g_element, _ = get_chinese_profile(g_date.year)
     affinity = evaluate_affinity(natal_animal, g_animal)
     
-    # Primary Stat Vibration (QB = PassYds, Skill = Scrimmage, Team = Score / Yards)
+    # Primary Stat Vibration
     cat = entity_data["category"]
     if cat == "QB":
         primary_stat = g.get("PassYds", 0)
