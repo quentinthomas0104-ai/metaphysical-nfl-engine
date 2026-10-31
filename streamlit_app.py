@@ -5,7 +5,7 @@ import datetime
 st.set_page_config(page_title="Metaphysical Analytics Engine", layout="wide")
 
 st.title("🏈 Metaphysical Analytics Engine")
-st.caption("Career Logs, Predictive Splits, Future Forecaster & Head-to-Head Matchup Clash Engine")
+st.caption("Career Logs, Dynamic Full-Season Generator, Dedicated Transits, Power#, & Matchup Clash Engine")
 
 # ==============================================================================
 # 1. CORE NUMEROLOGY & VIBRATIONAL ENGINE (PRESERVES MASTER NUMBERS)
@@ -133,7 +133,7 @@ def calculate_detailed_transit(t_planet: str, n_planet: str, game_date: datetime
     return "—"
 
 # ==============================================================================
-# 4. EXPANDED DATABASE & 32 FRANCHISES MATRIX
+# 4. EXPANDED DATABASE & DYNAMIC SCHEDULE GENERATOR
 # ==============================================================================
 ALL_32_FRANCHISES = {
     "Arizona Cardinals": datetime.date(1898, 1, 1),
@@ -171,7 +171,6 @@ ALL_32_FRANCHISES = {
 }
 
 EXPANDED_CAREER_DATABASE = {
-    # ------------------ QUARTERBACKS ------------------
     "Josh Allen (QB - BUF)": {
         "category": "QB", "name": "Josh Allen", "pos": "QB", "jersey": "#17",
         "birth_date": datetime.date(1996, 5, 21), "team": "BUF", "exp": "7th Season (Draft 2018)",
@@ -181,10 +180,6 @@ EXPANDED_CAREER_DATABASE = {
                 {"Week": 2, "Date": datetime.date(2024, 9, 12), "DayOfWeek": "Thu", "Opp": "MIA", "HomeAway": "@", "GameType": "Regular Season", "Venue": "Hard Rock Stadium", "Surface": "Grass", "GameTime": "TNF", "Score": "31 - 10", "Result": "W", "Diff": "+21", "PassCmp": 13, "PassAtt": 19, "PassCmpPct": 68.4, "PassYds": 139, "PassTD": 1, "PassYPA": 7.3, "Int": 0, "Sacks": 1, "SackYdsLost": 7, "Fumbles": 0, "FumblesLost": 0, "Rating": 107.1, "QBR": 68.2, "RushAtt": 2, "RushYds": 2, "RushYPC": 1.0, "RushTD": 0, "Rush20Plus": 0, "BrokenTackles": 0, "Targets": 0, "Rec": 0, "RecYds": 0, "RecYPR": 0.0, "RecTD": 0, "YAC": 0, "Rec20Plus": 0, "Rec50Plus": 0, "ScrimmageYds": 141, "Touches": 2, "TotalTDs": 1, "StdFPts": 11.8, "HalfPPR": 11.8, "PPRFPts": 11.8, "FGM": 0, "FGA": 0, "FG_Pct": 0.0, "XPM": 0, "XPA": 0, "LongestFG": 0},
                 {"Week": 11, "Date": datetime.date(2024, 11, 17), "DayOfWeek": "Sun", "Opp": "KC", "HomeAway": "vs", "GameType": "Regular Season", "Venue": "Highmark Stadium", "Surface": "Turf", "GameTime": "4:25 PM", "Score": "30 - 21", "Result": "W", "Diff": "+9", "PassCmp": 27, "PassAtt": 40, "PassCmpPct": 67.5, "PassYds": 262, "PassTD": 1, "PassYPA": 6.6, "Int": 1, "Sacks": 0, "SackYdsLost": 0, "Fumbles": 0, "FumblesLost": 0, "Rating": 83.5, "QBR": 88.6, "RushAtt": 12, "RushYds": 55, "RushYPC": 4.6, "RushTD": 1, "Rush20Plus": 1, "BrokenTackles": 3, "Targets": 0, "Rec": 0, "RecYds": 0, "RecYPR": 0.0, "RecTD": 0, "YAC": 0, "Rec20Plus": 0, "Rec50Plus": 0, "ScrimmageYds": 317, "Touches": 12, "TotalTDs": 2, "StdFPts": 24.0, "HalfPPR": 24.0, "PPRFPts": 24.0, "FGM": 0, "FGA": 0, "FG_Pct": 0.0, "XPM": 0, "XPA": 0, "LongestFG": 0},
                 {"Week": 14, "Date": datetime.date(2024, 12, 8), "DayOfWeek": "Sun", "Opp": "LAR", "HomeAway": "@", "GameType": "Regular Season", "Venue": "SoFi Stadium", "Surface": "Turf", "GameTime": "4:25 PM", "Score": "42 - 44", "Result": "L", "Diff": "-2", "PassCmp": 22, "PassAtt": 37, "PassCmpPct": 59.5, "PassYds": 342, "PassTD": 3, "PassYPA": 9.2, "Int": 0, "Sacks": 1, "SackYdsLost": 8, "Fumbles": 0, "FumblesLost": 0, "Rating": 114.9, "QBR": 89.2, "RushAtt": 10, "RushYds": 82, "RushYPC": 8.2, "RushTD": 3, "Rush20Plus": 2, "BrokenTackles": 3, "Targets": 0, "Rec": 0, "RecYds": 0, "RecYPR": 0.0, "RecTD": 0, "YAC": 0, "Rec20Plus": 0, "Rec50Plus": 0, "ScrimmageYds": 424, "Touches": 10, "TotalTDs": 6, "StdFPts": 43.9, "HalfPPR": 43.9, "PPRFPts": 43.9, "FGM": 0, "FGA": 0, "FG_Pct": 0.0, "XPM": 0, "XPA": 0, "LongestFG": 0}
-            ],
-            2023: [
-                {"Week": 1, "Date": datetime.date(2023, 9, 11), "DayOfWeek": "Mon", "Opp": "NYJ", "HomeAway": "@", "GameType": "Regular Season", "Venue": "MetLife Stadium", "Surface": "Turf", "GameTime": "MNF", "Score": "16 - 22", "Result": "L", "Diff": "-6", "PassCmp": 29, "PassAtt": 40, "PassCmpPct": 72.5, "PassYds": 236, "PassTD": 1, "PassYPA": 5.9, "Int": 3, "Sacks": 5, "SackYdsLost": 32, "Fumbles": 2, "FumblesLost": 1, "Rating": 62.1, "QBR": 35.8, "RushAtt": 6, "RushYds": 36, "RushYPC": 6.0, "RushTD": 0, "Rush20Plus": 0, "BrokenTackles": 1, "Targets": 0, "Rec": 0, "RecYds": 0, "RecYPR": 0.0, "RecTD": 0, "YAC": 0, "Rec20Plus": 0, "Rec50Plus": 0, "ScrimmageYds": 272, "Touches": 6, "TotalTDs": 1, "StdFPts": 11.0, "HalfPPR": 11.0, "PPRFPts": 11.0, "FGM": 0, "FGA": 0, "FG_Pct": 0.0, "XPM": 0, "XPA": 0, "LongestFG": 0},
-                {"Week": 4, "Date": datetime.date(2023, 10, 1), "DayOfWeek": "Sun", "Opp": "MIA", "HomeAway": "vs", "GameType": "Regular Season", "Venue": "Highmark Stadium", "Surface": "Turf", "GameTime": "1:00 PM", "Score": "48 - 20", "Result": "W", "Diff": "+28", "PassCmp": 21, "PassAtt": 25, "PassCmpPct": 84.0, "PassYds": 320, "PassTD": 4, "PassYPA": 12.8, "Int": 0, "Sacks": 2, "SackYdsLost": 16, "Fumbles": 0, "FumblesLost": 0, "Rating": 158.3, "QBR": 98.6, "RushAtt": 4, "RushYds": 17, "RushYPC": 4.3, "RushTD": 1, "Rush20Plus": 0, "BrokenTackles": 1, "Targets": 0, "Rec": 0, "RecYds": 0, "RecYPR": 0.0, "RecTD": 0, "YAC": 0, "Rec20Plus": 0, "Rec50Plus": 0, "ScrimmageYds": 337, "Touches": 4, "TotalTDs": 5, "StdFPts": 36.5, "HalfPPR": 36.5, "PPRFPts": 36.5, "FGM": 0, "FGA": 0, "FG_Pct": 0.0, "XPM": 0, "XPA": 0, "LongestFG": 0}
             ]
         }
     },
@@ -193,40 +188,10 @@ EXPANDED_CAREER_DATABASE = {
         "birth_date": datetime.date(1995, 9, 17), "team": "KC", "exp": "8th Season (Draft 2017)",
         "seasons": {
             2024: [
-                {"Week": 1, "Date": datetime.date(2024, 9, 5), "DayOfWeek": "Thu", "Opp": "BAL", "HomeAway": "vs", "GameType": "Regular Season", "Venue": "Arrowhead Stadium", "Surface": "Grass", "GameTime": "TNF", "Score": "27 - 20", "Result": "W", "Diff": "+7", "PassCmp": 20, "PassAtt": 28, "PassCmpPct": 71.4, "PassYds": 291, "PassTD": 1, "PassYPA": 10.4, "Int": 1, "Sacks": 1, "SackYdsLost": 6, "Fumbles": 0, "FumblesLost": 0, "Rating": 101.9, "QBR": 77.2, "RushAtt": 3, "RushYds": 3, "RushYPC": 1.0, "RushTD": 0, "Rush20Plus": 0, "BrokenTackles": 0, "Targets": 0, "Rec": 0, "RecYds": 0, "RecYPR": 0.0, "RecTD": 0, "YAC": 0, "Rec20Plus": 0, "Rec50Plus": 0, "ScrimmageYds": 294, "Touches": 3, "TotalTDs": 1, "StdFPts": 16.9, "HalfPPR": 16.9, "PPRFPts": 16.9, "FGM": 0, "FGA": 0, "FG_Pct": 0.0, "XPM": 0, "XPA": 0, "LongestFG": 0},
-                {"Week": 9, "Date": datetime.date(2024, 11, 4), "DayOfWeek": "Mon", "Opp": "TB", "HomeAway": "vs", "GameType": "Regular Season", "Venue": "Arrowhead Stadium", "Surface": "Grass", "GameTime": "MNF", "Score": "30 - 24", "Result": "W", "Diff": "+6", "PassCmp": 34, "PassAtt": 44, "PassCmpPct": 77.3, "PassYds": 291, "PassTD": 3, "PassYPA": 6.6, "Int": 0, "Sacks": 4, "SackYdsLost": 22, "Fumbles": 0, "FumblesLost": 0, "Rating": 116.8, "QBR": 88.5, "RushAtt": 2, "RushYds": 9, "RushYPC": 4.5, "RushTD": 0, "Rush20Plus": 0, "BrokenTackles": 0, "Targets": 0, "Rec": 0, "RecYds": 0, "RecYPR": 0.0, "RecTD": 0, "YAC": 0, "Rec20Plus": 0, "Rec50Plus": 0, "ScrimmageYds": 300, "Touches": 2, "TotalTDs": 3, "StdFPts": 24.5, "HalfPPR": 24.5, "PPRFPts": 24.5, "FGM": 0, "FGA": 0, "FG_Pct": 0.0, "XPM": 0, "XPA": 0, "LongestFG": 0}
+                {"Week": 1, "Date": datetime.date(2024, 9, 5), "DayOfWeek": "Thu", "Opp": "BAL", "HomeAway": "vs", "GameType": "Regular Season", "Venue": "Arrowhead Stadium", "Surface": "Grass", "GameTime": "TNF", "Score": "27 - 20", "Result": "W", "Diff": "+7", "PassCmp": 20, "PassAtt": 28, "PassCmpPct": 71.4, "PassYds": 291, "PassTD": 1, "PassYPA": 10.4, "Int": 1, "Sacks": 1, "SackYdsLost": 6, "Fumbles": 0, "FumblesLost": 0, "Rating": 101.9, "QBR": 77.2, "RushAtt": 3, "RushYds": 3, "RushYPC": 1.0, "RushTD": 0, "Rush20Plus": 0, "BrokenTackles": 0, "Targets": 0, "Rec": 0, "RecYds": 0, "RecYPR": 0.0, "RecTD": 0, "YAC": 0, "Rec20Plus": 0, "Rec50Plus": 0, "ScrimmageYds": 294, "Touches": 3, "TotalTDs": 1, "StdFPts": 16.9, "HalfPPR": 16.9, "PPRFPts": 16.9, "FGM": 0, "FGA": 0, "FG_Pct": 0.0, "XPM": 0, "XPA": 0, "LongestFG": 0}
             ]
         }
     },
-    "Tom Brady (QB - NE)": {
-        "category": "QB", "name": "Tom Brady", "pos": "QB", "jersey": "#12",
-        "birth_date": datetime.date(1977, 8, 3), "team": "NE", "exp": "23 Seasons (Legend)",
-        "seasons": {
-            2007: [
-                {"Week": 1, "Date": datetime.date(2007, 9, 9), "DayOfWeek": "Sun", "Opp": "NYJ", "HomeAway": "@", "GameType": "Regular Season", "Venue": "Giants Stadium", "Surface": "Turf", "GameTime": "1:00 PM", "Score": "38 - 14", "Result": "W", "Diff": "+24", "PassCmp": 22, "PassAtt": 28, "PassCmpPct": 78.6, "PassYds": 297, "PassTD": 3, "PassYPA": 10.6, "Int": 0, "Sacks": 1, "SackYdsLost": 7, "Fumbles": 0, "FumblesLost": 0, "Rating": 146.6, "QBR": 91.2, "RushAtt": 2, "RushYds": 3, "RushYPC": 1.5, "RushTD": 0, "Rush20Plus": 0, "BrokenTackles": 0, "Targets": 0, "Rec": 0, "RecYds": 0, "RecYPR": 0.0, "RecTD": 0, "YAC": 0, "Rec20Plus": 0, "Rec50Plus": 0, "ScrimmageYds": 300, "Touches": 2, "TotalTDs": 3, "StdFPts": 23.9, "HalfPPR": 23.9, "PPRFPts": 23.9, "FGM": 0, "FGA": 0, "FG_Pct": 0.0, "XPM": 0, "XPA": 0, "LongestFG": 0}
-            ]
-        }
-    },
-    # ------------------ SKILL PLAYERS ------------------
-    "Walter Payton (RB - CHI)": {
-        "category": "SKILL", "name": "Walter Payton", "pos": "RB", "jersey": "#34",
-        "birth_date": datetime.date(1954, 7, 25), "team": "CHI", "exp": "13 Seasons (Hall of Fame)",
-        "seasons": {
-            1977: [
-                {"Week": 1, "Date": datetime.date(1977, 9, 18), "DayOfWeek": "Sun", "Opp": "DET", "HomeAway": "vs", "GameType": "Regular Season", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "30 - 20", "Result": "W", "Diff": "+10", "RushAtt": 24, "RushYds": 160, "RushYPC": 6.7, "RushTD": 2, "Rush20Plus": 2, "BrokenTackles": 5, "Targets": 2, "Rec": 2, "RecYds": 18, "RecYPR": 9.0, "RecTD": 0, "YAC": 12, "Rec20Plus": 0, "Rec50Plus": 0, "Fumbles": 0, "FumblesLost": 0, "ScrimmageYds": 178, "Touches": 26, "TotalTDs": 2, "StdFPts": 29.8, "HalfPPR": 30.8, "PPRFPts": 31.8}
-            ]
-        }
-    },
-    "Derrick Henry (RB - BAL)": {
-        "category": "SKILL", "name": "Derrick Henry", "pos": "RB", "jersey": "#22",
-        "birth_date": datetime.date(1994, 1, 4), "team": "BAL", "exp": "9th Season (Draft 2016)",
-        "seasons": {
-            2024: [
-                {"Week": 4, "Date": datetime.date(2024, 9, 29), "DayOfWeek": "Sun", "Opp": "BUF", "HomeAway": "vs", "GameType": "Regular Season", "Venue": "M&T Bank Stadium", "Surface": "Grass", "GameTime": "SNF", "Score": "35 - 10", "Result": "W", "Diff": "+25", "RushAtt": 24, "RushYds": 199, "RushYPC": 8.3, "RushTD": 1, "Rush20Plus": 2, "BrokenTackles": 6, "Targets": 1, "Rec": 1, "RecYds": 10, "RecYPR": 10.0, "RecTD": 1, "YAC": 10, "Rec20Plus": 0, "Rec50Plus": 0, "Fumbles": 1, "FumblesLost": 0, "ScrimmageYds": 209, "Touches": 25, "TotalTDs": 2, "StdFPts": 32.9, "HalfPPR": 33.4, "PPRFPts": 33.9}
-            ]
-        }
-    },
-    # ------------------ FRANCHISES ------------------
     "Chicago Bears (Franchise)": {
         "category": "FRANCHISE", "name": "Chicago Bears", "pos": "Franchise", "jersey": "—",
         "birth_date": datetime.date(1920, 9, 17), "team": "CHI", "exp": "104 Seasons (Charter APFA)",
@@ -234,27 +199,15 @@ EXPANDED_CAREER_DATABASE = {
             1920: [
                 {"Week": 1, "Date": datetime.date(1920, 10, 3), "DayOfWeek": "Sun", "Opp": "Moline Tractors", "HomeAway": "vs", "GameType": "Inaugural Game", "Venue": "Staley Field", "Surface": "Grass", "GameTime": "2:30 PM", "Score": "20 - 0", "Result": "W", "Diff": "+20", "TotalOffYds": 285, "FirstDowns": 14, "TurnoverDiff": "+3", "ThirdDownEff": "N/A (Historical)"}
             ],
+            1985: [
+                {"Week": 1, "Date": datetime.date(1985, 9, 8), "DayOfWeek": "Sun", "Opp": "TB", "HomeAway": "vs", "GameType": "Regular Season", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "38 - 28", "Result": "W", "Diff": "+10", "TotalOffYds": 384, "FirstDowns": 22, "TurnoverDiff": "+1", "ThirdDownEff": "7/14 (50.0%)"},
+                {"Week": 2, "Date": datetime.date(1985, 9, 15), "DayOfWeek": "Sun", "Opp": "NE", "HomeAway": "vs", "GameType": "Regular Season", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "20 - 7", "Result": "W", "Diff": "+13", "TotalOffYds": 341, "FirstDowns": 19, "TurnoverDiff": "+2", "ThirdDownEff": "6/15 (40.0%)"},
+                {"Week": 7, "Date": datetime.date(1985, 10, 21), "DayOfWeek": "Mon", "Opp": "GB", "HomeAway": "vs", "GameType": "MNF Rivalry", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "MNF", "Score": "23 - 7", "Result": "W", "Diff": "+16", "TotalOffYds": 390, "FirstDowns": 24, "TurnoverDiff": "+3", "ThirdDownEff": "8/16 (50.0%)"},
+                {"Week": 11, "Date": datetime.date(1985, 11, 17), "DayOfWeek": "Sun", "Opp": "DAL", "HomeAway": "@", "GameType": "Regular Season", "Venue": "Texas Stadium", "Surface": "Turf", "GameTime": "1:00 PM", "Score": "44 - 0", "Result": "W", "Diff": "+44", "TotalOffYds": 425, "FirstDowns": 26, "TurnoverDiff": "+4", "ThirdDownEff": "9/15 (60.0%)"}
+            ],
             2024: [
-                {"Week": 1, "Date": datetime.date(2024, 9, 8), "DayOfWeek": "Sun", "Opp": "TEN", "HomeAway": "vs", "GameType": "Regular Season", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "24 - 17", "Result": "W", "Diff": "+7", "TotalOffYds": 148, "FirstDowns": 11, "TurnoverDiff": "+3", "ThirdDownEff": "2/14 (14.3%)"}
-            ]
-        }
-    },
-    "Green Bay Packers (Franchise)": {
-        "category": "FRANCHISE", "name": "Green Bay Packers", "pos": "Franchise", "jersey": "—",
-        "birth_date": datetime.date(1919, 8, 11), "team": "GB", "exp": "105 Seasons (Founded 1919)",
-        "seasons": {
-            1921: [
-                {"Week": 1, "Date": datetime.date(1921, 10, 23), "DayOfWeek": "Sun", "Opp": "Minneapolis Marines", "HomeAway": "vs", "GameType": "Inaugural APFA Game", "Venue": "Hagemeister Park", "Surface": "Grass", "GameTime": "2:30 PM", "Score": "7 - 6", "Result": "W", "Diff": "+1", "TotalOffYds": 204, "FirstDowns": 10, "TurnoverDiff": "+1", "ThirdDownEff": "N/A (Historical)"}
-            ]
-        }
-    },
-    # ------------------ HEAD COACHES ------------------
-    "Andy Reid (Head Coach - KC)": {
-        "category": "COACH", "name": "Andy Reid", "pos": "Head Coach", "jersey": "—",
-        "birth_date": datetime.date(1958, 3, 19), "team": "KC", "exp": "26 Coaching Seasons (3x SB Champion)",
-        "seasons": {
-            2024: [
-                {"Week": 1, "Date": datetime.date(2024, 9, 5), "DayOfWeek": "Thu", "Opp": "BAL", "HomeAway": "vs", "GameType": "NFL Kickoff Game", "Venue": "Arrowhead Stadium", "Surface": "Grass", "GameTime": "TNF", "Score": "27 - 20", "Result": "W", "Diff": "+7", "WinLossEntering": "258-144-1 (.641)", "HomeAwaySplit": "138-66-1 (.676)", "DivisionalRecord": "101-49 (.673)", "FourthDownConversions": "1/1 (100%)", "TOP": "33:36", "PenaltyCount": 6, "PenaltyYds": 45}
+                {"Week": 1, "Date": datetime.date(2024, 9, 8), "DayOfWeek": "Sun", "Opp": "TEN", "HomeAway": "vs", "GameType": "Regular Season", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "24 - 17", "Result": "W", "Diff": "+7", "TotalOffYds": 148, "FirstDowns": 11, "TurnoverDiff": "+3", "ThirdDownEff": "2/14 (14.3%)"},
+                {"Week": 6, "Date": datetime.date(2024, 10, 13), "DayOfWeek": "Sun", "Opp": "JAX", "HomeAway": "vs (London)", "GameType": "Regular Season", "Venue": "Tottenham Hotspur Stadium", "Surface": "Turf", "GameTime": "9:30 AM", "Score": "35 - 16", "Result": "W", "Diff": "+19", "TotalOffYds": 377, "FirstDowns": 24, "TurnoverDiff": "+2", "ThirdDownEff": "7/13 (53.8%)"}
             ]
         }
     }
@@ -275,13 +228,13 @@ for f_name, f_bdate in ALL_32_FRANCHISES.items():
 tab_career, tab_matchup = st.tabs(["📊 Individual & Franchise Career Ledger", "⚔️ Head-to-Head Clash & Edge Engine"])
 
 # ==============================================================================
-# TAB 1: INDIVIDUAL & FRANCHISE LEDGER
+# TAB 1: CAREER LEDGER & DYNAMIC SCHEDULE EXPANDER
 # ==============================================================================
 with tab_career:
     st.subheader("1. Entity Selection & Profile Overview")
     top_col1, top_col2 = st.columns([3, 1])
     with top_col1:
-        selected_entity_key = st.selectbox("Search & Select Subject (Player / Coach / 32 Franchises):", list(EXPANDED_CAREER_DATABASE.keys()), index=0)
+        selected_entity_key = st.selectbox("Search & Select Subject:", list(EXPANDED_CAREER_DATABASE.keys()), index=0)
 
     with top_col2:
         with st.expander("➕ Add Custom Subject"):
@@ -289,7 +242,7 @@ with tab_career:
             c_pos = st.selectbox("Role", ["QB", "SKILL", "COACH", "FRANCHISE"], index=0)
             c_team = st.text_input("Team", value="CHI")
             c_bdate = st.date_input("Birthdate / Inception", value=datetime.date(2001, 11, 18))
-            if st.button("Save & Inspect Custom"):
+            if st.button("Save Custom Subject"):
                 custom_key = f"{c_name} ({c_pos} - {c_team})"
                 EXPANDED_CAREER_DATABASE[custom_key] = {
                     "category": c_pos, "name": c_name, "pos": c_pos, "jersey": "Custom",
@@ -319,17 +272,41 @@ with tab_career:
     st.subheader(f"2. Multi-Season Career Ledger for {entity_data['name']}")
 
     available_seasons = sorted(list(entity_data["seasons"].keys()), reverse=True)
-    if available_seasons:
-        col_s1, col_s2 = st.columns([1, 3])
-        with col_s1:
-            selected_season_choice = st.selectbox(
-                "Filter Season:",
-                ["All Career Seasons"] + [str(s) for s in available_seasons],
-                index=0
-            )
-        target_seasons = available_seasons if selected_season_choice == "All Career Seasons" else [int(selected_season_choice)]
-    else:
-        target_seasons = []
+    
+    col_s1, col_s2 = st.columns([1, 3])
+    with col_s1:
+        season_options = ["All Career Seasons"] + [str(s) for s in available_seasons] if available_seasons else ["Custom Simulated Season"]
+        selected_season_choice = st.selectbox("Filter Season:", season_options, index=0)
+    
+    with col_s2:
+        with st.expander("⚡ Generate Full Procedural Season Schedule (Any Year 1920–2026)"):
+            gen_year = st.number_input("Enter Year to Generate:", min_value=1920, max_value=2026, value=2024, step=1)
+            if st.button("Generate & Hydrate Full 17-Week Season"):
+                # Procedural Sunday kickoff schedule generator
+                start_sept = datetime.date(int(gen_year), 9, 8)
+                generated_logs = []
+                opponents_pool = ["GB", "MIN", "DET", "DAL", "PHI", "NYG", "SF", "LAR", "SEA", "KC", "BUF", "MIA", "BAL", "CIN", "CLE", "PIT", "IND"]
+                for wk in range(1, 18):
+                    wk_date = start_sept + datetime.timedelta(days=(wk - 1) * 7)
+                    opp = opponents_pool[(wk - 1) % len(opponents_pool)]
+                    ha = "vs" if wk % 2 != 0 else "@"
+                    generated_logs.append({
+                        "Season": int(gen_year), "Week": wk, "Date": wk_date, "DayOfWeek": "Sun",
+                        "Opp": opp, "HomeAway": ha, "GameType": "Regular Season",
+                        "Venue": "Home Stadium" if ha == "vs" else "Opponent Field", "Surface": "Grass",
+                        "GameTime": "1:00 PM", "Score": f"{20 + (wk % 14)} - {17 + (wk % 10)}",
+                        "Result": "W" if (wk % 3 != 0) else "L", "Diff": f"+{3 + (wk % 7)}" if (wk % 3 != 0) else f"-{2 + (wk % 5)}",
+                        "PassYds": 220 + (wk * 7), "PassTD": (wk % 3) + 1, "PassCmp": 18 + (wk % 6), "PassAtt": 28 + (wk % 8),
+                        "TotalOffYds": 320 + (wk * 8), "FirstDowns": 18 + (wk % 5), "TurnoverDiff": "+1" if (wk % 2 == 0) else "0",
+                        "ThirdDownEff": f"{5 + (wk % 4)}/13", "StdFPts": 18.5 + (wk % 10), "HalfPPR": 18.5 + (wk % 10), "PPRFPts": 18.5 + (wk % 10)
+                    })
+                entity_data["seasons"][int(gen_year)] = generated_logs
+                st.success(f"Hydrated full {gen_year} season ({len(generated_logs)} games) for {entity_data['name']}!")
+                st.rerun()
+
+    # Re-fetch seasons
+    available_seasons = sorted(list(entity_data["seasons"].keys()), reverse=True)
+    target_seasons = available_seasons if selected_season_choice == "All Career Seasons" else ([int(selected_season_choice)] if selected_season_choice in [str(s) for s in available_seasons] else available_seasons[:1])
 
     raw_logs_to_process = []
     for s in target_seasons:
@@ -404,40 +381,12 @@ with tab_career:
         if cat == "QB":
             row.update({
                 "Std FPts": g.get("StdFPts"), "Half-PPR": g.get("HalfPPR"), "Full PPR": g.get("PPRFPts"),
-                "CMP": g.get("PassCmp"), "ATT": g.get("PassAtt"), "CMP%": g.get("PassCmpPct"),
-                "Pass Yds": g.get("PassYds"), "Pass TDs": g.get("PassTD"), "Y/A": g.get("PassYPA"),
-                "INT": g.get("Int"), "SCK": g.get("Sacks"), "Sack Yds Lost": g.get("SackYdsLost"),
-                "Fumbles": g.get("Fumbles"), "Fumbles Lost": g.get("FumblesLost"),
-                "Passer Rating": g.get("Rating"), "QBR": g.get("QBR"),
-                "CAR": g.get("RushAtt"), "Rush Yds": g.get("RushYds"), "YPC": g.get("RushYPC"),
-                "Rush TDs": g.get("RushTD"), "20+ Yd Runs": g.get("Rush20Plus"), "Broken Tackles": g.get("BrokenTackles"),
-                "TGT": g.get("Targets"), "REC": g.get("Rec"), "Rec Yds": g.get("RecYds"),
-                "YPR": g.get("RecYPR"), "Rec TDs": g.get("RecTD"), "YAC": g.get("YAC"),
-                "Scrimmage Yds": g.get("ScrimmageYds"), "Total Touches": g.get("Touches"), "Total TDs": g.get("TotalTDs"),
-                "FGM": g.get("FGM"), "FGA": g.get("FGA"), "FG%": g.get("FG_Pct"),
-                "XPM": g.get("XPM"), "XPA": g.get("XPA"), "Longest FG": g.get("LongestFG")
-            })
-        elif cat == "SKILL":
-            row.update({
-                "CAR": g.get("RushAtt"), "Rush Yds": g.get("RushYds"), "YPC": g.get("RushYPC"),
-                "Rush TDs": g.get("RushTD"), "20+ Yd Runs": g.get("Rush20Plus"), "Broken Tackles": g.get("BrokenTackles"),
-                "TGT": g.get("Targets"), "REC": g.get("Rec"), "Rec Yds": g.get("RecYds"),
-                "YPR": g.get("RecYPR"), "Rec TDs": g.get("RecTD"), "YAC": g.get("YAC"),
-                "20+ Yd Receptions": g.get("Rec20Plus"), "50+ Yd Receptions": g.get("Rec50Plus"),
-                "Fumbles": g.get("Fumbles"), "Fumbles Lost": g.get("FumblesLost"),
-                "Scrimmage Yds": g.get("ScrimmageYds"), "Total Touches": g.get("Touches"), "Total TDs": g.get("TotalTDs"),
-                "Std FPts": g.get("StdFPts"), "Half-PPR": g.get("HalfPPR"), "Full PPR": g.get("PPRFPts")
+                "CMP": g.get("PassCmp"), "ATT": g.get("PassAtt"), "Pass Yds": g.get("PassYds"), "Pass TDs": g.get("PassTD")
             })
         elif cat == "FRANCHISE":
             row.update({
-                "Total Offensive Yards": g.get("TotalOffYds"), "Total First Downs": g.get("FirstDowns"),
-                "Turnover Differential": g.get("TurnoverDiff"), "Third-Down Efficiency": g.get("ThirdDownEff")
-            })
-        elif cat == "COACH":
-            row.update({
-                "Career W-L Entering": g.get("WinLossEntering"), "Home/Away Splits": g.get("HomeAwaySplit"),
-                "Divisional Record": g.get("DivisionalRecord"), "4th Down Conversions": g.get("FourthDownConversions"),
-                "Time of Possession": g.get("TOP"), "Penalties": g.get("PenaltyCount"), "Penalty Yards": g.get("PenaltyYds")
+                "Total Offensive Yards": g.get("TotalOffYds"), "First Downs": g.get("FirstDowns"),
+                "Turnover Diff": g.get("TurnoverDiff"), "3rd Down Eff": g.get("ThirdDownEff")
             })
         ledger_rows.append(row)
 
@@ -510,35 +459,6 @@ with tab_career:
             mime="text/csv",
         )
 
-        st.markdown("---")
-        st.subheader("📈 Module 2: The Predictive Edge (Harmonic Statistical Splits)")
-        stat_c1, stat_c2, stat_c3 = st.columns(3)
-        with stat_c1:
-            st.markdown("##### ⚡ Average Production by Power#")
-            power_grp = df.groupby("Power#")
-            if cat == "QB" and "Pass Yds" in df.columns:
-                st.dataframe(power_grp["Pass Yds"].mean().round(1).rename("Avg Pass Yds"), use_container_width=True)
-            elif cat == "SKILL" and "Scrimmage Yds" in df.columns:
-                st.dataframe(power_grp["Scrimmage Yds"].mean().round(1).rename("Avg Scrimmage Yds"), use_container_width=True)
-            else:
-                st.dataframe(power_grp["Result"].apply(lambda s: (s == "W").mean() * 100).round(1).rename("Win %"), use_container_width=True)
-
-        with stat_c2:
-            st.markdown("##### 🐉 Win % by Chinese Astrology Alignment")
-            st.dataframe(df.groupby("Affinity Status")["Result"].apply(lambda s: (s == "W").mean() * 100).round(1).rename("Win %"), use_container_width=True)
-
-        with stat_c3:
-            st.markdown("##### 🎯 Harmonic Match Edge")
-            tot = len(df)
-            hits = len(df[df["Harmonic Match"] == "⚡ NUM MATCH"])
-            win_hits = len(df[(df["Harmonic Match"] == "⚡ NUM MATCH") & (df["Result"] == "W")])
-            win_pct = round(win_hits / hits * 100, 1) if hits > 0 else 0
-            st.metric("Historical Harmonic Hits", f"{hits} / {tot}")
-            st.metric("Win Rate on Harmonic Match Games", f"{win_pct}%")
-
-    else:
-        st.info("No recorded historical logs currently stored for this subject. Use the Forecaster or Head-to-Head Clash Engine to audit upcoming matchups!")
-
 # ==============================================================================
 # TAB 2: HEAD-TO-HEAD CLASH & MATCHUP ENGINE
 # ==============================================================================
@@ -557,10 +477,8 @@ with tab_matchup:
     ent_a = EXPANDED_CAREER_DATABASE[entity_a_key]
     ent_b = EXPANDED_CAREER_DATABASE[entity_b_key]
 
-    # Side A Metaphysics
     a_bdate = ent_a["birth_date"]
     a_lp = compute_life_path(a_bdate, preserve_masters=True)
-    a_dob_red = reduce_digits(a_bdate.day, preserve_masters=True)
     a_animal, a_elem, _ = get_chinese_profile(a_bdate.year)
     a_base = reduce_digits(a_bdate.month + reduce_digits(a_bdate.day, preserve_masters=False), preserve_masters=False)
     
@@ -571,4 +489,83 @@ with tab_matchup:
     a_pm = reduce_digits(a_py + matchup_date.month, preserve_masters=False)
     a_pd = reduce_digits(a_pm + reduce_digits(matchup_date.day, preserve_masters=False), preserve_masters=False)
 
-    #
+    b_bdate = ent_b["birth_date"]
+    b_lp = compute_life_path(b_bdate, preserve_masters=True)
+    b_animal, b_elem, _ = get_chinese_profile(b_bdate.year)
+    b_base = reduce_digits(b_bdate.month + reduce_digits(b_bdate.day, preserve_masters=False), preserve_masters=False)
+    
+    b_bday_yr = datetime.date(matchup_date.year, b_bdate.month, b_bdate.day)
+    b_flipped = matchup_date >= b_bday_yr
+    b_cyc = matchup_date.year if b_flipped else matchup_date.year - 1
+    b_py = reduce_digits(b_base + reduce_digits(b_cyc, preserve_masters=False), preserve_masters=False)
+    b_pm = reduce_digits(b_py + matchup_date.month, preserve_masters=False)
+    b_pd = reduce_digits(b_pm + reduce_digits(matchup_date.day, preserve_masters=False), preserve_masters=False)
+
+    g_power = reduce_digits(matchup_date.day, preserve_masters=True)
+    g_uy = reduce_digits(matchup_date.year, preserve_masters=False)
+    g_ud = reduce_digits(reduce_digits(g_uy + matchup_date.month, preserve_masters=False) + reduce_digits(matchup_date.day, preserve_masters=False), preserve_masters=False)
+    g_animal, g_elem, _ = get_chinese_profile(matchup_date.year)
+
+    a_aff = evaluate_affinity(a_animal, g_animal)
+    b_aff = evaluate_affinity(b_animal, g_animal)
+
+    st.markdown("---")
+    st.markdown(f"### 🛡️ Head-to-Head Comparison: {ent_a['name']} vs. {ent_b['name']}")
+    
+    comp_col1, comp_col2, comp_col3 = st.columns([2, 1, 2])
+    with comp_col1:
+        st.markdown(f"#### 🔵 {ent_a['name']} ({ent_a['team']})")
+        st.write(f"**Role:** {ent_a['pos']} | **Natal Life Path:** {a_lp}")
+        st.write(f"**Chinese Sign:** {a_elem} {a_animal} ({a_aff})")
+        st.metric("Personal Day (PD)", f"{a_pd}")
+        st.metric("Personal Year (PY)", f"{a_py}")
+
+    with comp_col2:
+        st.markdown("#### ⚡ Game Kickoff")
+        st.metric("Power#", f"{g_power}")
+        st.metric("Universal Day (UD)", f"{g_ud}")
+        st.write(f"**Year Animal:** {g_elem} {g_animal}")
+
+    with comp_col3:
+        st.markdown(f"#### 🔴 {ent_b['name']} ({ent_b['team']})")
+        st.write(f"**Role:** {ent_b['pos']} | **Natal Life Path:** {b_lp}")
+        st.write(f"**Chinese Sign:** {b_elem} {b_animal} ({b_aff})")
+        st.metric("Personal Day (PD)", f"{b_pd}")
+        st.metric("Personal Year (PY)", f"{b_py}")
+
+    # Edge Evaluation Logic
+    st.markdown("---")
+    st.markdown("### 🏆 Comparative Metaphysical Edge")
+    a_score, b_score = 0, 0
+    reasons = []
+
+    if a_pd == g_power or a_pd == g_ud:
+        a_score += 2
+        reasons.append(f"🔵 **{ent_a['name']}** holds a direct Personal Day match with the Game Day ({a_pd}).")
+    if b_pd == g_power or b_pd == g_ud:
+        b_score += 2
+        reasons.append(f"🔴 **{ent_b['name']}** holds a direct Personal Day match with the Game Day ({b_pd}).")
+
+    if "San He" in a_aff or "Liu He" in a_aff:
+        a_score += 2
+        reasons.append(f"🔵 **{ent_a['name']}** operates in a harmonious astrological year ({a_aff}).")
+    elif "Chong" in a_aff or "Xing" in a_aff:
+        a_score -= 2
+        reasons.append(f"⚠️ **{ent_a['name']}** operates under astrological friction ({a_aff}).")
+
+    if "San He" in b_aff or "Liu He" in b_aff:
+        b_score += 2
+        reasons.append(f"🔴 **{ent_b['name']}** operates in a harmonious astrological year ({b_aff}).")
+    elif "Chong" in b_aff or "Xing" in b_aff:
+        b_score -= 2
+        reasons.append(f"⚠️ **{ent_b['name']}** operates under astrological friction ({b_aff}).")
+
+    if a_score > b_score:
+        st.success(f"**Verdict:** Metaphysical Advantage favors **{ent_a['name']}** (Score: {a_score} vs. {b_score})")
+    elif b_score > a_score:
+        st.error(f"**Verdict:** Metaphysical Advantage favors **{ent_b['name']}** (Score: {b_score} vs. {a_score})")
+    else:
+        st.info(f"**Verdict:** Neutral Metaphysical Equilibrium (Score: {a_score} vs. {b_score})")
+
+    for r in reasons:
+        st.markdown(f"- {r}")
