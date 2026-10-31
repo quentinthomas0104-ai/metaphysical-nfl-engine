@@ -1,11 +1,11 @@
-import streamlit as st
-import pandas as pd
+import streamlit as st  # type: ignore
+import pandas as pd     # type: ignore
 import datetime
 
 st.set_page_config(page_title="Metaphysical Analytics Engine", layout="wide")
 
 st.title("🏈 Metaphysical Analytics Engine")
-st.caption("Career Game Logs: Players, Coaches, Franchises, Dedicated Transits, Power#, & Harmonic Match Correlator")
+st.caption("Career Game Logs: Players, Coaches, Franchises, Dedicated Transits, Power#, & Harmonic Milestone Scanner")
 
 # ==============================================================================
 # 1. CORE NUMEROLOGY & VIBRATIONAL ENGINE (PRESERVES MASTER NUMBERS)
@@ -79,7 +79,7 @@ def evaluate_affinity(natal_animal: str, game_year_animal: str) -> str:
     return "Neutral Alignment"
 
 # ==============================================================================
-# 3. WESTERN ASTROLOGY (10 CELESTIAL BODIES WITH ACCURATE SIGNS & ASPECTS)
+# 3. WESTERN ASTROLOGY (ALL 10 BODIES & DEDICATED TRANSIT PAIRS)
 # ==============================================================================
 SIGNS_ORDER = [
     "Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo",
@@ -279,28 +279,15 @@ birth_yr_red = reduce_digits(p_bdate.year, preserve_masters=False)
 base_number = reduce_digits(p_bdate.month + reduce_digits(p_bdate.day, preserve_masters=False), preserve_masters=False)
 
 # ==============================================================================
-# 6. MULTI-SEASON CAREER SELECTOR & ROW BUILDER
+# 6. ROW BUILDER & METAPHYSICAL AUDIT
 # ==============================================================================
-st.markdown("---")
-st.subheader(f"2. Multi-Season Career Ledger for {entity_data['name']}")
-
 available_seasons = sorted(list(entity_data["seasons"].keys()), reverse=True)
-col_s1, col_s2 = st.columns([1, 3])
-with col_s1:
-    selected_season_choice = st.selectbox(
-        "Filter Season:",
-        ["All Career Seasons"] + [str(s) for s in available_seasons],
-        index=0
-    )
-
-target_seasons = available_seasons if selected_season_choice == "All Career Seasons" else [int(selected_season_choice)]
-
-raw_logs_to_process = []
-for s in target_seasons:
-    raw_logs_to_process.extend(entity_data["seasons"].get(s, []))
+all_raw_logs = []
+for s in available_seasons:
+    all_raw_logs.extend(entity_data["seasons"].get(s, []))
 
 ledger_rows = []
-for g in raw_logs_to_process:
+for g in all_raw_logs:
     g_date = g["Date"]
     
     # Precise Birthday-Flip Engine
@@ -419,68 +406,4 @@ for g in raw_logs_to_process:
             "YPR": g.get("RecYPR"), "Rec TDs": g.get("RecTD"), "YAC": g.get("YAC"),
             "20+ Yd Receptions": g.get("Rec20Plus"), "50+ Yd Receptions": g.get("Rec50Plus"),
             "Fumbles": g.get("Fumbles"), "Fumbles Lost": g.get("FumblesLost"),
-            "Scrimmage Yds": g.get("ScrimmageYds"), "Total Touches": g.get("Touches"), "Total TDs": g.get("TotalTDs"),
-            "Std FPts": g.get("StdFPts"), "Half-PPR": g.get("HalfPPR"), "Full PPR": g.get("PPRFPts")
-        })
-    elif cat == "FRANCHISE":
-        row.update({
-            "Total Offensive Yards": g.get("TotalOffYds"), "Total First Downs": g.get("FirstDowns"),
-            "Turnover Differential": g.get("TurnoverDiff"), "Third-Down Efficiency": g.get("ThirdDownEff")
-        })
-    elif cat == "COACH":
-        row.update({
-            "Career W-L Entering": g.get("WinLossEntering"), "Home/Away Splits": g.get("HomeAwaySplit"),
-            "Divisional Record": g.get("DivisionalRecord"), "4th Down Conversions": g.get("FourthDownConversions"),
-            "Time of Possession": g.get("TOP"), "Penalties": g.get("PenaltyCount"), "Penalty Yards": g.get("PenaltyYds")
-        })
-        
-    ledger_rows.append(row)
-
-df = pd.DataFrame(ledger_rows)
-
-# ==============================================================================
-# 7. DYNAMIC COLOR HIGHLIGHTING & STYLING
-# ==============================================================================
-def apply_visual_highlights(row):
-    styles = [''] * len(row)
-    
-    # 1. Emerald Green for Direct Numerology Match
-    if "⚡ NUM MATCH" in str(row.get("Harmonic Match", "")):
-        match_idx = row.index.get_loc("Harmonic Match")
-        styles[match_idx] = 'background-color: #1b4332; color: #a3e635; font-weight: bold; border-radius: 4px;'
-        
-    # 2. Golden Amber for Positive Chinese Astrology (San He / Liu He)
-    aff = str(row.get("Affinity Status", ""))
-    if "San He" in aff or "Liu He" in aff:
-        aff_idx = row.index.get_loc("Affinity Status")
-        styles[aff_idx] = 'background-color: #78350f; color: #fde047; font-weight: bold; border-radius: 4px;'
-    elif "Chong" in aff or "Xing" in aff:
-        aff_idx = row.index.get_loc("Affinity Status")
-        styles[aff_idx] = 'background-color: #7f1d1d; color: #fca5a5; font-weight: bold; border-radius: 4px;'
-        
-    # 3. Indigo/Purple for Master Numbers
-    for col_name in ["Life Path Number", "Day of Birth Reduced", "Game Day Life Path", "Power#"]:
-        if col_name in row and row[col_name] in [11, 22, 33]:
-            c_idx = row.index.get_loc(col_name)
-            styles[c_idx] = 'background-color: #3b0764; color: #d8b4fe; font-weight: bold; border-radius: 4px;'
-            
-    # 4. Highlight active planetary transit hits
-    for c_idx, col_name in enumerate(row.index):
-        if "Transit" in col_name and str(row[col_name]) != "—":
-            styles[c_idx] = 'background-color: #1e1b4b; color: #93c5fd; font-weight: 500;'
-            
-    return styles
-
-styled_df = df.style.apply(apply_visual_highlights, axis=1)
-st.dataframe(styled_df, use_container_width=True)
-
-# Correlation Overview Bar
-st.markdown("### 📊 Correlation Overview")
-m1, m2, m3, m4 = st.columns(4)
-total_g = len(df)
-num_hits = len(df[df["Harmonic Match"] == "⚡ NUM MATCH"])
-pos_astrology = len(df[df["Affinity Status"].str.contains("San He|Liu He")])
-m1.metric("Games Evaluated", f"{total_g}")
-m2.metric("Direct Numerology Hits", f"{num_hits}")
-m3.metric("Favorable Astrology Cycles", f"{pos_astrology}")
-m4.metric("Harmonic Hit Rate", f"{round(num_hits/total_g*100, 1) if total_g > 0 else 0}%")
+            "Scrimmage Yds": g.get("ScrimmageYds
