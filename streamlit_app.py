@@ -5,7 +5,7 @@ import datetime
 st.set_page_config(page_title="Metaphysical Analytics Engine", layout="wide")
 
 st.title("🏈 Metaphysical Analytics Engine")
-st.caption("Past Research & Future Edge Forecaster: Expanded Pipeline, Dedicated Transits, Power#, & Predictive Analytics")
+st.caption("Career Logs, Predictive Splits, Future Forecaster & Head-to-Head Matchup Clash Engine")
 
 # ==============================================================================
 # 1. CORE NUMEROLOGY & VIBRATIONAL ENGINE (PRESERVES MASTER NUMBERS)
@@ -133,9 +133,8 @@ def calculate_detailed_transit(t_planet: str, n_planet: str, game_date: datetime
     return "—"
 
 # ==============================================================================
-# 4. MODULE 1: EXPANDED DATABASE & REPOSITORY
+# 4. EXPANDED DATABASE & 32 FRANCHISES MATRIX
 # ==============================================================================
-# Official NFL 32-Franchise Inception Charter Dates
 ALL_32_FRANCHISES = {
     "Arizona Cardinals": datetime.date(1898, 1, 1),
     "Atlanta Falcons": datetime.date(1965, 6, 30),
@@ -214,8 +213,7 @@ EXPANDED_CAREER_DATABASE = {
         "birth_date": datetime.date(1954, 7, 25), "team": "CHI", "exp": "13 Seasons (Hall of Fame)",
         "seasons": {
             1977: [
-                {"Week": 1, "Date": datetime.date(1977, 9, 18), "DayOfWeek": "Sun", "Opp": "DET", "HomeAway": "vs", "GameType": "Regular Season", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "30 - 20", "Result": "W", "Diff": "+10", "RushAtt": 24, "RushYds": 160, "RushYPC": 6.7, "RushTD": 2, "Rush20Plus": 2, "BrokenTackles": 5, "Targets": 2, "Rec": 2, "RecYds": 18, "RecYPR": 9.0, "RecTD": 0, "YAC": 12, "Rec20Plus": 0, "Rec50Plus": 0, "Fumbles": 0, "FumblesLost": 0, "ScrimmageYds": 178, "Touches": 26, "TotalTDs": 2, "StdFPts": 29.8, "HalfPPR": 30.8, "PPRFPts": 31.8},
-                {"Week": 10, "Date": datetime.date(1977, 11, 20), "DayOfWeek": "Sun", "Opp": "MIN", "HomeAway": "vs", "GameType": "Regular Season", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "10 - 7", "Result": "W", "Diff": "+3", "RushAtt": 40, "RushYds": 275, "RushYPC": 6.9, "RushTD": 1, "Rush20Plus": 3, "BrokenTackles": 9, "Targets": 1, "Rec": 1, "RecYds": 6, "RecYPR": 6.0, "RecTD": 0, "YAC": 6, "Rec20Plus": 0, "Rec50Plus": 0, "Fumbles": 0, "FumblesLost": 0, "ScrimmageYds": 281, "Touches": 41, "TotalTDs": 1, "StdFPts": 34.1, "HalfPPR": 34.6, "PPRFPts": 35.1}
+                {"Week": 1, "Date": datetime.date(1977, 9, 18), "DayOfWeek": "Sun", "Opp": "DET", "HomeAway": "vs", "GameType": "Regular Season", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "30 - 20", "Result": "W", "Diff": "+10", "RushAtt": 24, "RushYds": 160, "RushYPC": 6.7, "RushTD": 2, "Rush20Plus": 2, "BrokenTackles": 5, "Targets": 2, "Rec": 2, "RecYds": 18, "RecYPR": 9.0, "RecTD": 0, "YAC": 12, "Rec20Plus": 0, "Rec50Plus": 0, "Fumbles": 0, "FumblesLost": 0, "ScrimmageYds": 178, "Touches": 26, "TotalTDs": 2, "StdFPts": 29.8, "HalfPPR": 30.8, "PPRFPts": 31.8}
             ]
         }
     },
@@ -234,8 +232,7 @@ EXPANDED_CAREER_DATABASE = {
         "birth_date": datetime.date(1920, 9, 17), "team": "CHI", "exp": "104 Seasons (Charter APFA)",
         "seasons": {
             1920: [
-                {"Week": 1, "Date": datetime.date(1920, 10, 3), "DayOfWeek": "Sun", "Opp": "Moline Tractors", "HomeAway": "vs", "GameType": "Inaugural Game", "Venue": "Staley Field", "Surface": "Grass", "GameTime": "2:30 PM", "Score": "20 - 0", "Result": "W", "Diff": "+20", "TotalOffYds": 285, "FirstDowns": 14, "TurnoverDiff": "+3", "ThirdDownEff": "N/A (Historical)"},
-                {"Week": 11, "Date": datetime.date(1920, 11, 28), "DayOfWeek": "Sun", "Opp": "Chicago Cardinals", "HomeAway": "@", "GameType": "Rivalry Game", "Venue": "Normal Park", "Surface": "Grass", "GameTime": "2:30 PM", "Score": "6 - 7", "Result": "L", "Diff": "-1", "TotalOffYds": 210, "FirstDowns": 10, "TurnoverDiff": "-1", "ThirdDownEff": "N/A (Historical)"}
+                {"Week": 1, "Date": datetime.date(1920, 10, 3), "DayOfWeek": "Sun", "Opp": "Moline Tractors", "HomeAway": "vs", "GameType": "Inaugural Game", "Venue": "Staley Field", "Surface": "Grass", "GameTime": "2:30 PM", "Score": "20 - 0", "Result": "W", "Diff": "+20", "TotalOffYds": 285, "FirstDowns": 14, "TurnoverDiff": "+3", "ThirdDownEff": "N/A (Historical)"}
             ],
             2024: [
                 {"Week": 1, "Date": datetime.date(2024, 9, 8), "DayOfWeek": "Sun", "Opp": "TEN", "HomeAway": "vs", "GameType": "Regular Season", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "24 - 17", "Result": "W", "Diff": "+7", "TotalOffYds": 148, "FirstDowns": 11, "TurnoverDiff": "+3", "ThirdDownEff": "2/14 (14.3%)"}
@@ -263,7 +260,6 @@ EXPANDED_CAREER_DATABASE = {
     }
 }
 
-# Add all 32 Franchises dynamically into the database registry
 for f_name, f_bdate in ALL_32_FRANCHISES.items():
     f_key = f"{f_name} (Franchise)"
     if f_key not in EXPANDED_CAREER_DATABASE:
@@ -274,334 +270,305 @@ for f_name, f_bdate in ALL_32_FRANCHISES.items():
         }
 
 # ==============================================================================
-# 5. TOP METRIC SUMMARY CARDS & CUSTOM ENTRY PORTAL
+# 5. WORKSPACE TAB NAVIGATION
 # ==============================================================================
-st.subheader("1. Entity Selection & Profile Overview")
-
-top_col1, top_col2 = st.columns([3, 1])
-with top_col1:
-    selected_entity_key = st.selectbox("Search & Select Subject (Player / Coach / 32 Franchises):", list(EXPANDED_CAREER_DATABASE.keys()), index=0)
-
-with top_col2:
-    with st.expander("➕ Add Custom Subject"):
-        c_name = st.text_input("Name", value="Caleb Williams")
-        c_pos = st.selectbox("Role", ["QB", "SKILL", "COACH", "FRANCHISE"], index=0)
-        c_team = st.text_input("Team", value="CHI")
-        c_bdate = st.date_input("Birthdate / Inception", value=datetime.date(2001, 11, 18))
-        if st.button("Save & Inspect Custom"):
-            custom_key = f"{c_name} ({c_pos} - {c_team})"
-            EXPANDED_CAREER_DATABASE[custom_key] = {
-                "category": c_pos, "name": c_name, "pos": c_pos, "jersey": "Custom",
-                "birth_date": c_bdate, "team": c_team, "exp": "Custom Profile", "seasons": {}
-            }
-            selected_entity_key = custom_key
-            st.success(f"Loaded {c_name}!")
-
-entity_data = EXPANDED_CAREER_DATABASE[selected_entity_key]
-
-c1, c2, c3, c4, c5, c6 = st.columns(6)
-c1.metric("Name", entity_data["name"])
-c2.metric("Position / Role", entity_data["pos"])
-c3.metric("Jersey / ID", entity_data["jersey"])
-c4.metric("Birthdate / Inception", entity_data["birth_date"].strftime("%B %d, %Y"))
-c5.metric("Team", entity_data["team"])
-c6.metric("Experience / Seasons", entity_data["exp"])
-
-p_bdate = entity_data["birth_date"]
-natal_lp = compute_life_path(p_bdate, preserve_masters=True)
-natal_dob_red = reduce_digits(p_bdate.day, preserve_masters=True)
-natal_animal, natal_element, natal_polarity = get_chinese_profile(p_bdate.year)
-birth_yr_red = reduce_digits(p_bdate.year, preserve_masters=False)
-base_number = reduce_digits(p_bdate.month + reduce_digits(p_bdate.day, preserve_masters=False), preserve_masters=False)
+tab_career, tab_matchup = st.tabs(["📊 Individual & Franchise Career Ledger", "⚔️ Head-to-Head Clash & Edge Engine"])
 
 # ==============================================================================
-# 6. CAREER LEDGER BUILDER
+# TAB 1: INDIVIDUAL & FRANCHISE LEDGER
 # ==============================================================================
-st.markdown("---")
-st.subheader(f"2. Career Ledger & Historical Matches for {entity_data['name']}")
+with tab_career:
+    st.subheader("1. Entity Selection & Profile Overview")
+    top_col1, top_col2 = st.columns([3, 1])
+    with top_col1:
+        selected_entity_key = st.selectbox("Search & Select Subject (Player / Coach / 32 Franchises):", list(EXPANDED_CAREER_DATABASE.keys()), index=0)
 
-available_seasons = sorted(list(entity_data["seasons"].keys()), reverse=True)
-if available_seasons:
-    col_s1, col_s2 = st.columns([1, 3])
-    with col_s1:
-        selected_season_choice = st.selectbox(
-            "Filter Season:",
-            ["All Career Seasons"] + [str(s) for s in available_seasons],
-            index=0
-        )
-    target_seasons = available_seasons if selected_season_choice == "All Career Seasons" else [int(selected_season_choice)]
-else:
-    target_seasons = []
+    with top_col2:
+        with st.expander("➕ Add Custom Subject"):
+            c_name = st.text_input("Name", value="Caleb Williams")
+            c_pos = st.selectbox("Role", ["QB", "SKILL", "COACH", "FRANCHISE"], index=0)
+            c_team = st.text_input("Team", value="CHI")
+            c_bdate = st.date_input("Birthdate / Inception", value=datetime.date(2001, 11, 18))
+            if st.button("Save & Inspect Custom"):
+                custom_key = f"{c_name} ({c_pos} - {c_team})"
+                EXPANDED_CAREER_DATABASE[custom_key] = {
+                    "category": c_pos, "name": c_name, "pos": c_pos, "jersey": "Custom",
+                    "birth_date": c_bdate, "team": c_team, "exp": "Custom Profile", "seasons": {}
+                }
+                selected_entity_key = custom_key
+                st.success(f"Loaded {c_name}!")
 
-raw_logs_to_process = []
-for s in target_seasons:
-    raw_logs_to_process.extend(entity_data["seasons"].get(s, []))
+    entity_data = EXPANDED_CAREER_DATABASE[selected_entity_key]
 
-ledger_rows = []
-for g in raw_logs_to_process:
-    g_date = g["Date"]
-    
-    bday_game_year = datetime.date(g_date.year, p_bdate.month, p_bdate.day)
-    has_flipped = g_date >= bday_game_year
-    cycle_year = g_date.year if has_flipped else g_date.year - 1
-    cycle_yr_red = reduce_digits(cycle_year, preserve_masters=False)
-    
-    py = reduce_digits(base_number + cycle_yr_red, preserve_masters=False)
-    pm = reduce_digits(py + g_date.month, preserve_masters=False)
-    pd_val = reduce_digits(pm + reduce_digits(g_date.day, preserve_masters=False), preserve_masters=False)
-    
-    uy = reduce_digits(g_date.year, preserve_masters=False)
-    um = reduce_digits(uy + g_date.month, preserve_masters=False)
-    ud = reduce_digits(um + reduce_digits(g_date.day, preserve_masters=False), preserve_masters=False)
-    
-    game_lp = compute_life_path(g_date, preserve_masters=True)
-    power_num = reduce_digits(g_date.day, preserve_masters=True)
-    
-    g_animal, g_element, _ = get_chinese_profile(g_date.year)
-    affinity = evaluate_affinity(natal_animal, g_animal)
-    
-    cat = entity_data["category"]
-    if cat == "QB":
-        primary_stat = g.get("PassYds", 0)
-    elif cat == "SKILL":
-        primary_stat = g.get("ScrimmageYds", 0)
-    elif cat == "FRANCHISE":
-        primary_stat = g.get("TotalOffYds", 0)
-    elif cat == "COACH":
-        primary_stat = int(str(g.get("Score", "0")).split(" - ")[0]) if " - " in str(g.get("Score")) else 0
-    else:
-        primary_stat = int(str(g.get("Score", "0")).split(" - ")[0]) if " - " in str(g.get("Score")) else 0
-        
-    stat_red = reduce_digits(primary_stat, preserve_masters=False) if primary_stat > 0 else 0
-    num_match = (stat_red == pd_val) or (stat_red == ud)
-    
-    row = {
-        "Season": g.get("Season"), "Week": g.get("Week"), "Date": g_date.strftime("%Y-%m-%d"),
-        "Day of Week": g.get("DayOfWeek"), "Opponent": g.get("Opp"), "Home/Away": g.get("HomeAway"),
-        "Game Type": g.get("GameType"), "Stadium / Venue": g.get("Venue"), "Surface": g.get("Surface"),
-        "Game Time": g.get("GameTime"), "Final Score": g.get("Score"), "Result": g.get("Result"),
-        "Point Diff": g.get("Diff"), "Life Path Number": natal_lp, "Day of Birth Reduced": natal_dob_red,
-        "Chinese Zodiac Animal": natal_animal, "Fixed / Heavenly Element": natal_element,
-        "Yin / Yang Polarity": natal_polarity, "Birth Year Reduction": birth_yr_red,
-        "Flip Status": "Flipped" if has_flipped else "Pre-Flip", "Game Day Life Path": game_lp,
-        "Power#": power_num, "Game Year Animal & Element": f"{g_element} {g_animal}",
-        "Affinity Status": affinity, "Universal Year (UY)": uy, "Universal Month (UM)": um,
-        "Universal Day (UD)": ud, "Personal Year (PY)": py, "Personal Month (PM)": pm,
-        "Personal Day (PD)": pd_val, "Stat Vibration": stat_red,
-        "Harmonic Match": "⚡ NUM MATCH" if num_match and primary_stat > 0 else "—",
-        "Sun Transit": calculate_detailed_transit("Sun", "Sun", g_date, p_bdate),
-        "Moon Transit": calculate_detailed_transit("Moon", "Sun", g_date, p_bdate),
-        "Mercury Transit": calculate_detailed_transit("Mercury", "Mercury", g_date, p_bdate),
-        "Venus Transit": calculate_detailed_transit("Venus", "Venus", g_date, p_bdate),
-        "Mars Transit (to Sun)": calculate_detailed_transit("Mars", "Sun", g_date, p_bdate),
-        "Mars Transit (to Mars)": calculate_detailed_transit("Mars", "Mars", g_date, p_bdate),
-        "Jupiter Transit (to Sun)": calculate_detailed_transit("Jupiter", "Sun", g_date, p_bdate),
-        "Jupiter Transit (to Mars)": calculate_detailed_transit("Jupiter", "Mars", g_date, p_bdate),
-        "Saturn Transit (to Sun)": calculate_detailed_transit("Saturn", "Sun", g_date, p_bdate),
-        "Saturn Transit (to Mars)": calculate_detailed_transit("Saturn", "Mars", g_date, p_bdate),
-        "Uranus Transit": calculate_detailed_transit("Uranus", "Sun", g_date, p_bdate),
-        "Neptune Transit": calculate_detailed_transit("Neptune", "Sun", g_date, p_bdate),
-        "Pluto Transit": calculate_detailed_transit("Pluto", "Sun", g_date, p_bdate),
-    }
-    
-    if cat == "QB":
-        row.update({
-            "Std FPts": g.get("StdFPts"), "Half-PPR": g.get("HalfPPR"), "Full PPR": g.get("PPRFPts"),
-            "CMP": g.get("PassCmp"), "ATT": g.get("PassAtt"), "CMP%": g.get("PassCmpPct"),
-            "Pass Yds": g.get("PassYds"), "Pass TDs": g.get("PassTD"), "Y/A": g.get("PassYPA"),
-            "INT": g.get("Int"), "SCK": g.get("Sacks"), "Sack Yds Lost": g.get("SackYdsLost"),
-            "Fumbles": g.get("Fumbles"), "Fumbles Lost": g.get("FumblesLost"),
-            "Passer Rating": g.get("Rating"), "QBR": g.get("QBR"),
-            "CAR": g.get("RushAtt"), "Rush Yds": g.get("RushYds"), "YPC": g.get("RushYPC"),
-            "Rush TDs": g.get("RushTD"), "20+ Yd Runs": g.get("Rush20Plus"), "Broken Tackles": g.get("BrokenTackles"),
-            "TGT": g.get("Targets"), "REC": g.get("Rec"), "Rec Yds": g.get("RecYds"),
-            "YPR": g.get("RecYPR"), "Rec TDs": g.get("RecTD"), "YAC": g.get("YAC"),
-            "Scrimmage Yds": g.get("ScrimmageYds"), "Total Touches": g.get("Touches"), "Total TDs": g.get("TotalTDs"),
-            "FGM": g.get("FGM"), "FGA": g.get("FGA"), "FG%": g.get("FG_Pct"),
-            "XPM": g.get("XPM"), "XPA": g.get("XPA"), "Longest FG": g.get("LongestFG")
-        })
-    elif cat == "SKILL":
-        row.update({
-            "CAR": g.get("RushAtt"), "Rush Yds": g.get("RushYds"), "YPC": g.get("RushYPC"),
-            "Rush TDs": g.get("RushTD"), "20+ Yd Runs": g.get("Rush20Plus"), "Broken Tackles": g.get("BrokenTackles"),
-            "TGT": g.get("Targets"), "REC": g.get("Rec"), "Rec Yds": g.get("RecYds"),
-            "YPR": g.get("RecYPR"), "Rec TDs": g.get("RecTD"), "YAC": g.get("YAC"),
-            "20+ Yd Receptions": g.get("Rec20Plus"), "50+ Yd Receptions": g.get("Rec50Plus"),
-            "Fumbles": g.get("Fumbles"), "Fumbles Lost": g.get("FumblesLost"),
-            "Scrimmage Yds": g.get("ScrimmageYds"), "Total Touches": g.get("Touches"), "Total TDs": g.get("TotalTDs"),
-            "Std FPts": g.get("StdFPts"), "Half-PPR": g.get("HalfPPR"), "Full PPR": g.get("PPRFPts")
-        })
-    elif cat == "FRANCHISE":
-        row.update({
-            "Total Offensive Yards": g.get("TotalOffYds"), "Total First Downs": g.get("FirstDowns"),
-            "Turnover Differential": g.get("TurnoverDiff"), "Third-Down Efficiency": g.get("ThirdDownEff")
-        })
-    elif cat == "COACH":
-        row.update({
-            "Career W-L Entering": g.get("WinLossEntering"), "Home/Away Splits": g.get("HomeAwaySplit"),
-            "Divisional Record": g.get("DivisionalRecord"), "4th Down Conversions": g.get("FourthDownConversions"),
-            "Time of Possession": g.get("TOP"), "Penalties": g.get("PenaltyCount"), "Penalty Yards": g.get("PenaltyYds")
-        })
-    ledger_rows.append(row)
+    c1, c2, c3, c4, c5, c6 = st.columns(6)
+    c1.metric("Name", entity_data["name"])
+    c2.metric("Position / Role", entity_data["pos"])
+    c3.metric("Jersey / ID", entity_data["jersey"])
+    c4.metric("Birthdate / Inception", entity_data["birth_date"].strftime("%B %d, %Y"))
+    c5.metric("Team", entity_data["team"])
+    c6.metric("Experience / Seasons", entity_data["exp"])
 
-df = pd.DataFrame(ledger_rows)
+    p_bdate = entity_data["birth_date"]
+    natal_lp = compute_life_path(p_bdate, preserve_masters=True)
+    natal_dob_red = reduce_digits(p_bdate.day, preserve_masters=True)
+    natal_animal, natal_element, natal_polarity = get_chinese_profile(p_bdate.year)
+    birth_yr_red = reduce_digits(p_bdate.year, preserve_masters=False)
+    base_number = reduce_digits(p_bdate.month + reduce_digits(p_bdate.day, preserve_masters=False), preserve_masters=False)
 
-if not df.empty:
-    with st.expander("⚡ Harmonic Scanner & Filter Controls", expanded=False):
-        f_c1, f_c2, f_c3, f_c4 = st.columns(4)
-        with f_c1:
-            match_only = st.checkbox("Show Only ⚡ NUM MATCH Hits", value=False)
-        with f_c2:
-            all_powers = ["All"] + sorted([str(p) for p in df["Power#"].unique() if pd.notna(p)])
-            selected_power = st.selectbox("Filter by Power#:", all_powers, index=0)
-        with f_c3:
-            all_affinities = ["All"] + sorted([str(a) for a in df["Affinity Status"].unique() if pd.notna(a)])
-            selected_affinity = st.selectbox("Filter Chinese Affinity:", all_affinities, index=0)
-        with f_c4:
-            all_results = ["All", "W", "L", "T"]
-            selected_result = st.selectbox("Filter Game Result:", all_results, index=0)
-
-    filtered_df = df.copy()
-    if match_only:
-        filtered_df = filtered_df[filtered_df["Harmonic Match"] == "⚡ NUM MATCH"]
-    if selected_power != "All":
-        filtered_df = filtered_df[filtered_df["Power#"].astype(str) == selected_power]
-    if selected_affinity != "All":
-        filtered_df = filtered_df[filtered_df["Affinity Status"] == selected_affinity]
-    if selected_result != "All":
-        filtered_df = filtered_df[filtered_df["Result"] == selected_result]
-
-    def apply_visual_highlights(row):
-        styles = [''] * len(row)
-        if "⚡ NUM MATCH" in str(row.get("Harmonic Match", "")):
-            match_idx = row.index.get_loc("Harmonic Match")
-            styles[match_idx] = 'background-color: #1b4332; color: #a3e635; font-weight: bold;'
-        aff = str(row.get("Affinity Status", ""))
-        if "San He" in aff or "Liu He" in aff:
-            aff_idx = row.index.get_loc("Affinity Status")
-            styles[aff_idx] = 'background-color: #78350f; color: #fde047; font-weight: bold;'
-        elif "Chong" in aff or "Xing" in aff:
-            aff_idx = row.index.get_loc("Affinity Status")
-            styles[aff_idx] = 'background-color: #7f1d1d; color: #fca5a5; font-weight: bold;'
-        for col_name in ["Life Path Number", "Day of Birth Reduced", "Game Day Life Path", "Power#"]:
-            if col_name in row and row[col_name] in [11, 22, 33]:
-                c_idx = row.index.get_loc(col_name)
-                styles[c_idx] = 'background-color: #3b0764; color: #d8b4fe; font-weight: bold;'
-        for c_idx, col_name in enumerate(row.index):
-            if "Transit" in col_name and str(row[col_name]) != "—":
-                styles[c_idx] = 'background-color: #1e1b4b; color: #93c5fd;'
-        return styles
-
-    styled_df = filtered_df.style.apply(apply_visual_highlights, axis=1)
-    st.dataframe(styled_df, use_container_width=True)
-
-    # ==============================================================================
-    # 7. MODULE 2: PREDICTIVE HARMONIC HIT STATISTICAL ANALYSIS
-    # ==============================================================================
     st.markdown("---")
-    st.subheader("📈 Module 2: The Predictive Edge (Harmonic Statistical Splits)")
-    
-    stat_c1, stat_c2, stat_c3 = st.columns(3)
-    
-    # 1. Power# Performance Breakdown
-    with stat_c1:
-        st.markdown("##### ⚡ Average Production by Power#")
-        power_grp = df.groupby("Power#")
-        if cat == "QB" and "Pass Yds" in df.columns:
-            avg_power = power_grp["Pass Yds"].mean().round(1)
-            st.dataframe(avg_power.rename("Avg Pass Yds"), use_container_width=True)
-        elif cat == "SKILL" and "Scrimmage Yds" in df.columns:
-            avg_power = power_grp["Scrimmage Yds"].mean().round(1)
-            st.dataframe(avg_power.rename("Avg Scrimmage Yds"), use_container_width=True)
+    st.subheader(f"2. Multi-Season Career Ledger for {entity_data['name']}")
+
+    available_seasons = sorted(list(entity_data["seasons"].keys()), reverse=True)
+    if available_seasons:
+        col_s1, col_s2 = st.columns([1, 3])
+        with col_s1:
+            selected_season_choice = st.selectbox(
+                "Filter Season:",
+                ["All Career Seasons"] + [str(s) for s in available_seasons],
+                index=0
+            )
+        target_seasons = available_seasons if selected_season_choice == "All Career Seasons" else [int(selected_season_choice)]
+    else:
+        target_seasons = []
+
+    raw_logs_to_process = []
+    for s in target_seasons:
+        raw_logs_to_process.extend(entity_data["seasons"].get(s, []))
+
+    ledger_rows = []
+    for g in raw_logs_to_process:
+        g_date = g["Date"]
+        bday_game_year = datetime.date(g_date.year, p_bdate.month, p_bdate.day)
+        has_flipped = g_date >= bday_game_year
+        cycle_year = g_date.year if has_flipped else g_date.year - 1
+        cycle_yr_red = reduce_digits(cycle_year, preserve_masters=False)
+        
+        py = reduce_digits(base_number + cycle_yr_red, preserve_masters=False)
+        pm = reduce_digits(py + g_date.month, preserve_masters=False)
+        pd_val = reduce_digits(pm + reduce_digits(g_date.day, preserve_masters=False), preserve_masters=False)
+        
+        uy = reduce_digits(g_date.year, preserve_masters=False)
+        um = reduce_digits(uy + g_date.month, preserve_masters=False)
+        ud = reduce_digits(um + reduce_digits(g_date.day, preserve_masters=False), preserve_masters=False)
+        
+        game_lp = compute_life_path(g_date, preserve_masters=True)
+        power_num = reduce_digits(g_date.day, preserve_masters=True)
+        
+        g_animal, g_element, _ = get_chinese_profile(g_date.year)
+        affinity = evaluate_affinity(natal_animal, g_animal)
+        
+        cat = entity_data["category"]
+        if cat == "QB":
+            primary_stat = g.get("PassYds", 0)
+        elif cat == "SKILL":
+            primary_stat = g.get("ScrimmageYds", 0)
+        elif cat == "FRANCHISE":
+            primary_stat = g.get("TotalOffYds", 0)
+        elif cat == "COACH":
+            primary_stat = int(str(g.get("Score", "0")).split(" - ")[0]) if " - " in str(g.get("Score")) else 0
         else:
-            win_power = power_grp["Result"].apply(lambda s: (s == "W").mean() * 100).round(1)
-            st.dataframe(win_power.rename("Win %"), use_container_width=True)
+            primary_stat = int(str(g.get("Score", "0")).split(" - ")[0]) if " - " in str(g.get("Score")) else 0
+            
+        stat_red = reduce_digits(primary_stat, preserve_masters=False) if primary_stat > 0 else 0
+        num_match = (stat_red == pd_val) or (stat_red == ud)
+        
+        row = {
+            "Season": g.get("Season"), "Week": g.get("Week"), "Date": g_date.strftime("%Y-%m-%d"),
+            "Day of Week": g.get("DayOfWeek"), "Opponent": g.get("Opp"), "Home/Away": g.get("HomeAway"),
+            "Game Type": g.get("GameType"), "Stadium / Venue": g.get("Venue"), "Surface": g.get("Surface"),
+            "Game Time": g.get("GameTime"), "Final Score": g.get("Score"), "Result": g.get("Result"),
+            "Point Diff": g.get("Diff"), "Life Path Number": natal_lp, "Day of Birth Reduced": natal_dob_red,
+            "Chinese Zodiac Animal": natal_animal, "Fixed / Heavenly Element": natal_element,
+            "Yin / Yang Polarity": natal_polarity, "Birth Year Reduction": birth_yr_red,
+            "Flip Status": "Flipped" if has_flipped else "Pre-Flip", "Game Day Life Path": game_lp,
+            "Power#": power_num, "Game Year Animal & Element": f"{g_element} {g_animal}",
+            "Affinity Status": affinity, "Universal Year (UY)": uy, "Universal Month (UM)": um,
+            "Universal Day (UD)": ud, "Personal Year (PY)": py, "Personal Month (PM)": pm,
+            "Personal Day (PD)": pd_val, "Stat Vibration": stat_red,
+            "Harmonic Match": "⚡ NUM MATCH" if num_match and primary_stat > 0 else "—",
+            "Sun Transit": calculate_detailed_transit("Sun", "Sun", g_date, p_bdate),
+            "Moon Transit": calculate_detailed_transit("Moon", "Sun", g_date, p_bdate),
+            "Mercury Transit": calculate_detailed_transit("Mercury", "Mercury", g_date, p_bdate),
+            "Venus Transit": calculate_detailed_transit("Venus", "Venus", g_date, p_bdate),
+            "Mars Transit (to Sun)": calculate_detailed_transit("Mars", "Sun", g_date, p_bdate),
+            "Mars Transit (to Mars)": calculate_detailed_transit("Mars", "Mars", g_date, p_bdate),
+            "Jupiter Transit (to Sun)": calculate_detailed_transit("Jupiter", "Sun", g_date, p_bdate),
+            "Jupiter Transit (to Mars)": calculate_detailed_transit("Jupiter", "Mars", g_date, p_bdate),
+            "Saturn Transit (to Sun)": calculate_detailed_transit("Saturn", "Sun", g_date, p_bdate),
+            "Saturn Transit (to Mars)": calculate_detailed_transit("Saturn", "Mars", g_date, p_bdate),
+            "Uranus Transit": calculate_detailed_transit("Uranus", "Sun", g_date, p_bdate),
+            "Neptune Transit": calculate_detailed_transit("Neptune", "Sun", g_date, p_bdate),
+            "Pluto Transit": calculate_detailed_transit("Pluto", "Sun", g_date, p_bdate),
+        }
+        
+        if cat == "QB":
+            row.update({
+                "Std FPts": g.get("StdFPts"), "Half-PPR": g.get("HalfPPR"), "Full PPR": g.get("PPRFPts"),
+                "CMP": g.get("PassCmp"), "ATT": g.get("PassAtt"), "CMP%": g.get("PassCmpPct"),
+                "Pass Yds": g.get("PassYds"), "Pass TDs": g.get("PassTD"), "Y/A": g.get("PassYPA"),
+                "INT": g.get("Int"), "SCK": g.get("Sacks"), "Sack Yds Lost": g.get("SackYdsLost"),
+                "Fumbles": g.get("Fumbles"), "Fumbles Lost": g.get("FumblesLost"),
+                "Passer Rating": g.get("Rating"), "QBR": g.get("QBR"),
+                "CAR": g.get("RushAtt"), "Rush Yds": g.get("RushYds"), "YPC": g.get("RushYPC"),
+                "Rush TDs": g.get("RushTD"), "20+ Yd Runs": g.get("Rush20Plus"), "Broken Tackles": g.get("BrokenTackles"),
+                "TGT": g.get("Targets"), "REC": g.get("Rec"), "Rec Yds": g.get("RecYds"),
+                "YPR": g.get("RecYPR"), "Rec TDs": g.get("RecTD"), "YAC": g.get("YAC"),
+                "Scrimmage Yds": g.get("ScrimmageYds"), "Total Touches": g.get("Touches"), "Total TDs": g.get("TotalTDs"),
+                "FGM": g.get("FGM"), "FGA": g.get("FGA"), "FG%": g.get("FG_Pct"),
+                "XPM": g.get("XPM"), "XPA": g.get("XPA"), "Longest FG": g.get("LongestFG")
+            })
+        elif cat == "SKILL":
+            row.update({
+                "CAR": g.get("RushAtt"), "Rush Yds": g.get("RushYds"), "YPC": g.get("RushYPC"),
+                "Rush TDs": g.get("RushTD"), "20+ Yd Runs": g.get("Rush20Plus"), "Broken Tackles": g.get("BrokenTackles"),
+                "TGT": g.get("Targets"), "REC": g.get("Rec"), "Rec Yds": g.get("RecYds"),
+                "YPR": g.get("RecYPR"), "Rec TDs": g.get("RecTD"), "YAC": g.get("YAC"),
+                "20+ Yd Receptions": g.get("Rec20Plus"), "50+ Yd Receptions": g.get("Rec50Plus"),
+                "Fumbles": g.get("Fumbles"), "Fumbles Lost": g.get("FumblesLost"),
+                "Scrimmage Yds": g.get("ScrimmageYds"), "Total Touches": g.get("Touches"), "Total TDs": g.get("TotalTDs"),
+                "Std FPts": g.get("StdFPts"), "Half-PPR": g.get("HalfPPR"), "Full PPR": g.get("PPRFPts")
+            })
+        elif cat == "FRANCHISE":
+            row.update({
+                "Total Offensive Yards": g.get("TotalOffYds"), "Total First Downs": g.get("FirstDowns"),
+                "Turnover Differential": g.get("TurnoverDiff"), "Third-Down Efficiency": g.get("ThirdDownEff")
+            })
+        elif cat == "COACH":
+            row.update({
+                "Career W-L Entering": g.get("WinLossEntering"), "Home/Away Splits": g.get("HomeAwaySplit"),
+                "Divisional Record": g.get("DivisionalRecord"), "4th Down Conversions": g.get("FourthDownConversions"),
+                "Time of Possession": g.get("TOP"), "Penalties": g.get("PenaltyCount"), "Penalty Yards": g.get("PenaltyYds")
+            })
+        ledger_rows.append(row)
 
-    # 2. Chinese Affinity Impact Splits
-    with stat_c2:
-        st.markdown("##### 🐉 Win % by Chinese Astrology Alignment")
-        aff_grp = df.groupby("Affinity Status")["Result"].apply(lambda s: (s == "W").mean() * 100).round(1)
-        st.dataframe(aff_grp.rename("Win %"), use_container_width=True)
+    df = pd.DataFrame(ledger_rows)
 
-    # 3. Harmonic Hit Correlation
-    with stat_c3:
-        st.markdown("##### 🎯 Harmonic Match Edge")
-        tot = len(df)
-        hits = len(df[df["Harmonic Match"] == "⚡ NUM MATCH"])
-        win_hits = len(df[(df["Harmonic Match"] == "⚡ NUM MATCH") & (df["Result"] == "W")])
-        win_pct = round(win_hits / hits * 100, 1) if hits > 0 else 0
-        st.metric("Total Historical Harmonic Hits", f"{hits} / {tot}")
-        st.metric("Win Rate on Harmonic Match Games", f"{win_pct}%")
+    if not df.empty:
+        with st.expander("⚡ Harmonic Scanner & Filter Controls", expanded=False):
+            f_c1, f_c2, f_c3, f_c4 = st.columns(4)
+            with f_c1:
+                match_only = st.checkbox("Show Only ⚡ NUM MATCH Hits", value=False)
+            with f_c2:
+                all_powers = ["All"] + sorted([str(p) for p in df["Power#"].unique() if pd.notna(p)])
+                selected_power = st.selectbox("Filter by Power#:", all_powers, index=0)
+            with f_c3:
+                all_affinities = ["All"] + sorted([str(a) for a in df["Affinity Status"].unique() if pd.notna(a)])
+                selected_affinity = st.selectbox("Filter Chinese Affinity:", all_affinities, index=0)
+            with f_c4:
+                all_results = ["All", "W", "L", "T"]
+                selected_result = st.selectbox("Filter Game Result:", all_results, index=0)
 
-else:
-    st.info("No recorded historical logs currently stored for this subject. Use the forecaster below to audit upcoming games!")
+        filtered_df = df.copy()
+        if match_only:
+            filtered_df = filtered_df[filtered_df["Harmonic Match"] == "⚡ NUM MATCH"]
+        if selected_power != "All":
+            filtered_df = filtered_df[filtered_df["Power#"].astype(str) == selected_power]
+        if selected_affinity != "All":
+            filtered_df = filtered_df[filtered_df["Affinity Status"] == selected_affinity]
+        if selected_result != "All":
+            filtered_df = filtered_df[filtered_df["Result"] == selected_result]
+
+        def apply_visual_highlights(row):
+            styles = [''] * len(row)
+            if "⚡ NUM MATCH" in str(row.get("Harmonic Match", "")):
+                match_idx = row.index.get_loc("Harmonic Match")
+                styles[match_idx] = 'background-color: #1b4332; color: #a3e635; font-weight: bold;'
+            aff = str(row.get("Affinity Status", ""))
+            if "San He" in aff or "Liu He" in aff:
+                aff_idx = row.index.get_loc("Affinity Status")
+                styles[aff_idx] = 'background-color: #78350f; color: #fde047; font-weight: bold;'
+            elif "Chong" in aff or "Xing" in aff:
+                aff_idx = row.index.get_loc("Affinity Status")
+                styles[aff_idx] = 'background-color: #7f1d1d; color: #fca5a5; font-weight: bold;'
+            for col_name in ["Life Path Number", "Day of Birth Reduced", "Game Day Life Path", "Power#"]:
+                if col_name in row and row[col_name] in [11, 22, 33]:
+                    c_idx = row.index.get_loc(col_name)
+                    styles[c_idx] = 'background-color: #3b0764; color: #d8b4fe; font-weight: bold;'
+            for c_idx, col_name in enumerate(row.index):
+                if "Transit" in col_name and str(row[col_name]) != "—":
+                    styles[c_idx] = 'background-color: #1e1b4b; color: #93c5fd;'
+            return styles
+
+        styled_df = filtered_df.style.apply(apply_visual_highlights, axis=1)
+        st.dataframe(styled_df, use_container_width=True)
+
+        st.markdown("### 📊 Correlation Overview")
+        m1, m2, m3, m4 = st.columns(4)
+        total_g = len(filtered_df)
+        num_hits = len(filtered_df[filtered_df["Harmonic Match"] == "⚡ NUM MATCH"]) if total_g > 0 else 0
+        pos_astrology = len(filtered_df[filtered_df["Affinity Status"].str.contains("San He|Liu He")]) if total_g > 0 else 0
+        m1.metric("Games Displayed", f"{total_g}")
+        m2.metric("Direct Numerology Hits", f"{num_hits}")
+        m3.metric("Favorable Astrology Cycles", f"{pos_astrology}")
+        m4.metric("Harmonic Hit Rate", f"{round(num_hits/total_g*100, 1) if total_g > 0 else 0}%")
+
+        csv_data = filtered_df.to_csv(index=False).encode('utf-8')
+        st.download_button(
+            label="📥 Export Filtered Ledger to CSV",
+            data=csv_data,
+            file_name=f"{entity_data['name'].replace(' ', '_')}_Metaphysical_Ledger.csv",
+            mime="text/csv",
+        )
+
+        st.markdown("---")
+        st.subheader("📈 Module 2: The Predictive Edge (Harmonic Statistical Splits)")
+        stat_c1, stat_c2, stat_c3 = st.columns(3)
+        with stat_c1:
+            st.markdown("##### ⚡ Average Production by Power#")
+            power_grp = df.groupby("Power#")
+            if cat == "QB" and "Pass Yds" in df.columns:
+                st.dataframe(power_grp["Pass Yds"].mean().round(1).rename("Avg Pass Yds"), use_container_width=True)
+            elif cat == "SKILL" and "Scrimmage Yds" in df.columns:
+                st.dataframe(power_grp["Scrimmage Yds"].mean().round(1).rename("Avg Scrimmage Yds"), use_container_width=True)
+            else:
+                st.dataframe(power_grp["Result"].apply(lambda s: (s == "W").mean() * 100).round(1).rename("Win %"), use_container_width=True)
+
+        with stat_c2:
+            st.markdown("##### 🐉 Win % by Chinese Astrology Alignment")
+            st.dataframe(df.groupby("Affinity Status")["Result"].apply(lambda s: (s == "W").mean() * 100).round(1).rename("Win %"), use_container_width=True)
+
+        with stat_c3:
+            st.markdown("##### 🎯 Harmonic Match Edge")
+            tot = len(df)
+            hits = len(df[df["Harmonic Match"] == "⚡ NUM MATCH"])
+            win_hits = len(df[(df["Harmonic Match"] == "⚡ NUM MATCH") & (df["Result"] == "W")])
+            win_pct = round(win_hits / hits * 100, 1) if hits > 0 else 0
+            st.metric("Historical Harmonic Hits", f"{hits} / {tot}")
+            st.metric("Win Rate on Harmonic Match Games", f"{win_pct}%")
+
+    else:
+        st.info("No recorded historical logs currently stored for this subject. Use the Forecaster or Head-to-Head Clash Engine to audit upcoming matchups!")
 
 # ==============================================================================
-# 8. FUTURE GAME FORECASTER (MATCHUP ENGINE FOR UPCOMING GAMES)
+# TAB 2: HEAD-TO-HEAD CLASH & MATCHUP ENGINE
 # ==============================================================================
-st.markdown("---")
-st.subheader("🔮 Upcoming Game Forecaster (Future Dates & Unplayed Games)")
-st.caption("Calculate exact upcoming astrological transits, Power#, and Personal Day vibrations before kickoff.")
+with tab_matchup:
+    st.subheader("⚔️ Head-to-Head Clash & Edge Engine")
+    st.caption("Compare two players, coaches, or franchises side-by-side to determine the metaphysical edge on game day.")
 
-fc_col1, fc_col2, fc_col3 = st.columns(3)
-with fc_col1:
-    future_date = st.date_input("Target Kickoff Date:", value=datetime.date(2026, 11, 8))
-with fc_col2:
-    future_opp = st.text_input("Upcoming Opponent:", value="KC")
-with fc_col3:
-    future_home_away = st.selectbox("Location:", ["vs (Home)", "@ (Away)"], index=0)
+    m_col1, m_col2, m_col3 = st.columns(3)
+    with m_col1:
+        entity_a_key = st.selectbox("Primary Subject (Side A):", list(EXPANDED_CAREER_DATABASE.keys()), index=0)
+    with m_col2:
+        entity_b_key = st.selectbox("Opposing Subject (Side B):", list(EXPANDED_CAREER_DATABASE.keys()), index=1)
+    with m_col3:
+        matchup_date = st.date_input("Matchup Kickoff Date:", value=datetime.date(2026, 11, 8), key="clash_kickoff_date")
 
-# Compute future vibrations
-f_bday_year = datetime.date(future_date.year, p_bdate.month, p_bdate.day)
-f_has_flipped = future_date >= f_bday_year
-f_cycle_year = future_date.year if f_has_flipped else future_date.year - 1
-f_cycle_yr_red = reduce_digits(f_cycle_year, preserve_masters=False)
+    ent_a = EXPANDED_CAREER_DATABASE[entity_a_key]
+    ent_b = EXPANDED_CAREER_DATABASE[entity_b_key]
 
-f_py = reduce_digits(base_number + f_cycle_yr_red, preserve_masters=False)
-f_pm = reduce_digits(f_py + future_date.month, preserve_masters=False)
-f_pd = reduce_digits(f_pm + reduce_digits(future_date.day, preserve_masters=False), preserve_masters=False)
+    # Side A Metaphysics
+    a_bdate = ent_a["birth_date"]
+    a_lp = compute_life_path(a_bdate, preserve_masters=True)
+    a_dob_red = reduce_digits(a_bdate.day, preserve_masters=True)
+    a_animal, a_elem, _ = get_chinese_profile(a_bdate.year)
+    a_base = reduce_digits(a_bdate.month + reduce_digits(a_bdate.day, preserve_masters=False), preserve_masters=False)
+    
+    a_bday_yr = datetime.date(matchup_date.year, a_bdate.month, a_bdate.day)
+    a_flipped = matchup_date >= a_bday_yr
+    a_cyc = matchup_date.year if a_flipped else matchup_date.year - 1
+    a_py = reduce_digits(a_base + reduce_digits(a_cyc, preserve_masters=False), preserve_masters=False)
+    a_pm = reduce_digits(a_py + matchup_date.month, preserve_masters=False)
+    a_pd = reduce_digits(a_pm + reduce_digits(matchup_date.day, preserve_masters=False), preserve_masters=False)
 
-f_uy = reduce_digits(future_date.year, preserve_masters=False)
-f_um = reduce_digits(f_uy + future_date.month, preserve_masters=False)
-f_ud = reduce_digits(f_um + reduce_digits(future_date.day, preserve_masters=False), preserve_masters=False)
-
-f_power = reduce_digits(future_date.day, preserve_masters=True)
-f_game_lp = compute_life_path(future_date, preserve_masters=True)
-
-f_animal, f_element, _ = get_chinese_profile(future_date.year)
-f_affinity = evaluate_affinity(natal_animal, f_animal)
-
-st.markdown(f"#### ⚡ Kickoff Forecast: {entity_data['name']} {future_home_away} {future_opp} on `{future_date.strftime('%A, %B %d, %Y')}`")
-
-r1, r2, r3, r4, r5 = st.columns(5)
-r1.metric("Game Power#", f"{f_power}")
-r2.metric("Active Personal Day (PD)", f"{f_pd}")
-r3.metric("Universal Day (UD)", f"{f_ud}")
-r4.metric("Personal Year (PY)", f"{f_py}")
-r5.metric("Cycle Flip Status", "Flipped" if f_has_flipped else "Pre-Flip")
-
-st.markdown("##### 🪐 Active Planetary Transits at Kickoff Sky")
-future_transit_list = []
-for p in ["Sun", "Moon", "Mercury", "Venus", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune", "Pluto"]:
-    n_deg, n_sign, _ = get_planet_position(p, p_bdate)
-    g_deg, g_sign, _ = get_planet_position(p, future_date)
-    asp = get_aspect_name(g_deg, n_deg)
-    if asp:
-        future_transit_list.append({
-            "Celestial Body": p,
-            "Transit Sky Position": f"{g_sign}",
-            "Natal Blueprint Position": f"{n_sign}",
-            "Active Aspect": f"⚡ {p} in {g_sign} {asp} {p} in {n_sign}"
-        })
-
-if future_transit_list:
-    st.dataframe(pd.DataFrame(future_transit_list), use_container_width=True)
-else:
-    st.info("No major exact 0°, 60°, 90°, 120°, or 180° aspects detected on this date.")
-
-if "San He" in f_affinity or "Liu He" in f_affinity:
-    st.success(f"🌟 Positive Astrological Alignment: {f_affinity} is active for this matchup.")
-elif "Chong" in f_affinity or "Xing" in f_affinity:
-    st.warning(f"⚠️ High Friction Warning: Matchup takes place during a {f_affinity} cycle.")
-else:
-    st.info(f"Neutral Alignment: {f_affinity}")
+    #
