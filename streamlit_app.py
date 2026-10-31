@@ -78,7 +78,7 @@ def evaluate_affinity(natal_animal: str, game_year_animal: str) -> str:
     return "Neutral Alignment"
 
 # ==============================================================================
-# 3. WESTERN ASTROLOGY (ALL 10 BODIES)
+# 3. WESTERN ASTROLOGY (10 BODIES)
 # ==============================================================================
 SIGNS_ORDER = [
     "Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo",
@@ -197,6 +197,13 @@ CALEB_2026_SLATE = [
     }
 ]
 
+BEARS_1985_SLATE = [
+    {"Week": 1, "Date": datetime.date(1985, 9, 8), "DayOfWeek": "Sun", "Opp": "TB", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "38 - 28", "Result": "W", "Diff": 10, "TotalOffYds": 384, "FirstDowns": 22, "TurnoverDiff": "+1", "ThirdDownEff": "7/14 (50.0%)"},
+    {"Week": 2, "Date": datetime.date(1985, 9, 15), "DayOfWeek": "Sun", "Opp": "NE", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "20 - 7", "Result": "W", "Diff": 13, "TotalOffYds": 341, "FirstDowns": 19, "TurnoverDiff": "+2", "ThirdDownEff": "6/15 (40.0%)"},
+    {"Week": 7, "Date": datetime.date(1985, 10, 21), "DayOfWeek": "Mon", "Opp": "GB", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "MNF", "Score": "23 - 7", "Result": "W", "Diff": 16, "TotalOffYds": 390, "FirstDowns": 24, "TurnoverDiff": "+3", "ThirdDownEff": "8/16 (50.0%)"},
+    {"Week": 11, "Date": datetime.date(1985, 11, 17), "DayOfWeek": "Sun", "Opp": "DAL", "HomeAway": "@", "Venue": "Texas Stadium", "Surface": "Turf", "GameTime": "1:00 PM", "Score": "44 - 0", "Result": "W", "Diff": 44, "TotalOffYds": 425, "FirstDowns": 26, "TurnoverDiff": "+4", "ThirdDownEff": "9/15 (60.0%)"}
+]
+
 MASTER_DATABASE = {
     "Caleb Williams (QB - CHI)": {
         "category": "QB", "name": "Caleb Williams", "pos": "QB", "jersey": "#18",
@@ -206,7 +213,7 @@ MASTER_DATABASE = {
     "Chicago Bears (Franchise)": {
         "category": "FRANCHISE", "name": "Chicago Bears", "pos": "Franchise", "jersey": "—",
         "birth_date": datetime.date(1920, 9, 17), "team": "CHI", "exp": "104 Seasons (Charter APFA)",
-        "seasons": {2026: BEARS_2026_SLATE}
+        "seasons": {2026: BEARS_2026_SLATE, 1985: BEARS_1985_SLATE}
     }
 }
 
@@ -217,7 +224,239 @@ st.subheader("1. Entity Selection & Metaphysical Baseline")
 selected_entity_key = st.selectbox("Search & Select Subject:", list(MASTER_DATABASE.keys()), index=0)
 entity_data = MASTER_DATABASE[selected_entity_key]
 
-p_bdate = entity_data["birth_date"]
-natal_lp = compute_life_path(p_bdate, preserve_masters=True)
-natal_dob_red = reduce_digits(p_bdate.day, preserve_masters=True)
-natal_animal,
+natal_birth_date = entity_data["birth_date"]
+natal_lp = compute_life_path(natal_birth_date, preserve_masters=True)
+natal_dob_red = reduce_digits(natal_birth_date.day, preserve_masters=True)
+natal_animal, natal_element, natal_polarity = get_chinese_profile(natal_birth_date.year)
+birth_yr_red = reduce_digits(natal_birth_date.year, preserve_masters=False)
+base_number = reduce_digits(natal_birth_date.month + reduce_digits(natal_birth_date.day, preserve_masters=False), preserve_masters=False)
+
+c1, c2, c3, c4, c5, c6 = st.columns(6)
+c1.metric("Name", entity_data["name"])
+c2.metric("Position / Role", entity_data["pos"])
+c3.metric("Jersey / ID", entity_data["jersey"])
+c4.metric("Birthdate / Inception", natal_birth_date.strftime("%B %d, %Y"))
+c5.metric("Life Path Number", f"{natal_lp}")
+c6.metric("Chinese Zodiac", f"{natal_element} {natal_animal}")
+
+# ==============================================================================
+# SECTION 2: CAREER LEDGER BUILDER
+# ==============================================================================
+st.markdown("---")
+st.subheader(f"2. Multi-Season Career Ledger for {entity_data['name']}")
+
+available_seasons = sorted(list(entity_data["seasons"].keys()), reverse=True)
+selected_season_choice = st.selectbox("Filter Season:", [str(s) for s in available_seasons] + ["All Career Seasons"], index=0)
+
+if selected_season_choice == "All Career Seasons":
+    target_seasons = available_seasons
+else:
+    target_seasons = [int(selected_season_choice)]
+
+raw_logs = []
+for s in target_seasons:
+    raw_logs.extend(entity_data["seasons"].get(s, []))
+
+ledger_rows = []
+for g in raw_logs:
+    g_date = g["Date"]
+    bday_game_year = datetime.date(g_date.year, natal_birth_date.month, natal_birth_date.day)
+    has_flipped = g_date >= bday_game_year
+    cycle_year = g_date.year if has_flipped else g_date.year - 1
+    cycle_yr_red = reduce_digits(cycle_year, preserve_masters=False)
+    
+    py = reduce_digits(base_number + cycle_yr_red, preserve_masters=False)
+    pm = reduce_digits(py + g_date.month, preserve_masters=False)
+    pd_val = reduce_digits(pm + reduce_digits(g_date.day, preserve_masters=False), preserve_masters=False)
+    
+    uy = reduce_digits(g_date.year, preserve_masters=False)
+    um = reduce_digits(uy + g_date.month, preserve_masters=False)
+    ud = reduce_digits(um + reduce_digits(g_date.day, preserve_masters=False), preserve_masters=False)
+    
+    game_lp = compute_life_path(g_date, preserve_masters=True)
+    power_num = reduce_digits(g_date.day, preserve_masters=True)
+    
+    g_animal, g_element, _ = get_chinese_profile(g_date.year)
+    affinity = evaluate_affinity(natal_animal, g_animal)
+    
+    cat = entity_data["category"]
+    is_pending = g.get("Result") == "Pending"
+    
+    row = {
+        "Season": str(g.get("Season", g_date.year)),
+        "Week": f"Week {g.get('Week')}",
+        "Date": g_date.strftime("%Y-%m-%d"),
+        "Day of Week": g.get("DayOfWeek"),
+        "Opponent": g.get("Opp"),
+        "Home/Away": g.get("HomeAway"),
+        "Stadium / Venue": g.get("Venue"),
+        "Surface": g.get("Surface"),
+        "Game Time": g.get("GameTime"),
+        "Final Score": g.get("Score"),
+        "Result": g.get("Result"),
+        "Point Diff": g.get("Diff"),
+        "Life Path Number": str(natal_lp),
+        "Day of Birth Reduced": str(natal_dob_red),
+        "Chinese Zodiac Animal": natal_animal,
+        "Fixed / Heavenly Element": natal_element,
+        "Yin / Yang Polarity": natal_polarity,
+        "Birth Year Reduction": str(birth_yr_red),
+        "Flip Status": "Flipped" if has_flipped else "Pre-Flip",
+        "Game Day Life Path": str(game_lp),
+        "Power#": str(power_num),
+        "Game Year Animal & Element": f"{g_element} {g_animal}",
+        "Affinity Status": affinity,
+        "Universal Year (UY)": str(uy),
+        "Universal Month (UM)": str(um),
+        "Universal Day (UD)": str(ud),
+        "Personal Year (PY)": str(py),
+        "Personal Month (PM)": str(pm),
+        "Personal Day (PD)": str(pd_val),
+        "Sun Transit": calculate_detailed_transit("Sun", "Sun", g_date, natal_birth_date),
+        "Moon Transit": calculate_detailed_transit("Moon", "Sun", g_date, natal_birth_date),
+        "Mercury Transit": calculate_detailed_transit("Mercury", "Mercury", g_date, natal_birth_date),
+        "Venus Transit": calculate_detailed_transit("Venus", "Venus", g_date, natal_birth_date),
+        "Mars Transit (to Sun)": calculate_detailed_transit("Mars", "Sun", g_date, natal_birth_date),
+        "Mars Transit (to Mars)": calculate_detailed_transit("Mars", "Mars", g_date, natal_birth_date),
+        "Jupiter Transit (to Sun)": calculate_detailed_transit("Jupiter", "Sun", g_date, natal_birth_date),
+        "Jupiter Transit (to Mars)": calculate_detailed_transit("Jupiter", "Mars", g_date, natal_birth_date),
+        "Saturn Transit (to Sun)": calculate_detailed_transit("Saturn", "Sun", g_date, natal_birth_date),
+        "Saturn Transit (to Mars)": calculate_detailed_transit("Saturn", "Mars", g_date, natal_birth_date),
+        "Uranus Transit": calculate_detailed_transit("Uranus", "Sun", g_date, natal_birth_date),
+        "Neptune Transit": calculate_detailed_transit("Neptune", "Sun", g_date, natal_birth_date),
+        "Pluto Transit": calculate_detailed_transit("Pluto", "Sun", g_date, natal_birth_date),
+    }
+    
+    if cat == "QB":
+        row.update({
+            "CMP": str(g.get("CMP")) if not is_pending else "—",
+            "ATT": str(g.get("ATT")) if not is_pending else "—",
+            "CMP%": f"{g.get('CMP%')}%" if not is_pending else "—",
+            "Pass Yds": str(g.get("Pass Yds")) if not is_pending else "—",
+            "Pass TD": str(g.get("Pass TD")) if not is_pending else "—",
+            "Y/A": str(g.get("Y/A")) if not is_pending else "—",
+            "INT": str(g.get("INT")) if not is_pending else "—",
+            "SCK": str(g.get("SCK")) if not is_pending else "—",
+            "Sack Yds Lost": str(g.get("Sack Yds Lost")) if not is_pending else "—",
+            "Fumbles": str(g.get("Fumbles")) if not is_pending else "—",
+            "Fumbles Lost": str(g.get("Fumbles Lost")) if not is_pending else "—",
+            "Passer Rating": str(g.get("Passer Rating")) if not is_pending else "—",
+            "QBR": str(g.get("QBR")) if not is_pending else "—",
+            "Rush Att": str(g.get("Rush Att")) if not is_pending else "—",
+            "Rush Yds": str(g.get("Rush Yds")) if not is_pending else "—",
+            "YPC": str(g.get("YPC")) if not is_pending else "—",
+            "Rush TD": str(g.get("Rush TD")) if not is_pending else "—",
+        })
+    elif cat == "FRANCHISE":
+        row.update({
+            "Total Offense Yds": str(g.get("TotalOffYds")) if not is_pending else "—",
+            "First Downs": str(g.get("FirstDowns")) if not is_pending else "—",
+            "Turnover Diff": str(g.get("TurnoverDiff")) if not is_pending else "—",
+            "3rd Down Eff": str(g.get("ThirdDownEff")) if not is_pending else "—",
+        })
+
+    ledger_rows.append(row)
+
+df = pd.DataFrame(ledger_rows)
+
+# Full Career Ledger Displayed
+st.dataframe(df, use_container_width=True)
+
+csv_data = df.to_csv(index=False).encode('utf-8')
+st.download_button(
+    label="📥 Export Full Ledger to CSV",
+    data=csv_data,
+    file_name=f"{entity_data['name'].replace(' ', '_')}_Career_Ledger.csv",
+    mime="text/csv",
+)
+
+# ==============================================================================
+# SECTION 3: CHECKMARK CORRELATION BOX (SELECT TWO, SEVERAL, OR ALL)
+# ==============================================================================
+st.markdown("---")
+st.subheader("⚡ Checkmark Correlation & Trend Matrix")
+st.caption("Place a checkmark next to any metrics or stats to isolate them in the correlation view.")
+
+metaphysical_metrics = [
+    "Life Path Number", "Day of Birth Reduced", "Chinese Zodiac Animal",
+    "Fixed / Heavenly Element", "Yin / Yang Polarity", "Birth Year Reduction",
+    "Flip Status", "Game Day Life Path", "Power#", "Game Year Animal & Element",
+    "Affinity Status", "Universal Year (UY)", "Universal Month (UM)", "Universal Day (UD)",
+    "Personal Year (PY)", "Personal Month (PM)", "Personal Day (PD)",
+    "Sun Transit", "Moon Transit", "Mercury Transit", "Venus Transit",
+    "Mars Transit (to Sun)", "Mars Transit (to Mars)", "Jupiter Transit (to Sun)",
+    "Jupiter Transit (to Mars)", "Saturn Transit (to Sun)", "Saturn Transit (to Mars)",
+    "Uranus Transit", "Neptune Transit", "Pluto Transit"
+]
+
+if entity_data["category"] == "QB":
+    stat_metrics = [
+        "Week", "Day of Week", "Opponent", "Home/Away", "Stadium / Venue", "Surface",
+        "Final Score", "Result", "Point Diff",
+        "CMP", "ATT", "CMP%", "Pass Yds", "Pass TD", "Y/A", "INT", "SCK",
+        "Sack Yds Lost", "Fumbles", "Fumbles Lost", "Passer Rating", "QBR",
+        "Rush Att", "Rush Yds", "YPC", "Rush TD"
+    ]
+else:
+    stat_metrics = [
+        "Week", "Day of Week", "Opponent", "Home/Away", "Stadium / Venue", "Surface",
+        "Final Score", "Result", "Point Diff",
+        "Total Offense Yds", "First Downs", "Turnover Diff", "3rd Down Eff"
+    ]
+
+# Master Toggle Controls
+ctrl_col1, ctrl_col2, ctrl_col3 = st.columns([1, 1, 2])
+with ctrl_col1:
+    select_all_meta = st.checkbox("Select All Metaphysics", value=False)
+with ctrl_col2:
+    select_all_stats = st.checkbox("Select All Stats", value=False)
+
+selected_columns = []
+
+# Box 1: Metaphysical Metrics
+st.markdown("#### 🔮 Box 1: Metaphysical & Cosmic Metrics")
+with st.container():
+    meta_cols = st.columns(4)
+    for idx, m in enumerate(metaphysical_metrics):
+        col = meta_cols[idx % 4]
+        # Default checked if select_all is active, or default to Power# and PD for quick start
+        default_val = True if select_all_meta else (m in ["Power#", "Personal Day (PD)"])
+        if col.checkbox(m, value=default_val, key=f"chk_m_{m}"):
+            selected_columns.append(m)
+
+# Box 2: Game Log & Box Score Stats
+st.markdown("#### 🏈 Box 2: Game Log & Box Score Stats")
+with st.container():
+    stat_cols = st.columns(4)
+    for idx, s in enumerate(stat_metrics):
+        col = stat_cols[idx % 4]
+        default_val = True if select_all_stats else (s in ["Opponent", "Result", "Point Diff"])
+        if col.checkbox(s, value=default_val, key=f"chk_s_{s}"):
+            selected_columns.append(s)
+
+# ==============================================================================
+# SECTION 4: CORRELATION VIEW OF SELECTED CHECKED METRICS
+# ==============================================================================
+st.markdown("---")
+st.subheader("📊 Active Correlation Matrix (Your Checked Selections)")
+
+valid_selected = [c for c in selected_columns if c in df.columns]
+
+if len(valid_selected) >= 2:
+    st.write(f"**Currently Correlating ({len(valid_selected)} Checked Metrics):** `{', '.join(valid_selected)}`")
+    
+    correlation_df = df[valid_selected].copy()
+    st.dataframe(correlation_df, use_container_width=True)
+
+    if "Result" in valid_selected:
+        completed = df[df["Result"].isin(["W", "L"])]
+        wins = (completed["Result"] == "W").sum()
+        losses = (completed["Result"] == "L").sum()
+        win_pct = round((wins / len(completed) * 100), 1) if len(completed) > 0 else 0.0
+
+        rc1, rc2, rc3 = st.columns(3)
+        rc1.metric("Games in Dataset", f"{len(df)}")
+        rc2.metric("Straight-Up Record (W - L)", f"{wins} - {losses}")
+        rc3.metric("Straight-Up Win %", f"{win_pct}%")
+else:
+    st.info("Place a checkmark next to at least two metrics above to display the active correlation matrix.")
