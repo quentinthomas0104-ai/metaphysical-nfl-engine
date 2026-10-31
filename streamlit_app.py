@@ -6,7 +6,7 @@ import copy
 st.set_page_config(page_title="Metaphysical Analytics Engine", layout="wide")
 
 st.title("🏈 Metaphysical Analytics Engine")
-st.caption("100% Data Integrity: Verified Box Scores, Live Slate Ingestion, Cross-Resonance Scanner, & Matchup Clash Engine")
+st.caption("100% Data Integrity: Verified Box Scores, Live Slate Ingestion, Pre-Game Edge Matrix, & Clash Engine")
 
 # ==============================================================================
 # 1. CORE NUMEROLOGY & VIBRATIONAL ENGINE (PRESERVES MASTER NUMBERS)
@@ -133,7 +133,7 @@ def calculate_detailed_transit(t_planet: str, n_planet: str, game_date: datetime
     return "—"
 
 # ==============================================================================
-# 4. OFFICIAL VERIFIED SCHEDULE SLATES (100% BOX SCORE ACCURACY)
+# 4. OFFICIAL VERIFIED SCHEDULE SLATES (100% AUDITED DATA)
 # ==============================================================================
 OFFICIAL_SCHEDULE_SLATES = {
     "2026 Chicago Bears Verified Slate": [
@@ -187,7 +187,7 @@ ALL_32_FRANCHISES = {
 # ==============================================================================
 # 5. INITIALIZE PRODUCTION PERSISTENT DATABASE
 # ==============================================================================
-if "db_production" not in st.session_state:
+if "db_v3" not in st.session_state:
     initial_db = {
         "Chicago Bears (Franchise)": {
             "category": "FRANCHISE", "name": "Chicago Bears", "pos": "Franchise", "jersey": "—",
@@ -205,6 +205,11 @@ if "db_production" not in st.session_state:
             "seasons": {
                 2026: copy.deepcopy(OFFICIAL_SCHEDULE_SLATES["2026 Caleb Williams Verified Game Log"])
             }
+        },
+        "Seattle Seahawks (Franchise)": {
+            "category": "FRANCHISE", "name": "Seattle Seahawks", "pos": "Franchise", "jersey": "—",
+            "birth_date": datetime.date(1974, 6, 4), "team": "SEA", "exp": "50 Seasons (Founded 1974)",
+            "seasons": {}
         },
         "Josh Allen (QB - BUF)": {
             "category": "QB", "name": "Josh Allen", "pos": "QB", "jersey": "#17",
@@ -231,9 +236,9 @@ if "db_production" not in st.session_state:
                 "birth_date": f_bdate, "team": f_name[:3].upper(), "exp": f"Founded {f_bdate.year}",
                 "seasons": {}
             }
-    st.session_state["db_production"] = initial_db
+    st.session_state["db_v3"] = initial_db
 
-db = st.session_state["db_production"]
+db = st.session_state["db_v3"]
 
 # ==============================================================================
 # 6. WORKSPACE NAVIGATION
@@ -525,13 +530,40 @@ with tab_matchup:
     st.subheader("⚔️ Head-to-Head Clash & Edge Engine")
     st.caption("Compare two players, coaches, or franchises side-by-side across Personal Day, Universal Day, Power#, and planetary cycles.")
 
+    # One-click quick load for upcoming live slates
+    with st.expander("⚡ Quick-Load Active 2026 Primetime Matchups", expanded=True):
+        quick_pick = st.selectbox(
+            "Select Upcoming Primetime Clash:",
+            [
+                "Week 8: Chicago Bears @ Seattle Seahawks (MNF - Nov 2, 2026)",
+                "Week 9: Tampa Bay Buccaneers @ Chicago Bears (SNF - Nov 8, 2026)"
+            ]
+        )
+        if st.button("Load Matchup Directly Into Clash Engine"):
+            if "Week 8" in quick_pick:
+                st.session_state["clash_ent_a"] = "Chicago Bears (Franchise)"
+                st.session_state["clash_ent_b"] = "Seattle Seahawks (Franchise)"
+                st.session_state["clash_date"] = datetime.date(2026, 11, 2)
+            else:
+                st.session_state["clash_ent_a"] = "Chicago Bears (Franchise)"
+                st.session_state["clash_ent_b"] = "Tampa Bay Buccaneers (Franchise)"
+                st.session_state["clash_date"] = datetime.date(2026, 11, 8)
+            st.rerun()
+
+    default_ent_a = st.session_state.get("clash_ent_a", list(db.keys())[0])
+    default_ent_b = st.session_state.get("clash_ent_b", "Seattle Seahawks (Franchise)" if "Seattle Seahawks (Franchise)" in db else list(db.keys())[1])
+    default_date = st.session_state.get("clash_date", datetime.date(2026, 11, 2))
+
+    idx_a = list(db.keys()).index(default_ent_a) if default_ent_a in db else 0
+    idx_b = list(db.keys()).index(default_ent_b) if default_ent_b in db else 1
+
     m_col1, m_col2, m_col3 = st.columns(3)
     with m_col1:
-        entity_a_key = st.selectbox("Primary Subject (Side A):", list(db.keys()), index=0)
+        entity_a_key = st.selectbox("Primary Subject (Side A):", list(db.keys()), index=idx_a)
     with m_col2:
-        entity_b_key = st.selectbox("Opposing Subject (Side B):", list(db.keys()), index=1)
+        entity_b_key = st.selectbox("Opposing Subject (Side B):", list(db.keys()), index=idx_b)
     with m_col3:
-        matchup_date = st.date_input("Matchup Kickoff Date:", value=datetime.date(2026, 11, 8), key="clash_kickoff_date")
+        matchup_date = st.date_input("Matchup Kickoff Date:", value=default_date, key="clash_kickoff_date_v3")
 
     ent_a = db[entity_a_key]
     ent_b = db[entity_b_key]
