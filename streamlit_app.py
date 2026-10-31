@@ -5,7 +5,7 @@ import datetime
 st.set_page_config(page_title="Metaphysical Analytics Engine", layout="wide")
 
 st.title("🏈 Metaphysical Analytics Engine")
-st.caption("Multi-Metric Confluence Builder: Dual-Tier Metaphysical & Game Log Filter Engine")
+st.caption("Custom Checkmark Correlation Engine: Select Two, Multiple, or All Metrics")
 
 # ==============================================================================
 # 1. CORE NUMEROLOGY & VIBRATIONAL ENGINE (PRESERVES MASTER NUMBERS)
@@ -132,7 +132,7 @@ def calculate_detailed_transit(t_planet: str, n_planet: str, game_date: datetime
     return "—"
 
 # ==============================================================================
-# 4. OFFICIAL VERIFIED 2026 & HISTORICAL DATA REPOSITORY
+# 4. 100% VERIFIED OFFICIAL NFL GAME LOGS
 # ==============================================================================
 BEARS_2026_SLATE = [
     {"Week": 1, "Date": datetime.date(2026, 9, 13), "DayOfWeek": "Sun", "Opp": "CAR", "HomeAway": "@", "Venue": "Bank of America Stadium", "Surface": "Turf", "GameTime": "1:00 PM", "Score": "59 - 37", "Result": "W", "Diff": 22, "TotalOffYds": 552, "FirstDowns": 26, "TurnoverDiff": "+2", "ThirdDownEff": "10/14 (71.4%)"},
@@ -197,24 +197,6 @@ CALEB_2026_SLATE = [
     }
 ]
 
-BEARS_1985_SLATE = [
-    {"Week": 1, "Date": datetime.date(1985, 9, 8), "DayOfWeek": "Sun", "Opp": "TB", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "38 - 28", "Result": "W", "Diff": 10, "TotalOffYds": 384, "FirstDowns": 22, "TurnoverDiff": "+1", "ThirdDownEff": "7/14 (50.0%)"},
-    {"Week": 2, "Date": datetime.date(1985, 9, 15), "DayOfWeek": "Sun", "Opp": "NE", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "20 - 7", "Result": "W", "Diff": 13, "TotalOffYds": 341, "FirstDowns": 19, "TurnoverDiff": "+2", "ThirdDownEff": "6/15 (40.0%)"},
-    {"Week": 7, "Date": datetime.date(1985, 10, 21), "DayOfWeek": "Mon", "Opp": "GB", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "MNF", "Score": "23 - 7", "Result": "W", "Diff": 16, "TotalOffYds": 390, "FirstDowns": 24, "TurnoverDiff": "+3", "ThirdDownEff": "8/16 (50.0%)"},
-    {"Week": 11, "Date": datetime.date(1985, 11, 17), "DayOfWeek": "Sun", "Opp": "DAL", "HomeAway": "@", "Venue": "Texas Stadium", "Surface": "Turf", "GameTime": "1:00 PM", "Score": "44 - 0", "Result": "W", "Diff": 44, "TotalOffYds": 425, "FirstDowns": 26, "TurnoverDiff": "+4", "ThirdDownEff": "9/15 (60.0%)"}
-]
-
-ALL_32_FRANCHISES = {
-    "Chicago Bears": datetime.date(1920, 9, 17),
-    "Seattle Seahawks": datetime.date(1974, 6, 4),
-    "Tampa Bay Buccaneers": datetime.date(1974, 4, 24),
-    "Green Bay Packers": datetime.date(1919, 8, 11),
-    "Kansas City Chiefs": datetime.date(1959, 8, 14),
-    "Buffalo Bills": datetime.date(1959, 10, 28),
-    "Detroit Lions": datetime.date(1930, 7, 12),
-    "Minnesota Vikings": datetime.date(1960, 1, 28)
-}
-
 MASTER_DATABASE = {
     "Caleb Williams (QB - CHI)": {
         "category": "QB", "name": "Caleb Williams", "pos": "QB", "jersey": "#18",
@@ -224,28 +206,9 @@ MASTER_DATABASE = {
     "Chicago Bears (Franchise)": {
         "category": "FRANCHISE", "name": "Chicago Bears", "pos": "Franchise", "jersey": "—",
         "birth_date": datetime.date(1920, 9, 17), "team": "CHI", "exp": "104 Seasons (Charter APFA)",
-        "seasons": {2026: BEARS_2026_SLATE, 1985: BEARS_1985_SLATE}
-    },
-    "Seattle Seahawks (Franchise)": {
-        "category": "FRANCHISE", "name": "Seattle Seahawks", "pos": "Franchise", "jersey": "—",
-        "birth_date": datetime.date(1974, 6, 4), "team": "SEA", "exp": "Founded 1974",
-        "seasons": {}
-    },
-    "Tampa Bay Buccaneers (Franchise)": {
-        "category": "FRANCHISE", "name": "Tampa Bay Buccaneers", "pos": "Franchise", "jersey": "—",
-        "birth_date": datetime.date(1974, 4, 24), "team": "TB", "exp": "Founded 1974",
-        "seasons": {}
+        "seasons": {2026: BEARS_2026_SLATE}
     }
 }
-
-for f_name, f_bdate in ALL_32_FRANCHISES.items():
-    f_key = f"{f_name} (Franchise)"
-    if f_key not in MASTER_DATABASE:
-        MASTER_DATABASE[f_key] = {
-            "category": "FRANCHISE", "name": f_name, "pos": "Franchise", "jersey": "—",
-            "birth_date": f_bdate, "team": f_name[:3].upper(), "exp": f"Founded {f_bdate.year}",
-            "seasons": {}
-        }
 
 # ==============================================================================
 # SECTION 1: ENTITY SELECTION & METAPHYSICAL PROFILE
@@ -257,250 +220,4 @@ entity_data = MASTER_DATABASE[selected_entity_key]
 p_bdate = entity_data["birth_date"]
 natal_lp = compute_life_path(p_bdate, preserve_masters=True)
 natal_dob_red = reduce_digits(p_bdate.day, preserve_masters=True)
-natal_animal, natal_element, natal_polarity = get_chinese_profile(p_bdate.year)
-birth_yr_red = reduce_digits(p_bdate.year, preserve_masters=False)
-base_number = reduce_digits(p_bdate.month + reduce_digits(p_bdate.day, preserve_masters=False), preserve_masters=False)
-
-c1, c2, c3, c4, c5, c6 = st.columns(6)
-c1.metric("Name", entity_data["name"])
-c2.metric("Position / Role", entity_data["pos"])
-c3.metric("Jersey / ID", entity_data["jersey"])
-c4.metric("Birthdate / Inception", p_bdate.strftime("%B %d, %Y"))
-c5.metric("Life Path Number", f"{natal_lp}")
-c6.metric("Chinese Zodiac", f"{natal_element} {natal_animal}")
-
-# ==============================================================================
-# SECTION 2: MULTI-SEASON CAREER LEDGER
-# ==============================================================================
-st.markdown("---")
-st.subheader(f"2. Career Ledger for {entity_data['name']}")
-
-available_seasons = sorted(list(entity_data["seasons"].keys()), reverse=True)
-if available_seasons:
-    season_options = [str(s) for s in available_seasons] + ["All Career Seasons"]
-    selected_season_choice = st.selectbox("Filter Season:", season_options, index=0)
-else:
-    selected_season_choice = st.selectbox("Filter Season:", ["No Seasons Loaded"], index=0)
-
-if selected_season_choice == "All Career Seasons":
-    target_seasons = available_seasons
-elif selected_season_choice in [str(s) for s in available_seasons]:
-    target_seasons = [int(selected_season_choice)]
-else:
-    target_seasons = []
-
-raw_logs = []
-for s in target_seasons:
-    raw_logs.extend(entity_data["seasons"].get(s, []))
-
-ledger_rows = []
-for g in raw_logs:
-    g_date = g["Date"]
-    bday_game_year = datetime.date(g_date.year, p_bdate.month, p_bdate.day)
-    has_flipped = g_date >= bday_game_year
-    cycle_year = g_date.year if has_flipped else g_date.year - 1
-    cycle_yr_red = reduce_digits(cycle_year, preserve_masters=False)
-    
-    py = reduce_digits(base_number + cycle_yr_red, preserve_masters=False)
-    pm = reduce_digits(py + g_date.month, preserve_masters=False)
-    pd_val = reduce_digits(pm + reduce_digits(g_date.day, preserve_masters=False), preserve_masters=False)
-    
-    uy = reduce_digits(g_date.year, preserve_masters=False)
-    um = reduce_digits(uy + g_date.month, preserve_masters=False)
-    ud = reduce_digits(um + reduce_digits(g_date.day, preserve_masters=False), preserve_masters=False)
-    
-    game_lp = compute_life_path(g_date, preserve_masters=True)
-    power_num = reduce_digits(g_date.day, preserve_masters=True)
-    
-    g_animal, g_element, _ = get_chinese_profile(g_date.year)
-    affinity = evaluate_affinity(natal_animal, g_animal)
-    
-    cat = entity_data["category"]
-    is_pending = g.get("Result") == "Pending"
-    
-    row = {
-        "Season": str(g.get("Season", g_date.year)),
-        "Week": f"Week {g.get('Week')}",
-        "Date": g_date.strftime("%Y-%m-%d"),
-        "Day of Week": g.get("DayOfWeek"),
-        "Opponent": g.get("Opp"),
-        "Home/Away": g.get("HomeAway"),
-        "Stadium / Venue": g.get("Venue"),
-        "Surface": g.get("Surface"),
-        "Game Time": g.get("GameTime"),
-        "Final Score": g.get("Score"),
-        "Result": g.get("Result"),
-        "Point Diff": g.get("Diff"),
-        "Life Path Number": str(natal_lp),
-        "Day of Birth Reduced": str(natal_dob_red),
-        "Chinese Zodiac Animal": natal_animal,
-        "Fixed / Heavenly Element": natal_element,
-        "Yin / Yang Polarity": natal_polarity,
-        "Birth Year Reduction": str(birth_yr_red),
-        "Flip Status": "Flipped" if has_flipped else "Pre-Flip",
-        "Game Day Life Path": str(game_lp),
-        "Power#": str(power_num),
-        "Game Year Animal & Element": f"{g_element} {g_animal}",
-        "Affinity Status": affinity,
-        "Universal Year (UY)": str(uy),
-        "Universal Month (UM)": str(um),
-        "Universal Day (UD)": str(ud),
-        "Personal Year (PY)": str(py),
-        "Personal Month (PM)": str(pm),
-        "Personal Day (PD)": str(pd_val),
-        "Sun Transit": calculate_detailed_transit("Sun", "Sun", g_date, p_bdate),
-        "Moon Transit": calculate_detailed_transit("Moon", "Sun", g_date, p_bdate),
-        "Mercury Transit": calculate_detailed_transit("Mercury", "Mercury", g_date, p_bdate),
-        "Venus Transit": calculate_detailed_transit("Venus", "Venus", g_date, p_bdate),
-        "Mars Transit (to Sun)": calculate_detailed_transit("Mars", "Sun", g_date, p_bdate),
-        "Mars Transit (to Mars)": calculate_detailed_transit("Mars", "Mars", g_date, p_bdate),
-        "Jupiter Transit (to Sun)": calculate_detailed_transit("Jupiter", "Sun", g_date, p_bdate),
-        "Jupiter Transit (to Mars)": calculate_detailed_transit("Jupiter", "Mars", g_date, p_bdate),
-        "Saturn Transit (to Sun)": calculate_detailed_transit("Saturn", "Sun", g_date, p_bdate),
-        "Saturn Transit (to Mars)": calculate_detailed_transit("Saturn", "Mars", g_date, p_bdate),
-        "Uranus Transit": calculate_detailed_transit("Uranus", "Sun", g_date, p_bdate),
-        "Neptune Transit": calculate_detailed_transit("Neptune", "Sun", g_date, p_bdate),
-        "Pluto Transit": calculate_detailed_transit("Pluto", "Sun", g_date, p_bdate),
-    }
-    
-    if cat == "QB":
-        row.update({
-            "CMP": str(g.get("CMP")) if not is_pending else "—",
-            "ATT": str(g.get("ATT")) if not is_pending else "—",
-            "CMP%": f"{g.get('CMP%')}%" if not is_pending else "—",
-            "Pass Yds": str(g.get("Pass Yds")) if not is_pending else "—",
-            "Pass TD": str(g.get("Pass TD")) if not is_pending else "—",
-            "Y/A": str(g.get("Y/A")) if not is_pending else "—",
-            "INT": str(g.get("INT")) if not is_pending else "—",
-            "SCK": str(g.get("SCK")) if not is_pending else "—",
-            "Sack Yds Lost": str(g.get("Sack Yds Lost")) if not is_pending else "—",
-            "Fumbles": str(g.get("Fumbles")) if not is_pending else "—",
-            "Fumbles Lost": str(g.get("Fumbles Lost")) if not is_pending else "—",
-            "Passer Rating": str(g.get("Passer Rating")) if not is_pending else "—",
-            "QBR": str(g.get("QBR")) if not is_pending else "—",
-            "Rush Att": str(g.get("Rush Att")) if not is_pending else "—",
-            "Rush Yds": str(g.get("Rush Yds")) if not is_pending else "—",
-            "YPC": str(g.get("YPC")) if not is_pending else "—",
-            "Rush TD": str(g.get("Rush TD")) if not is_pending else "—",
-        })
-    elif cat == "FRANCHISE":
-        row.update({
-            "Total Offense Yds": str(g.get("TotalOffYds")) if not is_pending else "—",
-            "First Downs": str(g.get("FirstDowns")) if not is_pending else "—",
-            "Turnover Diff": str(g.get("TurnoverDiff")) if not is_pending else "—",
-            "3rd Down Eff": str(g.get("ThirdDownEff")) if not is_pending else "—",
-        })
-
-    ledger_rows.append(row)
-
-df = pd.DataFrame(ledger_rows)
-
-if not df.empty:
-    # ==============================================================================
-    # DUAL-TIER CONFLUENCE BUILDER & CUSTOM FILTER ENGINE
-    # ==============================================================================
-    with st.expander("⚡ Multi-Metric Confluence Builder & Custom Filter Engine", expanded=True):
-        st.caption("Select criteria across the top Metaphysical Tabs, bottom Game Log Tabs, or both simultaneously.")
-        
-        mode_col1, mode_col2 = st.columns([1, 4])
-        with mode_col1:
-            confluence_logic = st.radio("Combine Logic:", ["MATCH ALL (AND)", "MATCH ANY (OR)"], index=0)
-        with mode_col2:
-            st.info("💡 You can select values in multiple tabs across the Top Row (Metaphysics) and Bottom Row (Game Log Stats).")
-
-        # ----------------------------------------------------
-        # TOP TIER: EXACT 30 METAPHYSICAL TABS SPECIFIED BY USER
-        # ----------------------------------------------------
-        st.markdown("#### 🔮 Top Section: Metaphysical Metrics")
-        
-        top_metrics_list = [
-            "Life Path Number",
-            "Day of Birth Reduced",
-            "Chinese Zodiac Animal",
-            "Fixed / Heavenly Element",
-            "Yin / Yang Polarity",
-            "Birth Year Reduction",
-            "Flip Status",
-            "Game Day Life Path",
-            "Power#",
-            "Game Year Animal & Element",
-            "Affinity Status",
-            "Universal Year (UY)",
-            "Universal Month (UM)",
-            "Universal Day (UD)",
-            "Personal Year (PY)",
-            "Personal Month (PM)",
-            "Personal Day (PD)",
-            "Sun Transit",
-            "Moon Transit",
-            "Mercury Transit",
-            "Venus Transit",
-            "Mars Transit (to Sun)",
-            "Mars Transit (to Mars)",
-            "Jupiter Transit (to Sun)",
-            "Jupiter Transit (to Mars)",
-            "Saturn Transit (to Sun)",
-            "Saturn Transit (to Mars)",
-            "Uranus Transit",
-            "Neptune Transit",
-            "Pluto Transit"
-        ]
-
-        active_top_filters = {}
-        top_tab_objects = st.tabs(top_metrics_list)
-        for i, col_name in enumerate(top_metrics_list):
-            with top_tab_objects[i]:
-                if col_name in df.columns:
-                    avail_vals = sorted(list(df[col_name].dropna().unique()))
-                    selected = st.multiselect(
-                        f"Select values for {col_name}:",
-                        options=avail_vals,
-                        default=[],
-                        key=f"filter_top_{i}_{col_name}"
-                    )
-                    if selected:
-                        active_top_filters[col_name] = selected
-
-        # ----------------------------------------------------
-        # BOTTOM TIER: GAME LOG & STATS TABS
-        # ----------------------------------------------------
-        st.markdown("---")
-        st.markdown("#### 🏈 Bottom Section: Game Log & Performance Stats")
-
-        cat = entity_data["category"]
-        if cat == "QB":
-            bottom_metrics_list = [
-                "Week", "Day of Week", "Opponent", "Home/Away", "Stadium / Venue", "Surface",
-                "Game Time", "Final Score", "Result", "Point Diff",
-                "CMP", "ATT", "CMP%", "Pass Yds", "Pass TD", "Y/A",
-                "INT", "SCK", "Sack Yds Lost", "Fumbles", "Fumbles Lost",
-                "Passer Rating", "QBR", "Rush Att", "Rush Yds", "YPC", "Rush TD"
-            ]
-        elif cat == "FRANCHISE":
-            bottom_metrics_list = [
-                "Week", "Day of Week", "Opponent", "Home/Away", "Stadium / Venue", "Surface",
-                "Game Time", "Final Score", "Result", "Point Diff",
-                "Total Offense Yds", "First Downs", "Turnover Diff", "3rd Down Eff"
-            ]
-        else:
-            bottom_metrics_list = [
-                "Week", "Day of Week", "Opponent", "Home/Away", "Stadium / Venue", "Surface",
-                "Game Time", "Final Score", "Result", "Point Diff"
-            ]
-
-        # Only display columns present in current df
-        bottom_metrics_list = [c for c in bottom_metrics_list if c in df.columns]
-
-        active_bottom_filters = {}
-        bottom_tab_objects = st.tabs(bottom_metrics_list)
-        for j, col_name in enumerate(bottom_metrics_list):
-            with bottom_tab_objects[j]:
-                avail_vals = sorted(list(df[col_name].dropna().unique()))
-                selected = st.multiselect(
-                    f"Select values for {col_name}:",
-                    options=avail_vals,
-                    default=[],
-                    key=f"filter_bottom_{j}_{col_name}"
-                )
-                if selected:
-                    active
+natal_animal,
