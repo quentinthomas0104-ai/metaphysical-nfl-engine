@@ -5,7 +5,7 @@ import datetime
 st.set_page_config(page_title="Metaphysical Analytics Engine", layout="wide")
 
 st.title("🏈 Metaphysical Analytics Engine")
-st.caption("Career Game Logs, Multi-Season Database, Dedicated Planetary Transits, Power#, & Harmonic Match Correlator")
+st.caption("Career Game Logs: Players, Coaches, Franchises, Dedicated Transits, Power#, & Harmonic Match Correlator")
 
 # ==============================================================================
 # 1. CORE NUMEROLOGY & VIBRATIONAL ENGINE (PRESERVES MASTER NUMBERS)
@@ -79,7 +79,7 @@ def evaluate_affinity(natal_animal: str, game_year_animal: str) -> str:
     return "Neutral Alignment"
 
 # ==============================================================================
-# 3. WESTERN ASTROLOGY (10 CELESTIAL BODIES WITH ACCURATE SIGNS & ASPECTS)
+# 3. WESTERN ASTROLOGY (ALL 10 BODIES & DEDICATED TRANSIT PAIRS)
 # ==============================================================================
 SIGNS_ORDER = [
     "Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo",
@@ -133,10 +133,10 @@ def calculate_detailed_transit(t_planet: str, n_planet: str, game_date: datetime
     return "—"
 
 # ==============================================================================
-# 4. MULTI-SEASON CAREER REPOSITORY
+# 4. COMPREHENSIVE MULTI-SEASON CAREER REPOSITORY
 # ==============================================================================
 EXPANDED_CAREER_DATABASE = {
-    # ------------------ QUARTERBACKS ------------------
+    # ==================== QUARTERBACKS ====================
     "Josh Allen (QB - BUF)": {
         "category": "QB", "name": "Josh Allen", "pos": "QB", "jersey": "#17",
         "birth_date": datetime.date(1996, 5, 21), "team": "BUF", "exp": "7th Season (Draft 2018)",
@@ -144,7 +144,6 @@ EXPANDED_CAREER_DATABASE = {
             2024: [
                 {"Week": 1, "Date": datetime.date(2024, 9, 8), "DayOfWeek": "Sun", "Opp": "ARI", "HomeAway": "vs", "GameType": "Regular Season", "Venue": "Highmark Stadium", "Surface": "Turf", "GameTime": "1:00 PM", "Score": "34 - 28", "Result": "W", "Diff": "+6", "PassCmp": 18, "PassAtt": 23, "PassCmpPct": 78.3, "PassYds": 232, "PassTD": 2, "PassYPA": 10.1, "Int": 0, "Sacks": 2, "SackYdsLost": 14, "Fumbles": 0, "FumblesLost": 0, "Rating": 137.7, "QBR": 86.4, "RushAtt": 9, "RushYds": 39, "RushYPC": 4.3, "RushTD": 2, "Rush20Plus": 1, "BrokenTackles": 2, "Targets": 0, "Rec": 0, "RecYds": 0, "RecYPR": 0.0, "RecTD": 0, "YAC": 0, "Rec20Plus": 0, "Rec50Plus": 0, "ScrimmageYds": 271, "Touches": 9, "TotalTDs": 4, "StdFPts": 29.2, "HalfPPR": 29.2, "PPRFPts": 31.2, "FGM": 0, "FGA": 0, "FG_Pct": 0.0, "XPM": 0, "XPA": 0, "LongestFG": 0},
                 {"Week": 2, "Date": datetime.date(2024, 9, 12), "DayOfWeek": "Thu", "Opp": "MIA", "HomeAway": "@", "GameType": "Regular Season", "Venue": "Hard Rock Stadium", "Surface": "Grass", "GameTime": "TNF", "Score": "31 - 10", "Result": "W", "Diff": "+21", "PassCmp": 13, "PassAtt": 19, "PassCmpPct": 68.4, "PassYds": 139, "PassTD": 1, "PassYPA": 7.3, "Int": 0, "Sacks": 1, "SackYdsLost": 7, "Fumbles": 0, "FumblesLost": 0, "Rating": 107.1, "QBR": 68.2, "RushAtt": 2, "RushYds": 2, "RushYPC": 1.0, "RushTD": 0, "Rush20Plus": 0, "BrokenTackles": 0, "Targets": 0, "Rec": 0, "RecYds": 0, "RecYPR": 0.0, "RecTD": 0, "YAC": 0, "Rec20Plus": 0, "Rec50Plus": 0, "ScrimmageYds": 141, "Touches": 2, "TotalTDs": 1, "StdFPts": 11.8, "HalfPPR": 11.8, "PPRFPts": 11.8, "FGM": 0, "FGA": 0, "FG_Pct": 0.0, "XPM": 0, "XPA": 0, "LongestFG": 0},
-                {"Week": 3, "Date": datetime.date(2024, 9, 23), "DayOfWeek": "Mon", "Opp": "JAX", "HomeAway": "vs", "GameType": "Regular Season", "Venue": "Highmark Stadium", "Surface": "Turf", "GameTime": "MNF", "Score": "47 - 10", "Result": "W", "Diff": "+37", "PassCmp": 23, "PassAtt": 30, "PassCmpPct": 76.7, "PassYds": 263, "PassTD": 4, "PassYPA": 8.8, "Int": 0, "Sacks": 0, "SackYdsLost": 0, "Fumbles": 0, "FumblesLost": 0, "Rating": 142.1, "QBR": 94.3, "RushAtt": 6, "RushYds": 44, "RushYPC": 7.3, "RushTD": 0, "Rush20Plus": 1, "BrokenTackles": 2, "Targets": 0, "Rec": 0, "RecYds": 0, "RecYPR": 0.0, "RecTD": 0, "YAC": 0, "Rec20Plus": 0, "Rec50Plus": 0, "ScrimmageYds": 307, "Touches": 6, "TotalTDs": 4, "StdFPts": 30.9, "HalfPPR": 30.9, "PPRFPts": 30.9, "FGM": 0, "FGA": 0, "FG_Pct": 0.0, "XPM": 0, "XPA": 0, "LongestFG": 0},
                 {"Week": 11, "Date": datetime.date(2024, 11, 17), "DayOfWeek": "Sun", "Opp": "KC", "HomeAway": "vs", "GameType": "Regular Season", "Venue": "Highmark Stadium", "Surface": "Turf", "GameTime": "4:25 PM", "Score": "30 - 21", "Result": "W", "Diff": "+9", "PassCmp": 27, "PassAtt": 40, "PassCmpPct": 67.5, "PassYds": 262, "PassTD": 1, "PassYPA": 6.6, "Int": 1, "Sacks": 0, "SackYdsLost": 0, "Fumbles": 0, "FumblesLost": 0, "Rating": 83.5, "QBR": 88.6, "RushAtt": 12, "RushYds": 55, "RushYPC": 4.6, "RushTD": 1, "Rush20Plus": 1, "BrokenTackles": 3, "Targets": 0, "Rec": 0, "RecYds": 0, "RecYPR": 0.0, "RecTD": 0, "YAC": 0, "Rec20Plus": 0, "Rec50Plus": 0, "ScrimmageYds": 317, "Touches": 12, "TotalTDs": 2, "StdFPts": 24.0, "HalfPPR": 24.0, "PPRFPts": 24.0, "FGM": 0, "FGA": 0, "FG_Pct": 0.0, "XPM": 0, "XPA": 0, "LongestFG": 0},
                 {"Week": 14, "Date": datetime.date(2024, 12, 8), "DayOfWeek": "Sun", "Opp": "LAR", "HomeAway": "@", "GameType": "Regular Season", "Venue": "SoFi Stadium", "Surface": "Turf", "GameTime": "4:25 PM", "Score": "42 - 44", "Result": "L", "Diff": "-2", "PassCmp": 22, "PassAtt": 37, "PassCmpPct": 59.5, "PassYds": 342, "PassTD": 3, "PassYPA": 9.2, "Int": 0, "Sacks": 1, "SackYdsLost": 8, "Fumbles": 0, "FumblesLost": 0, "Rating": 114.9, "QBR": 89.2, "RushAtt": 10, "RushYds": 82, "RushYPC": 8.2, "RushTD": 3, "Rush20Plus": 2, "BrokenTackles": 3, "Targets": 0, "Rec": 0, "RecYds": 0, "RecYPR": 0.0, "RecTD": 0, "YAC": 0, "Rec20Plus": 0, "Rec50Plus": 0, "ScrimmageYds": 424, "Touches": 10, "TotalTDs": 6, "StdFPts": 43.9, "HalfPPR": 43.9, "PPRFPts": 43.9, "FGM": 0, "FGA": 0, "FG_Pct": 0.0, "XPM": 0, "XPA": 0, "LongestFG": 0}
             ],
@@ -177,6 +176,7 @@ EXPANDED_CAREER_DATABASE = {
             ]
         }
     },
+    # ==================== SKILL PLAYERS ====================
     "Walter Payton (RB - CHI)": {
         "category": "SKILL", "name": "Walter Payton", "pos": "RB", "jersey": "#34",
         "birth_date": datetime.date(1954, 7, 25), "team": "CHI", "exp": "13 Seasons (Hall of Fame)",
@@ -196,48 +196,61 @@ EXPANDED_CAREER_DATABASE = {
             ]
         }
     },
-    "Justin Tucker (K - BAL)": {
-        "category": "KICKER", "name": "Justin Tucker", "pos": "PK", "jersey": "#9",
-        "birth_date": datetime.date(1989, 11, 21), "team": "BAL", "exp": "13th Season",
-        "seasons": {
-            2024: [
-                {"Week": 5, "Date": datetime.date(2024, 10, 6), "DayOfWeek": "Sun", "Opp": "CIN", "HomeAway": "@", "GameType": "Regular Season", "Venue": "Paycor Stadium", "Surface": "Turf", "GameTime": "1:00 PM", "Score": "41 - 38", "Result": "W", "Diff": "+3", "FGM": 2, "FGA": 2, "FG_Pct": 100.0, "XPM": 5, "XPA": 5, "FG_1_19": 0, "FG_20_29": 0, "FG_30_39": 0, "FG_40_49": 1, "FG_50_Plus": 1, "LongestFG": 56, "Punts": 0, "PuntYds": 0, "GrossAvg": 0.0, "NetAvg": 0.0, "In20": 0}
-            ]
-        }
-    },
-    "Roquan Smith (LB - BAL)": {
-        "category": "DEFENSE_IDP", "name": "Roquan Smith", "pos": "LB", "jersey": "#0",
-        "birth_date": datetime.date(1997, 4, 8), "team": "BAL", "exp": "7th Season",
-        "seasons": {
-            2024: [
-                {"Week": 1, "Date": datetime.date(2024, 9, 5), "DayOfWeek": "Thu", "Opp": "KC", "HomeAway": "@", "GameType": "Regular Season", "Venue": "Arrowhead Stadium", "Surface": "Grass", "GameTime": "TNF", "Score": "20 - 27", "Result": "L", "Diff": "-7", "TacklesTot": 7, "TacklesSolo": 5, "TacklesAst": 2, "TFL": 1, "Sacks": 0.0, "QBH": 1, "Pressures": 2, "PassesDefensed": 1, "Int": 1, "IntReturnYds": 1, "DefTD": 0, "FF": 0, "FR": 0, "FR_ReturnYds": 0, "BlockedKicks": 0, "Safeties": 0, "StdFPts": 12.0, "HalfPPR": 12.0, "PPRFPts": 12.0}
-            ]
-        }
-    },
-    "Buffalo Bills (DST)": {
-        "category": "DST", "name": "Buffalo Bills Defense", "pos": "DST", "jersey": "—",
-        "birth_date": datetime.date(1959, 10, 28), "team": "BUF", "exp": "Franchise DST",
-        "seasons": {
-            2024: [
-                {"Week": 3, "Date": datetime.date(2024, 9, 23), "DayOfWeek": "Mon", "Opp": "JAX", "HomeAway": "vs", "GameType": "Regular Season", "Venue": "Highmark Stadium", "Surface": "Turf", "GameTime": "MNF", "Score": "47 - 10", "Result": "W", "Diff": "+37", "Sacks": 5.0, "Int": 1, "FR": 1, "TotalTurnovers": 2, "ReturnTDs": 0, "Safeties": 1, "BlockedKicks": 0, "PtsAllowed": 10, "YdsAllowed": 239, "DST_FPts": 15.0}
-            ]
-        }
-    },
+    # ==================== FRANCHISES (INCEPTION LEDGERS 1920-PRESENT) ====================
     "Chicago Bears (Franchise)": {
         "category": "FRANCHISE", "name": "Chicago Bears", "pos": "Franchise", "jersey": "—",
-        "birth_date": datetime.date(1920, 9, 17), "team": "CHI", "exp": "104 Seasons",
+        "birth_date": datetime.date(1920, 9, 17), "team": "CHI", "exp": "104 Seasons (Charter APFA)",
         "seasons": {
+            1920: [
+                {"Week": 1, "Date": datetime.date(1920, 10, 3), "DayOfWeek": "Sun", "Opp": "Moline Tractors", "HomeAway": "vs", "GameType": "Inaugural Game", "Venue": "Staley Field", "Surface": "Grass", "GameTime": "2:30 PM", "Score": "20 - 0", "Result": "W", "Diff": "+20", "TotalOffYds": 285, "FirstDowns": 14, "TurnoverDiff": "+3", "ThirdDownEff": "N/A (Historical)"},
+                {"Week": 3, "Date": datetime.date(1920, 10, 17), "DayOfWeek": "Sun", "Opp": "Rock Island Independents", "HomeAway": "@", "GameType": "Regular Season", "Venue": "Douglas Park", "Surface": "Grass", "GameTime": "2:30 PM", "Score": "7 - 0", "Result": "W", "Diff": "+7", "TotalOffYds": 194, "FirstDowns": 9, "TurnoverDiff": "+2", "ThirdDownEff": "N/A (Historical)"},
+                {"Week": 4, "Date": datetime.date(1920, 10, 24), "DayOfWeek": "Sun", "Opp": "Chicago Tigers", "HomeAway": "@", "GameType": "Regular Season", "Venue": "Cubs Park", "Surface": "Grass", "GameTime": "2:30 PM", "Score": "10 - 0", "Result": "W", "Diff": "+10", "TotalOffYds": 230, "FirstDowns": 11, "TurnoverDiff": "+1", "ThirdDownEff": "N/A (Historical)"},
+                {"Week": 11, "Date": datetime.date(1920, 11, 28), "DayOfWeek": "Sun", "Opp": "Chicago Cardinals", "HomeAway": "@", "GameType": "Rivalry Game", "Venue": "Normal Park", "Surface": "Grass", "GameTime": "2:30 PM", "Score": "6 - 7", "Result": "L", "Diff": "-1", "TotalOffYds": 210, "FirstDowns": 10, "TurnoverDiff": "-1", "ThirdDownEff": "N/A (Historical)"},
+                {"Week": 13, "Date": datetime.date(1920, 12, 12), "DayOfWeek": "Sun", "Opp": "Akron Pros", "HomeAway": "vs", "GameType": "APFA Title Clash", "Venue": "Cubs Park", "Surface": "Grass", "GameTime": "2:15 PM", "Score": "0 - 0", "Result": "T", "Diff": "0", "TotalOffYds": 165, "FirstDowns": 8, "TurnoverDiff": "0", "ThirdDownEff": "N/A (Historical)"}
+            ],
             2024: [
+                {"Week": 1, "Date": datetime.date(2024, 9, 8), "DayOfWeek": "Sun", "Opp": "TEN", "HomeAway": "vs", "GameType": "Regular Season", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "24 - 17", "Result": "W", "Diff": "+7", "TotalOffYds": 148, "FirstDowns": 11, "TurnoverDiff": "+3", "ThirdDownEff": "2/14 (14.3%)"},
                 {"Week": 6, "Date": datetime.date(2024, 10, 13), "DayOfWeek": "Sun", "Opp": "JAX", "HomeAway": "vs (London)", "GameType": "Regular Season", "Venue": "Tottenham Hotspur Stadium", "Surface": "Turf", "GameTime": "9:30 AM", "Score": "35 - 16", "Result": "W", "Diff": "+19", "TotalOffYds": 377, "FirstDowns": 24, "TurnoverDiff": "+2", "ThirdDownEff": "7/13 (53.8%)"}
+            ]
+        }
+    },
+    "Green Bay Packers (Franchise)": {
+        "category": "FRANCHISE", "name": "Green Bay Packers", "pos": "Franchise", "jersey": "—",
+        "birth_date": datetime.date(1919, 8, 11), "team": "GB", "exp": "105 Seasons (Founded 1919)",
+        "seasons": {
+            1921: [
+                {"Week": 1, "Date": datetime.date(1921, 10, 23), "DayOfWeek": "Sun", "Opp": "Minneapolis Marines", "HomeAway": "vs", "GameType": "Inaugural APFA Game", "Venue": "Hagemeister Park", "Surface": "Grass", "GameTime": "2:30 PM", "Score": "7 - 6", "Result": "W", "Diff": "+1", "TotalOffYds": 204, "FirstDowns": 10, "TurnoverDiff": "+1", "ThirdDownEff": "N/A (Historical)"},
+                {"Week": 6, "Date": datetime.date(1921, 11, 27), "DayOfWeek": "Sun", "Opp": "Chicago Staleys (Bears)", "HomeAway": "@", "GameType": "Historic Rivalry Launch", "Venue": "Cubs Park", "Surface": "Grass", "GameTime": "2:30 PM", "Score": "0 - 20", "Result": "L", "Diff": "-20", "TotalOffYds": 142, "FirstDowns": 6, "TurnoverDiff": "-3", "ThirdDownEff": "N/A (Historical)"}
+            ],
+            2024: [
+                {"Week": 11, "Date": datetime.date(2024, 11, 17), "DayOfWeek": "Sun", "Opp": "CHI", "HomeAway": "@", "GameType": "Regular Season", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "20 - 19", "Result": "W", "Diff": "+1", "TotalOffYds": 366, "FirstDowns": 17, "TurnoverDiff": "-1", "ThirdDownEff": "5/10 (50.0%)"}
+            ]
+        }
+    },
+    # ==================== HEAD COACHES & STRATEGISTS ====================
+    "George Halas (Founder & Coach - CHI)": {
+        "category": "COACH", "name": "George Halas", "pos": "Head Coach", "jersey": "—",
+        "birth_date": datetime.date(1895, 2, 2), "team": "CHI", "exp": "40 Coaching Seasons (318 Wins)",
+        "seasons": {
+            1920: [
+                {"Week": 1, "Date": datetime.date(1920, 10, 3), "DayOfWeek": "Sun", "Opp": "Moline Tractors", "HomeAway": "vs", "GameType": "Head Coach Debut", "Venue": "Staley Field", "Surface": "Grass", "GameTime": "2:30 PM", "Score": "20 - 0", "Result": "W", "Diff": "+20", "WinLossEntering": "0-0-0 (.000)", "HomeAwaySplit": "0-0-0", "DivisionalRecord": "0-0-0", "FourthDownConversions": "N/A", "TOP": "30:00 (Est)", "PenaltyCount": 2, "PenaltyYds": 15},
+                {"Week": 11, "Date": datetime.date(1920, 11, 28), "DayOfWeek": "Sun", "Opp": "Chicago Cardinals", "HomeAway": "@", "GameType": "Regular Season", "Venue": "Normal Park", "Surface": "Grass", "GameTime": "2:30 PM", "Score": "6 - 7", "Result": "L", "Diff": "-1", "WinLossEntering": "9-0-1 (.950)", "HomeAwaySplit": "4-0-1", "DivisionalRecord": "2-0-0", "FourthDownConversions": "N/A", "TOP": "28:00 (Est)", "PenaltyCount": 4, "PenaltyYds": 35}
+            ],
+            1921: [
+                {"Week": 8, "Date": datetime.date(1921, 11, 27), "DayOfWeek": "Sun", "Opp": "Green Bay Packers", "HomeAway": "vs", "GameType": "Bears-Packers Game 1", "Venue": "Cubs Park", "Surface": "Grass", "GameTime": "2:30 PM", "Score": "20 - 0", "Result": "W", "Diff": "+20", "WinLossEntering": "17-2-3 (.841)", "HomeAwaySplit": "11-0-1", "DivisionalRecord": "7-1-1", "FourthDownConversions": "N/A", "TOP": "32:00 (Est)", "PenaltyCount": 3, "PenaltyYds": 25}
             ]
         }
     },
     "Andy Reid (Head Coach - KC)": {
         "category": "COACH", "name": "Andy Reid", "pos": "Head Coach", "jersey": "—",
-        "birth_date": datetime.date(1958, 3, 19), "team": "KC", "exp": "26th Season",
+        "birth_date": datetime.date(1958, 3, 19), "team": "KC", "exp": "26 Coaching Seasons (3x SB Champion)",
         "seasons": {
             2024: [
-                {"Week": 1, "Date": datetime.date(2024, 9, 5), "DayOfWeek": "Thu", "Opp": "BAL", "HomeAway": "vs", "GameType": "Regular Season", "Venue": "Arrowhead Stadium", "Surface": "Grass", "GameTime": "TNF", "Score": "27 - 20", "Result": "W", "Diff": "+7", "WinLossEntering": "258-144-1 (.641)", "HomeAwaySplit": "138-66-1 (.676)", "DivisionalRecord": "101-49 (.673)", "FourthDownConversions": "1/1 (100%)", "TOP": "33:36", "PenaltyCount": 6, "PenaltyYds": 45}
+                {"Week": 1, "Date": datetime.date(2024, 9, 5), "DayOfWeek": "Thu", "Opp": "BAL", "HomeAway": "vs", "GameType": "NFL Kickoff Game", "Venue": "Arrowhead Stadium", "Surface": "Grass", "GameTime": "TNF", "Score": "27 - 20", "Result": "W", "Diff": "+7", "WinLossEntering": "258-144-1 (.641)", "HomeAwaySplit": "138-66-1 (.676)", "DivisionalRecord": "101-49 (.673)", "FourthDownConversions": "1/1 (100%)", "TOP": "33:36", "PenaltyCount": 6, "PenaltyYds": 45},
+                {"Week": 11, "Date": datetime.date(2024, 11, 17), "DayOfWeek": "Sun", "Opp": "BUF", "HomeAway": "@", "GameType": "Regular Season", "Venue": "Highmark Stadium", "Surface": "Turf", "GameTime": "4:25 PM", "Score": "21 - 30", "Result": "L", "Diff": "-9", "WinLossEntering": "267-144-1 (.649)", "HomeAwaySplit": "125-78-0 (.616)", "DivisionalRecord": "103-50 (.673)", "FourthDownConversions": "0/1 (0.0%)", "TOP": "25:57", "PenaltyCount": 5, "PenaltyYds": 38}
+            ],
+            2023: [
+                {"Week": 3, "Date": datetime.date(2023, 9, 24), "DayOfWeek": "Sun", "Opp": "CHI", "HomeAway": "vs", "GameType": "Regular Season", "Venue": "Arrowhead Stadium", "Surface": "Grass", "GameTime": "4:25 PM", "Score": "41 - 10", "Result": "W", "Diff": "+31", "WinLossEntering": "248-139-1 (.640)", "HomeAwaySplit": "132-63-1 (.676)", "DivisionalRecord": "96-48 (.667)", "FourthDownConversions": "0/0", "TOP": "36:13", "PenaltyCount": 3, "PenaltyYds": 15}
             ]
         }
     }
@@ -252,8 +265,8 @@ entity_data = EXPANDED_CAREER_DATABASE[selected_entity_key]
 
 c1, c2, c3, c4, c5, c6 = st.columns(6)
 c1.metric("Name", entity_data["name"])
-c2.metric("Position", entity_data["pos"])
-c3.metric("Jersey #", entity_data["jersey"])
+c2.metric("Position / Role", entity_data["pos"])
+c3.metric("Jersey / ID", entity_data["jersey"])
 c4.metric("Birthdate / Inception", entity_data["birth_date"].strftime("%B %d, %Y"))
 c5.metric("Team", entity_data["team"])
 c6.metric("Experience / Seasons", entity_data["exp"])
@@ -281,7 +294,6 @@ with col_s1:
         index=0
     )
 
-# Gather logs across targeted seasons
 target_seasons = available_seasons if selected_season_choice == "All Career Seasons" else [int(selected_season_choice)]
 
 raw_logs_to_process = []
@@ -314,14 +326,16 @@ for g in raw_logs_to_process:
     g_animal, g_element, _ = get_chinese_profile(g_date.year)
     affinity = evaluate_affinity(natal_animal, g_animal)
     
-    # Primary Stat Vibration
+    # Primary Stat Vibration (QB = PassYds, Skill = Scrimmage, Team = Score / Yards)
     cat = entity_data["category"]
     if cat == "QB":
         primary_stat = g.get("PassYds", 0)
     elif cat == "SKILL":
         primary_stat = g.get("ScrimmageYds", 0)
-    elif cat == "DEFENSE_IDP":
-        primary_stat = g.get("TacklesTot", 0)
+    elif cat == "FRANCHISE":
+        primary_stat = g.get("TotalOffYds", 0)
+    elif cat == "COACH":
+        primary_stat = int(str(g.get("Score", "0")).split(" - ")[0]) if " - " in str(g.get("Score")) else 0
     else:
         primary_stat = int(str(g.get("Score", "0")).split(" - ")[0]) if " - " in str(g.get("Score")) else 0
         
@@ -381,7 +395,7 @@ for g in raw_logs_to_process:
         "Pluto Transit": calculate_detailed_transit("Pluto", "Sun", g_date, p_bdate),
     }
     
-    # Position-Specific Stat Appends
+    # Position / Entity-Specific Columns
     if cat == "QB":
         row.update({
             "Std FPts": g.get("StdFPts"), "Half-PPR": g.get("HalfPPR"), "Full PPR": g.get("PPRFPts"),
@@ -408,32 +422,6 @@ for g in raw_logs_to_process:
             "Fumbles": g.get("Fumbles"), "Fumbles Lost": g.get("FumblesLost"),
             "Scrimmage Yds": g.get("ScrimmageYds"), "Total Touches": g.get("Touches"), "Total TDs": g.get("TotalTDs"),
             "Std FPts": g.get("StdFPts"), "Half-PPR": g.get("HalfPPR"), "Full PPR": g.get("PPRFPts")
-        })
-    elif cat == "KICKER":
-        row.update({
-            "FGM": g.get("FGM"), "FGA": g.get("FGA"), "FG%": g.get("FG_Pct"),
-            "XPM": g.get("XPM"), "XPA": g.get("XPA"),
-            "FG 1-19": g.get("FG_1_19"), "FG 20-29": g.get("FG_20_29"), "FG 30-39": g.get("FG_30_39"),
-            "FG 40-49": g.get("FG_40_49"), "FG 50+": g.get("FG_50_Plus"), "Longest FG": g.get("LongestFG"),
-            "Punts": g.get("Punts"), "Punt Yds": g.get("PuntYds"), "Gross Avg": g.get("GrossAvg"),
-            "Net Avg": g.get("NetAvg"), "In20": g.get("In20")
-        })
-    elif cat == "DEFENSE_IDP":
-        row.update({
-            "TOT": g.get("TacklesTot"), "SOLO": g.get("TacklesSolo"), "AST": g.get("TacklesAst"), "TFL": g.get("TFL"),
-            "Sacks": g.get("Sacks"), "QBH": g.get("QBH"), "Pressures": g.get("Pressures"),
-            "PD": g.get("PassesDefensed"), "INT": g.get("Int"), "INT Return Yds": g.get("IntReturnYds"),
-            "Def TDs": g.get("DefTD"), "FF": g.get("FF"), "FR": g.get("FR"), "FR Return Yds": g.get("FR_ReturnYds"),
-            "Blocked Kicks": g.get("BlockedKicks"), "Safeties": g.get("Safeties"),
-            "Std FPts": g.get("StdFPts"), "Half-PPR": g.get("HalfPPR"), "Full PPR": g.get("PPRFPts")
-        })
-    elif cat == "DST":
-        row.update({
-            "Sacks": g.get("Sacks"), "INT": g.get("Int"), "FR": g.get("FR"),
-            "Total Turnovers": g.get("TotalTurnovers"), "Return TDs": g.get("ReturnTDs"),
-            "Safeties": g.get("Safeties"), "Blocked Kicks": g.get("BlockedKicks"),
-            "Points Allowed": g.get("PtsAllowed"), "Yds Allowed": g.get("YdsAllowed"),
-            "DST FPts": g.get("DST_FPts")
         })
     elif cat == "FRANCHISE":
         row.update({
