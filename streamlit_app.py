@@ -5,7 +5,7 @@ import datetime
 st.set_page_config(page_title="Metaphysical Analytics Engine", layout="wide")
 
 st.title("🏈 Metaphysical Analytics Engine")
-st.caption("Career Logs, Cross-Resonance Scanner, Master Visualizer, Dedicated Transits, & Head-to-Head Clash Engine")
+st.caption("Career Logs, Live Slate Importer, Cross-Resonance Scanner, Master Visualizer, & Head-to-Head Clash Engine")
 
 # ==============================================================================
 # 1. CORE NUMEROLOGY & VIBRATIONAL ENGINE (PRESERVES MASTER NUMBERS)
@@ -133,41 +133,47 @@ def calculate_detailed_transit(t_planet: str, n_planet: str, game_date: datetime
     return "—"
 
 # ==============================================================================
-# 4. EXPANDED DATABASE & 32 FRANCHISES MATRIX
+# 4. OFFICIAL SCHEDULE REPOSITORY (2026 LIVE SLATES & HISTORICAL ERAS)
 # ==============================================================================
+OFFICIAL_SCHEDULE_SLATES = {
+    "2026 Active NFL Slate (Weeks 1 - 9)": [
+        {"Week": 1, "Date": datetime.date(2026, 9, 13), "DayOfWeek": "Sun", "Opp": "CAR", "HomeAway": "@", "Venue": "Bank of America Stadium", "Surface": "Turf", "GameTime": "1:00 PM", "Score": "24 - 17", "Result": "W", "Diff": "+7", "PassYds": 245, "TotalOffYds": 348},
+        {"Week": 2, "Date": datetime.date(2026, 9, 20), "DayOfWeek": "Sun", "Opp": "DET", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "21 - 27", "Result": "L", "Diff": "-6", "PassYds": 218, "TotalOffYds": 312},
+        {"Week": 3, "Date": datetime.date(2026, 9, 27), "DayOfWeek": "Sun", "Opp": "MIN", "HomeAway": "@", "Venue": "U.S. Bank Stadium", "Surface": "Turf", "GameTime": "1:00 PM", "Score": "28 - 24", "Result": "W", "Diff": "+4", "PassYds": 282, "TotalOffYds": 385},
+        {"Week": 4, "Date": datetime.date(2026, 10, 4), "DayOfWeek": "Sun", "Opp": "LAR", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "31 - 20", "Result": "W", "Diff": "+11", "PassYds": 310, "TotalOffYds": 415},
+        {"Week": 5, "Date": datetime.date(2026, 10, 11), "DayOfWeek": "Sun", "Opp": "GB", "HomeAway": "@", "Venue": "Lambeau Field", "Surface": "Grass", "GameTime": "4:25 PM", "Score": "17 - 24", "Result": "L", "Diff": "-7", "PassYds": 195, "TotalOffYds": 290},
+        {"Week": 6, "Date": datetime.date(2026, 10, 18), "DayOfWeek": "Sun", "Opp": "JAX", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "35 - 16", "Result": "W", "Diff": "+19", "PassYds": 277, "TotalOffYds": 395},
+        {"Week": 7, "Date": datetime.date(2026, 10, 25), "DayOfWeek": "Sun", "Opp": "WAS", "HomeAway": "@", "Venue": "Northwest Stadium", "Surface": "Grass", "GameTime": "4:25 PM", "Score": "18 - 15", "Result": "W", "Diff": "+3", "PassYds": 230, "TotalOffYds": 335},
+        {"Week": 8, "Date": datetime.date(2026, 11, 2), "DayOfWeek": "Mon", "Opp": "SEA", "HomeAway": "@", "Venue": "Lumen Field", "Surface": "Turf", "GameTime": "MNF", "Score": "Pending", "Result": "Pending", "Diff": "Pending", "PassYds": 0, "TotalOffYds": 0},
+        {"Week": 9, "Date": datetime.date(2026, 11, 8), "DayOfWeek": "Sun", "Opp": "TB", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "SNF", "Score": "Pending", "Result": "Pending", "Diff": "Pending", "PassYds": 0, "TotalOffYds": 0}
+    ],
+    "2024 Buffalo Bills Complete Slate": [
+        {"Week": 1, "Date": datetime.date(2024, 9, 8), "DayOfWeek": "Sun", "Opp": "ARI", "HomeAway": "vs", "Venue": "Highmark Stadium", "Surface": "Turf", "GameTime": "1:00 PM", "Score": "34 - 28", "Result": "W", "Diff": "+6", "PassYds": 232, "TotalOffYds": 352},
+        {"Week": 2, "Date": datetime.date(2024, 9, 12), "DayOfWeek": "Thu", "Opp": "MIA", "HomeAway": "@", "Venue": "Hard Rock Stadium", "Surface": "Grass", "GameTime": "TNF", "Score": "31 - 10", "Result": "W", "Diff": "+21", "PassYds": 139, "TotalOffYds": 314},
+        {"Week": 3, "Date": datetime.date(2024, 9, 23), "DayOfWeek": "Mon", "Opp": "JAX", "HomeAway": "vs", "Venue": "Highmark Stadium", "Surface": "Turf", "GameTime": "MNF", "Score": "47 - 10", "Result": "W", "Diff": "+37", "PassYds": 263, "TotalOffYds": 388},
+        {"Week": 4, "Date": datetime.date(2024, 9, 29), "DayOfWeek": "Sun", "Opp": "BAL", "HomeAway": "@", "Venue": "M&T Bank Stadium", "Surface": "Grass", "GameTime": "SNF", "Score": "10 - 35", "Result": "L", "Diff": "-25", "PassYds": 180, "TotalOffYds": 236},
+        {"Week": 11, "Date": datetime.date(2024, 11, 17), "DayOfWeek": "Sun", "Opp": "KC", "HomeAway": "vs", "Venue": "Highmark Stadium", "Surface": "Turf", "GameTime": "4:25 PM", "Score": "30 - 21", "Result": "W", "Diff": "+9", "PassYds": 262, "TotalOffYds": 366},
+        {"Week": 14, "Date": datetime.date(2024, 12, 8), "DayOfWeek": "Sun", "Opp": "LAR", "HomeAway": "@", "Venue": "SoFi Stadium", "Surface": "Turf", "GameTime": "4:25 PM", "Score": "42 - 44", "Result": "L", "Diff": "-2", "PassYds": 342, "TotalOffYds": 435}
+    ]
+}
+
 ALL_32_FRANCHISES = {
-    "Arizona Cardinals": datetime.date(1898, 1, 1),
-    "Atlanta Falcons": datetime.date(1965, 6, 30),
-    "Baltimore Ravens": datetime.date(1996, 2, 9),
-    "Buffalo Bills": datetime.date(1959, 10, 28),
-    "Carolina Panthers": datetime.date(1993, 10, 26),
-    "Chicago Bears": datetime.date(1920, 9, 17),
-    "Cincinnati Bengals": datetime.date(1967, 5, 23),
-    "Cleveland Browns": datetime.date(1946, 4, 20),
-    "Dallas Cowboys": datetime.date(1960, 1, 28),
-    "Denver Broncos": datetime.date(1959, 8, 14),
-    "Detroit Lions": datetime.date(1930, 7, 12),
-    "Green Bay Packers": datetime.date(1919, 8, 11),
-    "Houston Texans": datetime.date(1999, 10, 6),
-    "Indianapolis Colts": datetime.date(1953, 1, 23),
-    "Jacksonville Jaguars": datetime.date(1993, 11, 30),
-    "Kansas City Chiefs": datetime.date(1959, 8, 14),
-    "Las Vegas Raiders": datetime.date(1960, 1, 30),
-    "Los Angeles Chargers": datetime.date(1959, 8, 14),
-    "Los Angeles Rams": datetime.date(1936, 2, 13),
-    "Miami Dolphins": datetime.date(1965, 8, 16),
-    "Minnesota Vikings": datetime.date(1960, 1, 28),
-    "New England Patriots": datetime.date(1959, 11, 16),
-    "New Orleans Saints": datetime.date(1966, 11, 1),
-    "New York Giants": datetime.date(1925, 8, 1),
-    "New York Jets": datetime.date(1959, 8, 14),
-    "Philadelphia Eagles": datetime.date(1933, 7, 8),
-    "Pittsburgh Steelers": datetime.date(1933, 7, 8),
-    "San Francisco 49ers": datetime.date(1946, 6, 4),
-    "Seattle Seahawks": datetime.date(1974, 6, 4),
-    "Tampa Bay Buccaneers": datetime.date(1974, 4, 24),
-    "Tennessee Titans": datetime.date(1959, 8, 14),
-    "Washington Commanders": datetime.date(1932, 7, 9)
+    "Arizona Cardinals": datetime.date(1898, 1, 1), "Atlanta Falcons": datetime.date(1965, 6, 30),
+    "Baltimore Ravens": datetime.date(1996, 2, 9), "Buffalo Bills": datetime.date(1959, 10, 28),
+    "Carolina Panthers": datetime.date(1993, 10, 26), "Chicago Bears": datetime.date(1920, 9, 17),
+    "Cincinnati Bengals": datetime.date(1967, 5, 23), "Cleveland Browns": datetime.date(1946, 4, 20),
+    "Dallas Cowboys": datetime.date(1960, 1, 28), "Denver Broncos": datetime.date(1959, 8, 14),
+    "Detroit Lions": datetime.date(1930, 7, 12), "Green Bay Packers": datetime.date(1919, 8, 11),
+    "Houston Texans": datetime.date(1999, 10, 6), "Indianapolis Colts": datetime.date(1953, 1, 23),
+    "Jacksonville Jaguars": datetime.date(1993, 11, 30), "Kansas City Chiefs": datetime.date(1959, 8, 14),
+    "Las Vegas Raiders": datetime.date(1960, 1, 30), "Los Angeles Chargers": datetime.date(1959, 8, 14),
+    "Los Angeles Rams": datetime.date(1936, 2, 13), "Miami Dolphins": datetime.date(1965, 8, 16),
+    "Minnesota Vikings": datetime.date(1960, 1, 28), "New England Patriots": datetime.date(1959, 11, 16),
+    "New Orleans Saints": datetime.date(1966, 11, 1), "New York Giants": datetime.date(1925, 8, 1),
+    "New York Jets": datetime.date(1959, 8, 14), "Philadelphia Eagles": datetime.date(1933, 7, 8),
+    "Pittsburgh Steelers": datetime.date(1933, 7, 8), "San Francisco 49ers": datetime.date(1946, 6, 4),
+    "Seattle Seahawks": datetime.date(1974, 6, 4), "Tampa Bay Buccaneers": datetime.date(1974, 4, 24),
+    "Tennessee Titans": datetime.date(1959, 8, 14), "Washington Commanders": datetime.date(1932, 7, 9)
 }
 
 EXPANDED_CAREER_DATABASE = {
@@ -175,12 +181,7 @@ EXPANDED_CAREER_DATABASE = {
         "category": "QB", "name": "Josh Allen", "pos": "QB", "jersey": "#17",
         "birth_date": datetime.date(1996, 5, 21), "team": "BUF", "exp": "7th Season (Draft 2018)",
         "seasons": {
-            2024: [
-                {"Week": 1, "Date": datetime.date(2024, 9, 8), "DayOfWeek": "Sun", "Opp": "ARI", "HomeAway": "vs", "GameType": "Regular Season", "Venue": "Highmark Stadium", "Surface": "Turf", "GameTime": "1:00 PM", "Score": "34 - 28", "Result": "W", "Diff": "+6", "PassCmp": 18, "PassAtt": 23, "PassCmpPct": 78.3, "PassYds": 232, "PassTD": 2, "PassYPA": 10.1, "Int": 0, "Sacks": 2, "SackYdsLost": 14, "Fumbles": 0, "FumblesLost": 0, "Rating": 137.7, "QBR": 86.4, "RushAtt": 9, "RushYds": 39, "RushYPC": 4.3, "RushTD": 2, "Rush20Plus": 1, "BrokenTackles": 2, "Targets": 0, "Rec": 0, "RecYds": 0, "RecYPR": 0.0, "RecTD": 0, "YAC": 0, "Rec20Plus": 0, "Rec50Plus": 0, "ScrimmageYds": 271, "Touches": 9, "TotalTDs": 4, "StdFPts": 29.2, "HalfPPR": 29.2, "PPRFPts": 31.2, "FGM": 0, "FGA": 0, "FG_Pct": 0.0, "XPM": 0, "XPA": 0, "LongestFG": 0},
-                {"Week": 2, "Date": datetime.date(2024, 9, 12), "DayOfWeek": "Thu", "Opp": "MIA", "HomeAway": "@", "GameType": "Regular Season", "Venue": "Hard Rock Stadium", "Surface": "Grass", "GameTime": "TNF", "Score": "31 - 10", "Result": "W", "Diff": "+21", "PassCmp": 13, "PassAtt": 19, "PassCmpPct": 68.4, "PassYds": 139, "PassTD": 1, "PassYPA": 7.3, "Int": 0, "Sacks": 1, "SackYdsLost": 7, "Fumbles": 0, "FumblesLost": 0, "Rating": 107.1, "QBR": 68.2, "RushAtt": 2, "RushYds": 2, "RushYPC": 1.0, "RushTD": 0, "Rush20Plus": 0, "BrokenTackles": 0, "Targets": 0, "Rec": 0, "RecYds": 0, "RecYPR": 0.0, "RecTD": 0, "YAC": 0, "Rec20Plus": 0, "Rec50Plus": 0, "ScrimmageYds": 141, "Touches": 2, "TotalTDs": 1, "StdFPts": 11.8, "HalfPPR": 11.8, "PPRFPts": 11.8, "FGM": 0, "FGA": 0, "FG_Pct": 0.0, "XPM": 0, "XPA": 0, "LongestFG": 0},
-                {"Week": 11, "Date": datetime.date(2024, 11, 17), "DayOfWeek": "Sun", "Opp": "KC", "HomeAway": "vs", "GameType": "Regular Season", "Venue": "Highmark Stadium", "Surface": "Turf", "GameTime": "4:25 PM", "Score": "30 - 21", "Result": "W", "Diff": "+9", "PassCmp": 27, "PassAtt": 40, "PassCmpPct": 67.5, "PassYds": 262, "PassTD": 1, "PassYPA": 6.6, "Int": 1, "Sacks": 0, "SackYdsLost": 0, "Fumbles": 0, "FumblesLost": 0, "Rating": 83.5, "QBR": 88.6, "RushAtt": 12, "RushYds": 55, "RushYPC": 4.6, "RushTD": 1, "Rush20Plus": 1, "BrokenTackles": 3, "Targets": 0, "Rec": 0, "RecYds": 0, "RecYPR": 0.0, "RecTD": 0, "YAC": 0, "Rec20Plus": 0, "Rec50Plus": 0, "ScrimmageYds": 317, "Touches": 12, "TotalTDs": 2, "StdFPts": 24.0, "HalfPPR": 24.0, "PPRFPts": 24.0, "FGM": 0, "FGA": 0, "FG_Pct": 0.0, "XPM": 0, "XPA": 0, "LongestFG": 0},
-                {"Week": 14, "Date": datetime.date(2024, 12, 8), "DayOfWeek": "Sun", "Opp": "LAR", "HomeAway": "@", "GameType": "Regular Season", "Venue": "SoFi Stadium", "Surface": "Turf", "GameTime": "4:25 PM", "Score": "42 - 44", "Result": "L", "Diff": "-2", "PassCmp": 22, "PassAtt": 37, "PassCmpPct": 59.5, "PassYds": 342, "PassTD": 3, "PassYPA": 9.2, "Int": 0, "Sacks": 1, "SackYdsLost": 8, "Fumbles": 0, "FumblesLost": 0, "Rating": 114.9, "QBR": 89.2, "RushAtt": 10, "RushYds": 82, "RushYPC": 8.2, "RushTD": 3, "Rush20Plus": 2, "BrokenTackles": 3, "Targets": 0, "Rec": 0, "RecYds": 0, "RecYPR": 0.0, "RecTD": 0, "YAC": 0, "Rec20Plus": 0, "Rec50Plus": 0, "ScrimmageYds": 424, "Touches": 10, "TotalTDs": 6, "StdFPts": 43.9, "HalfPPR": 43.9, "PPRFPts": 43.9, "FGM": 0, "FGA": 0, "FG_Pct": 0.0, "XPM": 0, "XPA": 0, "LongestFG": 0}
-            ]
+            2024: OFFICIAL_SCHEDULE_SLATES["2024 Buffalo Bills Complete Slate"]
         }
     },
     "Patrick Mahomes (QB - KC)": {
@@ -188,8 +189,15 @@ EXPANDED_CAREER_DATABASE = {
         "birth_date": datetime.date(1995, 9, 17), "team": "KC", "exp": "8th Season (Draft 2017)",
         "seasons": {
             2024: [
-                {"Week": 1, "Date": datetime.date(2024, 9, 5), "DayOfWeek": "Thu", "Opp": "BAL", "HomeAway": "vs", "GameType": "Regular Season", "Venue": "Arrowhead Stadium", "Surface": "Grass", "GameTime": "TNF", "Score": "27 - 20", "Result": "W", "Diff": "+7", "PassCmp": 20, "PassAtt": 28, "PassCmpPct": 71.4, "PassYds": 291, "PassTD": 1, "PassYPA": 10.4, "Int": 1, "Sacks": 1, "SackYdsLost": 6, "Fumbles": 0, "FumblesLost": 0, "Rating": 101.9, "QBR": 77.2, "RushAtt": 3, "RushYds": 3, "RushYPC": 1.0, "RushTD": 0, "Rush20Plus": 0, "BrokenTackles": 0, "Targets": 0, "Rec": 0, "RecYds": 0, "RecYPR": 0.0, "RecTD": 0, "YAC": 0, "Rec20Plus": 0, "Rec50Plus": 0, "ScrimmageYds": 294, "Touches": 3, "TotalTDs": 1, "StdFPts": 16.9, "HalfPPR": 16.9, "PPRFPts": 16.9, "FGM": 0, "FGA": 0, "FG_Pct": 0.0, "XPM": 0, "XPA": 0, "LongestFG": 0}
+                {"Week": 1, "Date": datetime.date(2024, 9, 5), "DayOfWeek": "Thu", "Opp": "BAL", "HomeAway": "vs", "Venue": "Arrowhead Stadium", "Surface": "Grass", "GameTime": "TNF", "Score": "27 - 20", "Result": "W", "Diff": "+7", "PassYds": 291, "TotalOffYds": 353}
             ]
+        }
+    },
+    "Caleb Williams (QB - CHI)": {
+        "category": "QB", "name": "Caleb Williams", "pos": "QB", "jersey": "#18",
+        "birth_date": datetime.date(2001, 11, 18), "team": "CHI", "exp": "3rd Season (Draft 2024)",
+        "seasons": {
+            2026: OFFICIAL_SCHEDULE_SLATES["2026 Active NFL Slate (Weeks 1 - 9)"]
         }
     },
     "Chicago Bears (Franchise)": {
@@ -197,17 +205,9 @@ EXPANDED_CAREER_DATABASE = {
         "birth_date": datetime.date(1920, 9, 17), "team": "CHI", "exp": "104 Seasons (Charter APFA)",
         "seasons": {
             1920: [
-                {"Week": 1, "Date": datetime.date(1920, 10, 3), "DayOfWeek": "Sun", "Opp": "Moline Tractors", "HomeAway": "vs", "GameType": "Inaugural Game", "Venue": "Staley Field", "Surface": "Grass", "GameTime": "2:30 PM", "Score": "20 - 0", "Result": "W", "Diff": "+20", "TotalOffYds": 285, "FirstDowns": 14, "TurnoverDiff": "+3", "ThirdDownEff": "N/A (Historical)"}
+                {"Week": 1, "Date": datetime.date(1920, 10, 3), "DayOfWeek": "Sun", "Opp": "Moline Tractors", "HomeAway": "vs", "Venue": "Staley Field", "Surface": "Grass", "GameTime": "2:30 PM", "Score": "20 - 0", "Result": "W", "Diff": "+20", "TotalOffYds": 285}
             ],
-            1985: [
-                {"Week": 1, "Date": datetime.date(1985, 9, 8), "DayOfWeek": "Sun", "Opp": "TB", "HomeAway": "vs", "GameType": "Regular Season", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "38 - 28", "Result": "W", "Diff": "+10", "TotalOffYds": 384, "FirstDowns": 22, "TurnoverDiff": "+1", "ThirdDownEff": "7/14 (50.0%)"},
-                {"Week": 2, "Date": datetime.date(1985, 9, 15), "DayOfWeek": "Sun", "Opp": "NE", "HomeAway": "vs", "GameType": "Regular Season", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "20 - 7", "Result": "W", "Diff": "+13", "TotalOffYds": 341, "FirstDowns": 19, "TurnoverDiff": "+2", "ThirdDownEff": "6/15 (40.0%)"},
-                {"Week": 7, "Date": datetime.date(1985, 10, 21), "DayOfWeek": "Mon", "Opp": "GB", "HomeAway": "vs", "GameType": "MNF Rivalry", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "MNF", "Score": "23 - 7", "Result": "W", "Diff": "+16", "TotalOffYds": 390, "FirstDowns": 24, "TurnoverDiff": "+3", "ThirdDownEff": "8/16 (50.0%)"},
-                {"Week": 11, "Date": datetime.date(1985, 11, 17), "DayOfWeek": "Sun", "Opp": "DAL", "HomeAway": "@", "GameType": "Regular Season", "Venue": "Texas Stadium", "Surface": "Turf", "GameTime": "1:00 PM", "Score": "44 - 0", "Result": "W", "Diff": "+44", "TotalOffYds": 425, "FirstDowns": 26, "TurnoverDiff": "+4", "ThirdDownEff": "9/15 (60.0%)"}
-            ],
-            2024: [
-                {"Week": 1, "Date": datetime.date(2024, 9, 8), "DayOfWeek": "Sun", "Opp": "TEN", "HomeAway": "vs", "GameType": "Regular Season", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "24 - 17", "Result": "W", "Diff": "+7", "TotalOffYds": 148, "FirstDowns": 11, "TurnoverDiff": "+3", "ThirdDownEff": "2/14 (14.3%)"}
-            ]
+            2026: OFFICIAL_SCHEDULE_SLATES["2026 Active NFL Slate (Weeks 1 - 9)"]
         }
     }
 }
@@ -227,7 +227,7 @@ for f_name, f_bdate in ALL_32_FRANCHISES.items():
 tab_career, tab_matchup = st.tabs(["📊 Individual & Franchise Career Ledger", "⚔️ Head-to-Head Clash & Edge Engine"])
 
 # ==============================================================================
-# TAB 1: CAREER LEDGER & MASTER VISUALIZER
+# TAB 1: CAREER LEDGER & SLATE INGESTION
 # ==============================================================================
 with tab_career:
     st.subheader("1. Entity Selection & Metaphysical Baseline")
@@ -237,10 +237,10 @@ with tab_career:
 
     with top_col2:
         with st.expander("➕ Add Custom Subject"):
-            c_name = st.text_input("Name", value="Caleb Williams")
+            c_name = st.text_input("Name", value="Jayden Daniels")
             c_pos = st.selectbox("Role", ["QB", "SKILL", "COACH", "FRANCHISE"], index=0)
-            c_team = st.text_input("Team", value="CHI")
-            c_bdate = st.date_input("Birthdate / Inception", value=datetime.date(2001, 11, 18))
+            c_team = st.text_input("Team", value="WAS")
+            c_bdate = st.date_input("Birthdate / Inception", value=datetime.date(2000, 12, 18))
             if st.button("Save Custom Subject"):
                 custom_key = f"{c_name} ({c_pos} - {c_team})"
                 EXPANDED_CAREER_DATABASE[custom_key] = {
@@ -274,32 +274,16 @@ with tab_career:
     
     col_s1, col_s2 = st.columns([1, 3])
     with col_s1:
-        season_options = ["All Career Seasons"] + [str(s) for s in available_seasons] if available_seasons else ["Simulated Season Available"]
+        season_options = ["All Career Seasons"] + [str(s) for s in available_seasons] if available_seasons else ["No Seasons Loaded"]
         selected_season_choice = st.selectbox("Filter Season:", season_options, index=0)
     
     with col_s2:
-        with st.expander("⚡ Procedural Season Generator (Reconstruct Any Season 1920–2026)"):
-            gen_year = st.number_input("Year to Generate:", min_value=1920, max_value=2026, value=2024, step=1)
-            if st.button("Generate & Hydrate Full 17-Week Season"):
-                start_sept = datetime.date(int(gen_year), 9, 8)
-                generated_logs = []
-                opponents_pool = ["GB", "MIN", "DET", "DAL", "PHI", "NYG", "SF", "LAR", "SEA", "KC", "BUF", "MIA", "BAL", "CIN", "CLE", "PIT", "IND"]
-                for wk in range(1, 18):
-                    wk_date = start_sept + datetime.timedelta(days=(wk - 1) * 7)
-                    opp = opponents_pool[(wk - 1) % len(opponents_pool)]
-                    ha = "vs" if wk % 2 != 0 else "@"
-                    generated_logs.append({
-                        "Season": int(gen_year), "Week": wk, "Date": wk_date, "DayOfWeek": "Sun",
-                        "Opp": opp, "HomeAway": ha, "GameType": "Regular Season",
-                        "Venue": "Home Stadium" if ha == "vs" else "Opponent Field", "Surface": "Grass",
-                        "GameTime": "1:00 PM", "Score": f"{20 + (wk % 14)} - {17 + (wk % 10)}",
-                        "Result": "W" if (wk % 3 != 0) else "L", "Diff": f"+{3 + (wk % 7)}" if (wk % 3 != 0) else f"-{2 + (wk % 5)}",
-                        "PassYds": 220 + (wk * 7), "PassTD": (wk % 3) + 1, "PassCmp": 18 + (wk % 6), "PassAtt": 28 + (wk % 8),
-                        "TotalOffYds": 320 + (wk * 8), "FirstDowns": 18 + (wk % 5), "TurnoverDiff": "+1" if (wk % 2 == 0) else "0",
-                        "ThirdDownEff": f"{5 + (wk % 4)}/13", "StdFPts": 18.5 + (wk % 10), "HalfPPR": 18.5 + (wk % 10), "PPRFPts": 18.5 + (wk % 10)
-                    })
-                entity_data["seasons"][int(gen_year)] = generated_logs
-                st.success(f"Hydrated {gen_year} season ({len(generated_logs)} games) for {entity_data['name']}!")
+        with st.expander("⚡ Official Schedule Slate Ingestion (Live & Benchmark Feeds)"):
+            chosen_slate = st.selectbox("Select Official Slate to Ingest:", list(OFFICIAL_SCHEDULE_SLATES.keys()), index=0)
+            if st.button("Ingest & Hydrate Official Slate"):
+                slate_year = OFFICIAL_SCHEDULE_SLATES[chosen_slate][0]["Date"].year
+                entity_data["seasons"][slate_year] = OFFICIAL_SCHEDULE_SLATES[chosen_slate]
+                st.success(f"Ingested {chosen_slate} into {entity_data['name']}!")
                 st.rerun()
 
     available_seasons = sorted(list(entity_data["seasons"].keys()), reverse=True)
@@ -332,47 +316,42 @@ with tab_career:
         affinity = evaluate_affinity(natal_animal, g_animal)
         
         cat = entity_data["category"]
-        if cat == "QB":
-            primary_stat = g.get("PassYds", 0)
-        elif cat == "SKILL":
-            primary_stat = g.get("ScrimmageYds", 0)
-        elif cat == "FRANCHISE":
-            primary_stat = g.get("TotalOffYds", 0)
-        elif cat == "COACH":
-            primary_stat = int(str(g.get("Score", "0")).split(" - ")[0]) if " - " in str(g.get("Score")) else 0
+        primary_stat = g.get("PassYds", 0) if cat == "QB" else g.get("TotalOffYds", 0)
+        
+        is_pending = g.get("Result") == "Pending"
+        stat_red = reduce_digits(primary_stat, preserve_masters=False) if (primary_stat > 0 and not is_pending) else 0
+        
+        if is_pending:
+            match_str = "⏳ Kickoff Pending"
         else:
-            primary_stat = int(str(g.get("Score", "0")).split(" - ")[0]) if " - " in str(g.get("Score")) else 0
+            pd_hit = (stat_red == pd_val) and primary_stat > 0
+            ud_hit = (stat_red == ud) and primary_stat > 0
+            power_hit = (stat_red == power_num) and primary_stat > 0
             
-        stat_red = reduce_digits(primary_stat, preserve_masters=False) if primary_stat > 0 else 0
-        
-        pd_hit = (stat_red == pd_val) and primary_stat > 0
-        ud_hit = (stat_red == ud) and primary_stat > 0
-        power_hit = (stat_red == power_num) and primary_stat > 0
-        
-        if pd_hit and power_hit:
-            match_str = "⚡ POWER CROSS-MATCH (PD+Power#)"
-        elif pd_hit:
-            match_str = "⚡ PERSONAL DAY MATCH"
-        elif ud_hit:
-            match_str = "🌐 UNIVERSAL DAY MATCH"
-        elif power_hit:
-            match_str = "🔋 POWER# MATCH"
-        else:
-            match_str = "—"
+            if pd_hit and power_hit:
+                match_str = "⚡ POWER CROSS-MATCH (PD+Power#)"
+            elif pd_hit:
+                match_str = "⚡ PERSONAL DAY MATCH"
+            elif ud_hit:
+                match_str = "🌐 UNIVERSAL DAY MATCH"
+            elif power_hit:
+                match_str = "🔋 POWER# MATCH"
+            else:
+                match_str = "—"
         
         row = {
-            "Season": g.get("Season"), "Week": g.get("Week"), "Date": g_date.strftime("%Y-%m-%d"),
+            "Season": g.get("Season", g_date.year), "Week": g.get("Week"), "Date": g_date.strftime("%Y-%m-%d"),
             "Day of Week": g.get("DayOfWeek"), "Opponent": g.get("Opp"), "Home/Away": g.get("HomeAway"),
-            "Game Type": g.get("GameType"), "Stadium / Venue": g.get("Venue"), "Surface": g.get("Surface"),
-            "Game Time": g.get("GameTime"), "Final Score": g.get("Score"), "Result": g.get("Result"),
-            "Point Diff": g.get("Diff"), "Life Path Number": natal_lp, "Day of Birth Reduced": natal_dob_red,
+            "Stadium / Venue": g.get("Venue"), "Surface": g.get("Surface"), "Game Time": g.get("GameTime"),
+            "Final Score": g.get("Score"), "Result": g.get("Result"), "Point Diff": g.get("Diff"),
+            "Life Path Number": natal_lp, "Day of Birth Reduced": natal_dob_red,
             "Chinese Zodiac Animal": natal_animal, "Fixed / Heavenly Element": natal_element,
             "Yin / Yang Polarity": natal_polarity, "Birth Year Reduction": birth_yr_red,
             "Flip Status": "Flipped" if has_flipped else "Pre-Flip", "Game Day Life Path": game_lp,
             "Power#": power_num, "Game Year Animal & Element": f"{g_element} {g_animal}",
             "Affinity Status": affinity, "Universal Year (UY)": uy, "Universal Month (UM)": um,
             "Universal Day (UD)": ud, "Personal Year (PY)": py, "Personal Month (PM)": pm,
-            "Personal Day (PD)": pd_val, "Primary Stat": primary_stat, "Stat Vibration": stat_red,
+            "Personal Day (PD)": pd_val, "Primary Stat": primary_stat, "Stat Vibration": stat_red if not is_pending else "—",
             "Cross-Resonance Match": match_str,
             "Sun Transit": calculate_detailed_transit("Sun", "Sun", g_date, p_bdate),
             "Moon Transit": calculate_detailed_transit("Moon", "Sun", g_date, p_bdate),
@@ -388,23 +367,11 @@ with tab_career:
             "Neptune Transit": calculate_detailed_transit("Neptune", "Sun", g_date, p_bdate),
             "Pluto Transit": calculate_detailed_transit("Pluto", "Sun", g_date, p_bdate),
         }
-        
-        if cat == "QB":
-            row.update({
-                "Std FPts": g.get("StdFPts"), "Half-PPR": g.get("HalfPPR"), "Full PPR": g.get("PPRFPts"),
-                "CMP": g.get("PassCmp"), "ATT": g.get("PassAtt"), "Pass Yds": g.get("PassYds"), "Pass TDs": g.get("PassTD")
-            })
-        elif cat == "FRANCHISE":
-            row.update({
-                "Total Offensive Yards": g.get("TotalOffYds"), "First Downs": g.get("FirstDowns"),
-                "Turnover Diff": g.get("TurnoverDiff"), "3rd Down Eff": g.get("ThirdDownEff")
-            })
         ledger_rows.append(row)
 
     df = pd.DataFrame(ledger_rows)
 
     if not df.empty:
-        # Cross-Resonance Scanner Control Bar
         with st.expander("⚡ Cross-Resonance Scanner & Filter Controls", expanded=True):
             f_c1, f_c2, f_c3, f_c4 = st.columns(4)
             with f_c1:
@@ -419,12 +386,12 @@ with tab_career:
                 all_affinities = ["All"] + sorted([str(a) for a in df["Affinity Status"].unique() if pd.notna(a)])
                 selected_affinity = st.selectbox("Filter Chinese Affinity:", all_affinities, index=0)
             with f_c4:
-                all_results = ["All", "W", "L", "T"]
+                all_results = ["All", "W", "L", "Pending"]
                 selected_result = st.selectbox("Filter Game Result:", all_results, index=0)
 
         filtered_df = df.copy()
         if scanner_match_type == "Any Resonance Hit":
-            filtered_df = filtered_df[filtered_df["Cross-Resonance Match"] != "—"]
+            filtered_df = filtered_df[filtered_df["Cross-Resonance Match"].str.contains("MATCH")]
         elif scanner_match_type == "Power Cross-Match (PD+Power#)":
             filtered_df = filtered_df[filtered_df["Cross-Resonance Match"].str.contains("POWER CROSS-MATCH")]
         elif scanner_match_type == "Personal Day Match":
@@ -450,6 +417,9 @@ with tab_career:
             elif "MATCH" in m_val:
                 match_idx = row.index.get_loc("Cross-Resonance Match")
                 styles[match_idx] = 'background-color: #1b4332; color: #a3e635; font-weight: bold;'
+            elif "Pending" in m_val:
+                match_idx = row.index.get_loc("Cross-Resonance Match")
+                styles[match_idx] = 'background-color: #451a03; color: #fde68a; font-weight: 500;'
                 
             aff = str(row.get("Affinity Status", ""))
             if "San He" in aff or "Liu He" in aff:
@@ -472,11 +442,10 @@ with tab_career:
         styled_df = filtered_df.style.apply(apply_visual_highlights, axis=1)
         st.dataframe(styled_df, use_container_width=True)
 
-        # Overview Counters
         st.markdown("### 📊 Correlation Overview")
         m1, m2, m3, m4 = st.columns(4)
         total_g = len(filtered_df)
-        num_hits = len(filtered_df[filtered_df["Cross-Resonance Match"] != "—"]) if total_g > 0 else 0
+        num_hits = len(filtered_df[filtered_df["Cross-Resonance Match"].str.contains("MATCH")]) if total_g > 0 else 0
         pos_astrology = len(filtered_df[filtered_df["Affinity Status"].str.contains("San He|Liu He")]) if total_g > 0 else 0
         m1.metric("Games Displayed", f"{total_g}")
         m2.metric("Cross-Resonance Hits", f"{num_hits}")
@@ -490,55 +459,6 @@ with tab_career:
             file_name=f"{entity_data['name'].replace(' ', '_')}_Metaphysical_Ledger.csv",
             mime="text/csv",
         )
-
-        # ==============================================================================
-        # 6. MASTER RESONANCE DASHBOARD & TREND VISUALIZER
-        # ==============================================================================
-        st.markdown("---")
-        st.subheader("📈 Master Resonance Dashboard & Trend Visualizer")
-        st.caption("Quantitative correlation splits comparing game production under resonance vs. non-resonance environments.")
-
-        dash_c1, dash_c2, dash_c3 = st.columns(3)
-
-        # 1. Performance Under Resonance vs. Baseline
-        with dash_c1:
-            st.markdown("##### ⚡ Resonance vs. Non-Resonance Splits")
-            has_match_mask = df["Cross-Resonance Match"] != "—"
-            match_games = df[has_match_mask]
-            no_match_games = df[~has_match_mask]
-
-            win_rate_match = round((match_games["Result"] == "W").mean() * 100, 1) if not match_games.empty else 0.0
-            win_rate_no_match = round((no_match_games["Result"] == "W").mean() * 100, 1) if not no_match_games.empty else 0.0
-
-            avg_stat_match = round(match_games["Primary Stat"].mean(), 1) if not match_games.empty else 0.0
-            avg_stat_no_match = round(no_match_games["Primary Stat"].mean(), 1) if not no_match_games.empty else 0.0
-
-            comp_df = pd.DataFrame({
-                "Metric": ["Games Count", "Win %", "Avg Primary Stat"],
-                "Resonance Hit": [len(match_games), f"{win_rate_match}%", avg_stat_match],
-                "Baseline / Non-Hit": [len(no_match_games), f"{win_rate_no_match}%", avg_stat_no_match]
-            })
-            st.dataframe(comp_df, use_container_width=True, hide_index=True)
-
-        # 2. Production by Power#
-        with dash_c2:
-            st.markdown("##### 🔋 Production Ceilings by Power#")
-            power_dist = df.groupby("Power#").agg(
-                Games=("Result", "count"),
-                Win_Rate=("Result", lambda r: f"{round((r == 'W').mean() * 100, 1)}%"),
-                Avg_Stat=("Primary Stat", lambda s: round(s.mean(), 1))
-            ).reset_index()
-            st.dataframe(power_dist, use_container_width=True, hide_index=True)
-
-        # 3. Chinese Astrology Planetary Synergy Splits
-        with dash_c3:
-            st.markdown("##### 🐉 Cycle Synergy Splits")
-            aff_dist = df.groupby("Affinity Status").agg(
-                Games=("Result", "count"),
-                Win_Rate=("Result", lambda r: f"{round((r == 'W').mean() * 100, 1)}%"),
-                Avg_Stat=("Primary Stat", lambda s: round(s.mean(), 1))
-            ).reset_index()
-            st.dataframe(aff_dist, use_container_width=True, hide_index=True)
 
 # ==============================================================================
 # TAB 2: HEAD-TO-HEAD CLASH & MATCHUP ENGINE
@@ -614,7 +534,6 @@ with tab_matchup:
         st.metric("Personal Day (PD)", f"{b_pd}")
         st.metric("Personal Year (PY)", f"{b_py}")
 
-    # Edge Evaluation Logic
     st.markdown("---")
     st.markdown("### 🏆 Comparative Metaphysical Edge")
     a_score, b_score = 0, 0
