@@ -5,7 +5,7 @@ import datetime
 st.set_page_config(page_title="Metaphysical Analytics Engine", layout="wide")
 
 st.title("🏈 Metaphysical Analytics Engine")
-st.caption("Career Logs, Dynamic Full-Season Generator, Dedicated Transits, Power#, & Matchup Clash Engine")
+st.caption("Career Logs, Cross-Resonance Scanner, Dedicated Transits, Power#, & Head-to-Head Clash Engine")
 
 # ==============================================================================
 # 1. CORE NUMEROLOGY & VIBRATIONAL ENGINE (PRESERVES MASTER NUMBERS)
@@ -133,7 +133,7 @@ def calculate_detailed_transit(t_planet: str, n_planet: str, game_date: datetime
     return "—"
 
 # ==============================================================================
-# 4. EXPANDED DATABASE & DYNAMIC SCHEDULE GENERATOR
+# 4. EXPANDED DATABASE & 32 FRANCHISES MATRIX
 # ==============================================================================
 ALL_32_FRANCHISES = {
     "Arizona Cardinals": datetime.date(1898, 1, 1),
@@ -206,8 +206,7 @@ EXPANDED_CAREER_DATABASE = {
                 {"Week": 11, "Date": datetime.date(1985, 11, 17), "DayOfWeek": "Sun", "Opp": "DAL", "HomeAway": "@", "GameType": "Regular Season", "Venue": "Texas Stadium", "Surface": "Turf", "GameTime": "1:00 PM", "Score": "44 - 0", "Result": "W", "Diff": "+44", "TotalOffYds": 425, "FirstDowns": 26, "TurnoverDiff": "+4", "ThirdDownEff": "9/15 (60.0%)"}
             ],
             2024: [
-                {"Week": 1, "Date": datetime.date(2024, 9, 8), "DayOfWeek": "Sun", "Opp": "TEN", "HomeAway": "vs", "GameType": "Regular Season", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "24 - 17", "Result": "W", "Diff": "+7", "TotalOffYds": 148, "FirstDowns": 11, "TurnoverDiff": "+3", "ThirdDownEff": "2/14 (14.3%)"},
-                {"Week": 6, "Date": datetime.date(2024, 10, 13), "DayOfWeek": "Sun", "Opp": "JAX", "HomeAway": "vs (London)", "GameType": "Regular Season", "Venue": "Tottenham Hotspur Stadium", "Surface": "Turf", "GameTime": "9:30 AM", "Score": "35 - 16", "Result": "W", "Diff": "+19", "TotalOffYds": 377, "FirstDowns": 24, "TurnoverDiff": "+2", "ThirdDownEff": "7/13 (53.8%)"}
+                {"Week": 1, "Date": datetime.date(2024, 9, 8), "DayOfWeek": "Sun", "Opp": "TEN", "HomeAway": "vs", "GameType": "Regular Season", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "24 - 17", "Result": "W", "Diff": "+7", "TotalOffYds": 148, "FirstDowns": 11, "TurnoverDiff": "+3", "ThirdDownEff": "2/14 (14.3%)"}
             ]
         }
     }
@@ -228,10 +227,10 @@ for f_name, f_bdate in ALL_32_FRANCHISES.items():
 tab_career, tab_matchup = st.tabs(["📊 Individual & Franchise Career Ledger", "⚔️ Head-to-Head Clash & Edge Engine"])
 
 # ==============================================================================
-# TAB 1: CAREER LEDGER & DYNAMIC SCHEDULE EXPANDER
+# TAB 1: CAREER LEDGER & CROSS-RESONANCE SCANNER
 # ==============================================================================
 with tab_career:
-    st.subheader("1. Entity Selection & Profile Overview")
+    st.subheader("1. Entity Selection & Metaphysical Baseline")
     top_col1, top_col2 = st.columns([3, 1])
     with top_col1:
         selected_entity_key = st.selectbox("Search & Select Subject:", list(EXPANDED_CAREER_DATABASE.keys()), index=0)
@@ -253,20 +252,20 @@ with tab_career:
 
     entity_data = EXPANDED_CAREER_DATABASE[selected_entity_key]
 
-    c1, c2, c3, c4, c5, c6 = st.columns(6)
-    c1.metric("Name", entity_data["name"])
-    c2.metric("Position / Role", entity_data["pos"])
-    c3.metric("Jersey / ID", entity_data["jersey"])
-    c4.metric("Birthdate / Inception", entity_data["birth_date"].strftime("%B %d, %Y"))
-    c5.metric("Team", entity_data["team"])
-    c6.metric("Experience / Seasons", entity_data["exp"])
-
     p_bdate = entity_data["birth_date"]
     natal_lp = compute_life_path(p_bdate, preserve_masters=True)
     natal_dob_red = reduce_digits(p_bdate.day, preserve_masters=True)
     natal_animal, natal_element, natal_polarity = get_chinese_profile(p_bdate.year)
     birth_yr_red = reduce_digits(p_bdate.year, preserve_masters=False)
     base_number = reduce_digits(p_bdate.month + reduce_digits(p_bdate.day, preserve_masters=False), preserve_masters=False)
+
+    c1, c2, c3, c4, c5, c6 = st.columns(6)
+    c1.metric("Name", entity_data["name"])
+    c2.metric("Position / Role", entity_data["pos"])
+    c3.metric("Jersey / ID", entity_data["jersey"])
+    c4.metric("Birthdate / Inception", p_bdate.strftime("%B %d, %Y"))
+    c5.metric("Life Path Number", f"{natal_lp}")
+    c6.metric("Chinese Zodiac", f"{natal_element} {natal_animal}")
 
     st.markdown("---")
     st.subheader(f"2. Multi-Season Career Ledger for {entity_data['name']}")
@@ -275,14 +274,13 @@ with tab_career:
     
     col_s1, col_s2 = st.columns([1, 3])
     with col_s1:
-        season_options = ["All Career Seasons"] + [str(s) for s in available_seasons] if available_seasons else ["Custom Simulated Season"]
+        season_options = ["All Career Seasons"] + [str(s) for s in available_seasons] if available_seasons else ["Simulated Season Available"]
         selected_season_choice = st.selectbox("Filter Season:", season_options, index=0)
     
     with col_s2:
-        with st.expander("⚡ Generate Full Procedural Season Schedule (Any Year 1920–2026)"):
-            gen_year = st.number_input("Enter Year to Generate:", min_value=1920, max_value=2026, value=2024, step=1)
+        with st.expander("⚡ Procedural Season Generator (Reconstruct Any Season 1920–2026)"):
+            gen_year = st.number_input("Year to Generate:", min_value=1920, max_value=2026, value=2024, step=1)
             if st.button("Generate & Hydrate Full 17-Week Season"):
-                # Procedural Sunday kickoff schedule generator
                 start_sept = datetime.date(int(gen_year), 9, 8)
                 generated_logs = []
                 opponents_pool = ["GB", "MIN", "DET", "DAL", "PHI", "NYG", "SF", "LAR", "SEA", "KC", "BUF", "MIA", "BAL", "CIN", "CLE", "PIT", "IND"]
@@ -301,10 +299,9 @@ with tab_career:
                         "ThirdDownEff": f"{5 + (wk % 4)}/13", "StdFPts": 18.5 + (wk % 10), "HalfPPR": 18.5 + (wk % 10), "PPRFPts": 18.5 + (wk % 10)
                     })
                 entity_data["seasons"][int(gen_year)] = generated_logs
-                st.success(f"Hydrated full {gen_year} season ({len(generated_logs)} games) for {entity_data['name']}!")
+                st.success(f"Hydrated {gen_year} season ({len(generated_logs)} games) for {entity_data['name']}!")
                 st.rerun()
 
-    # Re-fetch seasons
     available_seasons = sorted(list(entity_data["seasons"].keys()), reverse=True)
     target_seasons = available_seasons if selected_season_choice == "All Career Seasons" else ([int(selected_season_choice)] if selected_season_choice in [str(s) for s in available_seasons] else available_seasons[:1])
 
@@ -347,7 +344,22 @@ with tab_career:
             primary_stat = int(str(g.get("Score", "0")).split(" - ")[0]) if " - " in str(g.get("Score")) else 0
             
         stat_red = reduce_digits(primary_stat, preserve_masters=False) if primary_stat > 0 else 0
-        num_match = (stat_red == pd_val) or (stat_red == ud)
+        
+        # Cross-Resonance Logic (Stat matching Personal Day, Universal Day, or Power#)
+        pd_hit = (stat_red == pd_val) and primary_stat > 0
+        ud_hit = (stat_red == ud) and primary_stat > 0
+        power_hit = (stat_red == power_num) and primary_stat > 0
+        
+        if pd_hit and power_hit:
+            match_str = "⚡ POWER CROSS-MATCH (PD+Power#)"
+        elif pd_hit:
+            match_str = "⚡ PERSONAL DAY MATCH"
+        elif ud_hit:
+            match_str = "🌐 UNIVERSAL DAY MATCH"
+        elif power_hit:
+            match_str = "🔋 POWER# MATCH"
+        else:
+            match_str = "—"
         
         row = {
             "Season": g.get("Season"), "Week": g.get("Week"), "Date": g_date.strftime("%Y-%m-%d"),
@@ -362,7 +374,7 @@ with tab_career:
             "Affinity Status": affinity, "Universal Year (UY)": uy, "Universal Month (UM)": um,
             "Universal Day (UD)": ud, "Personal Year (PY)": py, "Personal Month (PM)": pm,
             "Personal Day (PD)": pd_val, "Stat Vibration": stat_red,
-            "Harmonic Match": "⚡ NUM MATCH" if num_match and primary_stat > 0 else "—",
+            "Cross-Resonance Match": match_str,
             "Sun Transit": calculate_detailed_transit("Sun", "Sun", g_date, p_bdate),
             "Moon Transit": calculate_detailed_transit("Moon", "Sun", g_date, p_bdate),
             "Mercury Transit": calculate_detailed_transit("Mercury", "Mercury", g_date, p_bdate),
@@ -393,10 +405,14 @@ with tab_career:
     df = pd.DataFrame(ledger_rows)
 
     if not df.empty:
-        with st.expander("⚡ Harmonic Scanner & Filter Controls", expanded=False):
+        # Cross-Resonance Scanner Control Bar
+        with st.expander("⚡ Cross-Resonance Scanner & Filter Controls", expanded=True):
             f_c1, f_c2, f_c3, f_c4 = st.columns(4)
             with f_c1:
-                match_only = st.checkbox("Show Only ⚡ NUM MATCH Hits", value=False)
+                scanner_match_type = st.selectbox(
+                    "Cross-Resonance Filter:",
+                    ["All Games", "Any Resonance Hit", "Power Cross-Match (PD+Power#)", "Personal Day Match", "Universal Day Match", "Power# Match"]
+                )
             with f_c2:
                 all_powers = ["All"] + sorted([str(p) for p in df["Power#"].unique() if pd.notna(p)])
                 selected_power = st.selectbox("Filter by Power#:", all_powers, index=0)
@@ -408,8 +424,17 @@ with tab_career:
                 selected_result = st.selectbox("Filter Game Result:", all_results, index=0)
 
         filtered_df = df.copy()
-        if match_only:
-            filtered_df = filtered_df[filtered_df["Harmonic Match"] == "⚡ NUM MATCH"]
+        if scanner_match_type == "Any Resonance Hit":
+            filtered_df = filtered_df[filtered_df["Cross-Resonance Match"] != "—"]
+        elif scanner_match_type == "Power Cross-Match (PD+Power#)":
+            filtered_df = filtered_df[filtered_df["Cross-Resonance Match"].str.contains("POWER CROSS-MATCH")]
+        elif scanner_match_type == "Personal Day Match":
+            filtered_df = filtered_df[filtered_df["Cross-Resonance Match"].str.contains("PERSONAL DAY MATCH")]
+        elif scanner_match_type == "Universal Day Match":
+            filtered_df = filtered_df[filtered_df["Cross-Resonance Match"].str.contains("UNIVERSAL DAY MATCH")]
+        elif scanner_match_type == "Power# Match":
+            filtered_df = filtered_df[filtered_df["Cross-Resonance Match"].str.contains("POWER# MATCH")]
+
         if selected_power != "All":
             filtered_df = filtered_df[filtered_df["Power#"].astype(str) == selected_power]
         if selected_affinity != "All":
@@ -419,9 +444,14 @@ with tab_career:
 
         def apply_visual_highlights(row):
             styles = [''] * len(row)
-            if "⚡ NUM MATCH" in str(row.get("Harmonic Match", "")):
-                match_idx = row.index.get_loc("Harmonic Match")
+            m_val = str(row.get("Cross-Resonance Match", ""))
+            if "POWER CROSS-MATCH" in m_val:
+                match_idx = row.index.get_loc("Cross-Resonance Match")
+                styles[match_idx] = 'background-color: #064e3b; color: #6ee7b7; font-weight: bold;'
+            elif "MATCH" in m_val:
+                match_idx = row.index.get_loc("Cross-Resonance Match")
                 styles[match_idx] = 'background-color: #1b4332; color: #a3e635; font-weight: bold;'
+                
             aff = str(row.get("Affinity Status", ""))
             if "San He" in aff or "Liu He" in aff:
                 aff_idx = row.index.get_loc("Affinity Status")
@@ -429,10 +459,12 @@ with tab_career:
             elif "Chong" in aff or "Xing" in aff:
                 aff_idx = row.index.get_loc("Affinity Status")
                 styles[aff_idx] = 'background-color: #7f1d1d; color: #fca5a5; font-weight: bold;'
+                
             for col_name in ["Life Path Number", "Day of Birth Reduced", "Game Day Life Path", "Power#"]:
                 if col_name in row and row[col_name] in [11, 22, 33]:
                     c_idx = row.index.get_loc(col_name)
                     styles[c_idx] = 'background-color: #3b0764; color: #d8b4fe; font-weight: bold;'
+                    
             for c_idx, col_name in enumerate(row.index):
                 if "Transit" in col_name and str(row[col_name]) != "—":
                     styles[c_idx] = 'background-color: #1e1b4b; color: #93c5fd;'
@@ -444,12 +476,12 @@ with tab_career:
         st.markdown("### 📊 Correlation Overview")
         m1, m2, m3, m4 = st.columns(4)
         total_g = len(filtered_df)
-        num_hits = len(filtered_df[filtered_df["Harmonic Match"] == "⚡ NUM MATCH"]) if total_g > 0 else 0
+        num_hits = len(filtered_df[filtered_df["Cross-Resonance Match"] != "—"]) if total_g > 0 else 0
         pos_astrology = len(filtered_df[filtered_df["Affinity Status"].str.contains("San He|Liu He")]) if total_g > 0 else 0
         m1.metric("Games Displayed", f"{total_g}")
-        m2.metric("Direct Numerology Hits", f"{num_hits}")
+        m2.metric("Cross-Resonance Hits", f"{num_hits}")
         m3.metric("Favorable Astrology Cycles", f"{pos_astrology}")
-        m4.metric("Harmonic Hit Rate", f"{round(num_hits/total_g*100, 1) if total_g > 0 else 0}%")
+        m4.metric("Resonance Hit Rate", f"{round(num_hits/total_g*100, 1) if total_g > 0 else 0}%")
 
         csv_data = filtered_df.to_csv(index=False).encode('utf-8')
         st.download_button(
@@ -464,7 +496,7 @@ with tab_career:
 # ==============================================================================
 with tab_matchup:
     st.subheader("⚔️ Head-to-Head Clash & Edge Engine")
-    st.caption("Compare two players, coaches, or franchises side-by-side to determine the metaphysical edge on game day.")
+    st.caption("Compare two players, coaches, or franchises side-by-side across Personal Day, Universal Day, Power#, and planetary cycles.")
 
     m_col1, m_col2, m_col3 = st.columns(3)
     with m_col1:
