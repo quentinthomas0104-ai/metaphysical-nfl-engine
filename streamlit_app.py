@@ -5,7 +5,7 @@ import datetime
 st.set_page_config(page_title="Metaphysical Analytics Engine", layout="wide")
 
 st.title("🏈 Metaphysical Analytics Engine")
-st.caption("Career Game Logs: Players, Coaches, Franchises, Transits, Power#, & Harmonic Scanner")
+st.caption("Career Game Logs: Multi-Entity Cycles, Dedicated Transits, Power#, Scanner & Deep Game Inspector")
 
 # ==============================================================================
 # 1. CORE NUMEROLOGY & VIBRATIONAL ENGINE (PRESERVES MASTER NUMBERS)
@@ -79,7 +79,7 @@ def evaluate_affinity(natal_animal: str, game_year_animal: str) -> str:
     return "Neutral Alignment"
 
 # ==============================================================================
-# 3. WESTERN ASTROLOGY (10 CELESTIAL BODIES WITH ACCURATE SIGNS & ASPECTS)
+# 3. WESTERN ASTROLOGY (ALL 10 BODIES & TRANSIT MATRIX)
 # ==============================================================================
 SIGNS_ORDER = [
     "Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo",
@@ -160,9 +160,6 @@ EXPANDED_CAREER_DATABASE = {
             2024: [
                 {"Week": 1, "Date": datetime.date(2024, 9, 5), "DayOfWeek": "Thu", "Opp": "BAL", "HomeAway": "vs", "GameType": "Regular Season", "Venue": "Arrowhead Stadium", "Surface": "Grass", "GameTime": "TNF", "Score": "27 - 20", "Result": "W", "Diff": "+7", "PassCmp": 20, "PassAtt": 28, "PassCmpPct": 71.4, "PassYds": 291, "PassTD": 1, "PassYPA": 10.4, "Int": 1, "Sacks": 1, "SackYdsLost": 6, "Fumbles": 0, "FumblesLost": 0, "Rating": 101.9, "QBR": 77.2, "RushAtt": 3, "RushYds": 3, "RushYPC": 1.0, "RushTD": 0, "Rush20Plus": 0, "BrokenTackles": 0, "Targets": 0, "Rec": 0, "RecYds": 0, "RecYPR": 0.0, "RecTD": 0, "YAC": 0, "Rec20Plus": 0, "Rec50Plus": 0, "ScrimmageYds": 294, "Touches": 3, "TotalTDs": 1, "StdFPts": 16.9, "HalfPPR": 16.9, "PPRFPts": 16.9, "FGM": 0, "FGA": 0, "FG_Pct": 0.0, "XPM": 0, "XPA": 0, "LongestFG": 0},
                 {"Week": 9, "Date": datetime.date(2024, 11, 4), "DayOfWeek": "Mon", "Opp": "TB", "HomeAway": "vs", "GameType": "Regular Season", "Venue": "Arrowhead Stadium", "Surface": "Grass", "GameTime": "MNF", "Score": "30 - 24", "Result": "W", "Diff": "+6", "PassCmp": 34, "PassAtt": 44, "PassCmpPct": 77.3, "PassYds": 291, "PassTD": 3, "PassYPA": 6.6, "Int": 0, "Sacks": 4, "SackYdsLost": 22, "Fumbles": 0, "FumblesLost": 0, "Rating": 116.8, "QBR": 88.5, "RushAtt": 2, "RushYds": 9, "RushYPC": 4.5, "RushTD": 0, "Rush20Plus": 0, "BrokenTackles": 0, "Targets": 0, "Rec": 0, "RecYds": 0, "RecYPR": 0.0, "RecTD": 0, "YAC": 0, "Rec20Plus": 0, "Rec50Plus": 0, "ScrimmageYds": 300, "Touches": 2, "TotalTDs": 3, "StdFPts": 24.5, "HalfPPR": 24.5, "PPRFPts": 24.5, "FGM": 0, "FGA": 0, "FG_Pct": 0.0, "XPM": 0, "XPA": 0, "LongestFG": 0}
-            ],
-            2023: [
-                {"Week": 3, "Date": datetime.date(2023, 9, 24), "DayOfWeek": "Sun", "Opp": "CHI", "HomeAway": "vs", "GameType": "Regular Season", "Venue": "Arrowhead Stadium", "Surface": "Grass", "GameTime": "4:25 PM", "Score": "41 - 10", "Result": "W", "Diff": "+31", "PassCmp": 24, "PassAtt": 33, "PassCmpPct": 72.7, "PassYds": 272, "PassTD": 3, "PassYPA": 8.2, "Int": 0, "Sacks": 0, "SackYdsLost": 0, "Fumbles": 0, "FumblesLost": 0, "Rating": 127.3, "QBR": 89.1, "RushAtt": 3, "RushYds": 28, "RushYPC": 9.3, "RushTD": 0, "Rush20Plus": 0, "BrokenTackles": 1, "Targets": 0, "Rec": 0, "RecYds": 0, "RecYPR": 0.0, "RecTD": 0, "YAC": 0, "Rec20Plus": 0, "Rec50Plus": 0, "ScrimmageYds": 300, "Touches": 3, "TotalTDs": 3, "StdFPts": 25.7, "HalfPPR": 25.7, "PPRFPts": 25.7, "FGM": 0, "FGA": 0, "FG_Pct": 0.0, "XPM": 0, "XPA": 0, "LongestFG": 0}
             ]
         }
     },
@@ -503,7 +500,7 @@ def apply_visual_highlights(row):
 styled_df = filtered_df.style.apply(apply_visual_highlights, axis=1)
 st.dataframe(styled_df, use_container_width=True)
 
-# Correlation Overview Bar
+# Correlation Overview Bar & CSV Export
 st.markdown("### 📊 Correlation Overview")
 m1, m2, m3, m4 = st.columns(4)
 total_g = len(filtered_df)
@@ -513,3 +510,70 @@ m1.metric("Games Displayed", f"{total_g}")
 m2.metric("Direct Numerology Hits", f"{num_hits}")
 m3.metric("Favorable Astrology Cycles", f"{pos_astrology}")
 m4.metric("Harmonic Hit Rate", f"{round(num_hits/total_g*100, 1) if total_g > 0 else 0}%")
+
+# CSV Download
+csv_data = filtered_df.to_csv(index=False).encode('utf-8')
+st.download_button(
+    label="📥 Export Filtered Ledger to CSV",
+    data=csv_data,
+    file_name=f"{entity_data['name'].replace(' ', '_')}_Metaphysical_Ledger.csv",
+    mime="text/csv",
+)
+
+# ==============================================================================
+# 9. DEEP GAME DAY TRANSIT INSPECTOR & HARMONIC BREAKDOWN
+# ==============================================================================
+st.markdown("---")
+st.subheader("🔍 Deep Game Day Transit Inspector & Harmonic Audit")
+
+if not filtered_df.empty:
+    game_options = [
+        f"Week {row['Week']} ({row['Date']}) {row['Home/Away']} {row['Opponent']} — Score: {row['Final Score']}"
+        for _, row in filtered_df.iterrows()
+    ]
+    selected_game_label = st.selectbox("Select Game to Audit:", game_options, index=0)
+    selected_idx = game_options.index(selected_game_label)
+    audit_row = filtered_df.iloc[selected_idx]
+    
+    # Audit Date
+    audit_date = datetime.datetime.strptime(str(audit_row["Date"]), "%Y-%m-%d").date()
+    
+    col_ins1, col_ins2 = st.columns(2)
+    
+    with col_ins1:
+        st.markdown("#### 🪐 Celestial Chart Positions (Natal vs. Kickoff Sky)")
+        planet_audit_list = []
+        for p in ["Sun", "Moon", "Mercury", "Venus", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune", "Pluto"]:
+            n_deg, n_sign, n_deg_in = get_planet_position(p, p_bdate)
+            g_deg, g_sign, g_deg_in = get_planet_position(p, audit_date)
+            asp = get_aspect_name(g_deg, n_deg)
+            planet_audit_list.append({
+                "Body": p,
+                "Natal Placement": f"{round(n_deg_in, 1)}° {n_sign}",
+                "Game Sky Position": f"{round(g_deg_in, 1)}° {g_sign}",
+                "Direct Aspect (Sky to Natal)": asp if asp else "—"
+            })
+        st.dataframe(pd.DataFrame(planet_audit_list), use_container_width=True)
+        
+    with col_ins2:
+        st.markdown("#### ⚡ Vibrational & Numerology Breakdown")
+        st.markdown(f"""
+        * **Birthdate Root / Base Number:** `{p_bdate.strftime('%B %d')} → Month ({p_bdate.month}) + Day ({p_bdate.day})` = **{base_number}**
+        * **Natal Life Path:** **{natal_lp}** | **Day of Birth Reduced:** **{natal_dob_red}**
+        * **Calendar Birthday Check:** `{p_bdate.strftime('%B %d')}` | **Flip Status:** `{audit_row['Flip Status']}`
+        * **Governing Personal Year (PY):** **{audit_row['Personal Year (PY)']}**
+        * **Governing Personal Month (PM):** **{audit_row['Personal Month (PM)']}**
+        * **Active Personal Day (PD):** **{audit_row['Personal Day (PD)']}**
+        * **Active Universal Day (UD):** **{audit_row['Universal Day (UD)']}**
+        * **Game Day Power#:** **{audit_row['Power#']}**
+        * **Primary Stat Vibration Value:** `{audit_row['Stat Vibration']}`
+        * **Harmonic Verdict:** `{audit_row['Harmonic Match']}`
+        """)
+        
+        aff_status = audit_row['Affinity Status']
+        if "San He" in aff_status or "Liu He" in aff_status:
+            st.success(f"Astrological Alignment: {aff_status} — Peak synergy between natal sign and season.")
+        elif "Chong" in aff_status or "Xing" in aff_status:
+            st.error(f"Astrological Alignment: {aff_status} — High-friction or testing cycle.")
+        else:
+            st.info(f"Astrological Alignment: {aff_status}")
