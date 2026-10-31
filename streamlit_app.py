@@ -5,7 +5,7 @@ import datetime
 st.set_page_config(page_title="Metaphysical Analytics Engine", layout="wide")
 
 st.title("🏈 Metaphysical Analytics Engine")
-st.caption("Multi-Metric Confluence Builder: Correlate Any Combination of Cycles, Transits, & Alignments")
+st.caption("Multi-Metric Confluence Builder: Dual-Tier Metaphysical & Game Log Filter Engine")
 
 # ==============================================================================
 # 1. CORE NUMEROLOGY & VIBRATIONAL ENGINE (PRESERVES MASTER NUMBERS)
@@ -78,7 +78,7 @@ def evaluate_affinity(natal_animal: str, game_year_animal: str) -> str:
     return "Neutral Alignment"
 
 # ==============================================================================
-# 3. WESTERN ASTROLOGY (10 BODIES)
+# 3. WESTERN ASTROLOGY (ALL 10 BODIES)
 # ==============================================================================
 SIGNS_ORDER = [
     "Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo",
@@ -132,7 +132,7 @@ def calculate_detailed_transit(t_planet: str, n_planet: str, game_date: datetime
     return "—"
 
 # ==============================================================================
-# 4. OFFICIAL VERIFIED SCHEDULE SLATES (100% AUDITED)
+# 4. OFFICIAL VERIFIED 2026 & HISTORICAL DATA REPOSITORY
 # ==============================================================================
 BEARS_2026_SLATE = [
     {"Week": 1, "Date": datetime.date(2026, 9, 13), "DayOfWeek": "Sun", "Opp": "CAR", "HomeAway": "@", "Venue": "Bank of America Stadium", "Surface": "Turf", "GameTime": "1:00 PM", "Score": "59 - 37", "Result": "W", "Diff": 22, "TotalOffYds": 552, "FirstDowns": 26, "TurnoverDiff": "+2", "ThirdDownEff": "10/14 (71.4%)"},
@@ -319,49 +319,35 @@ for g in raw_logs:
     is_pending = g.get("Result") == "Pending"
     
     row = {
-        "Season": g.get("Season", g_date.year), "Week": g.get("Week"), "Date": g_date.strftime("%Y-%m-%d"),
-        "Day of Week": g.get("DayOfWeek"), "Opponent": g.get("Opp"), "Home/Away": g.get("HomeAway"),
-        "Stadium / Venue": g.get("Venue"), "Surface": g.get("Surface"), "Game Time": g.get("GameTime"),
-        "Final Score": g.get("Score"), "Result": g.get("Result"), "Point Diff": g.get("Diff"),
-    }
-    
-    if cat == "QB":
-        row.update({
-            "CMP": g.get("CMP") if not is_pending else "—",
-            "ATT": g.get("ATT") if not is_pending else "—",
-            "CMP%": f"{g.get('CMP%')}%" if not is_pending else "—",
-            "Pass Yds": g.get("Pass Yds") if not is_pending else "—",
-            "Pass TD": g.get("Pass TD") if not is_pending else "—",
-            "Y/A": g.get("Y/A") if not is_pending else "—",
-            "INT": g.get("INT") if not is_pending else "—",
-            "SCK": g.get("SCK") if not is_pending else "—",
-            "Sack Yds Lost": g.get("Sack Yds Lost") if not is_pending else "—",
-            "Fumbles": g.get("Fumbles") if not is_pending else "—",
-            "Fumbles Lost": g.get("Fumbles Lost") if not is_pending else "—",
-            "Passer Rating": g.get("Passer Rating") if not is_pending else "—",
-            "QBR": g.get("QBR") if not is_pending else "—",
-            "Rush Att": g.get("Rush Att") if not is_pending else "—",
-            "Rush Yds": g.get("Rush Yds") if not is_pending else "—",
-            "YPC": g.get("YPC") if not is_pending else "—",
-            "Rush TD": g.get("Rush TD") if not is_pending else "—",
-        })
-    elif cat == "FRANCHISE":
-        row.update({
-            "Total Offense Yds": g.get("TotalOffYds") if not is_pending else "—",
-            "First Downs": g.get("FirstDowns") if not is_pending else "—",
-            "Turnover Diff": g.get("TurnoverDiff") if not is_pending else "—",
-            "3rd Down Eff": g.get("ThirdDownEff") if not is_pending else "—",
-        })
-
-    row.update({
-        "Life Path Number": natal_lp, "Day of Birth Reduced": natal_dob_red,
-        "Chinese Zodiac Animal": natal_animal, "Fixed / Heavenly Element": natal_element,
-        "Yin / Yang Polarity": natal_polarity, "Birth Year Reduction": birth_yr_red,
-        "Flip Status": "Flipped" if has_flipped else "Pre-Flip", "Game Day Life Path": game_lp,
-        "Power#": power_num, "Game Year Animal & Element": f"{g_element} {g_animal}",
-        "Affinity Status": affinity, "Universal Year (UY)": uy, "Universal Month (UM)": um,
-        "Universal Day (UD)": ud, "Personal Year (PY)": py, "Personal Month (PM)": pm,
-        "Personal Day (PD)": pd_val,
+        "Season": str(g.get("Season", g_date.year)),
+        "Week": f"Week {g.get('Week')}",
+        "Date": g_date.strftime("%Y-%m-%d"),
+        "Day of Week": g.get("DayOfWeek"),
+        "Opponent": g.get("Opp"),
+        "Home/Away": g.get("HomeAway"),
+        "Stadium / Venue": g.get("Venue"),
+        "Surface": g.get("Surface"),
+        "Game Time": g.get("GameTime"),
+        "Final Score": g.get("Score"),
+        "Result": g.get("Result"),
+        "Point Diff": g.get("Diff"),
+        "Life Path Number": str(natal_lp),
+        "Day of Birth Reduced": str(natal_dob_red),
+        "Chinese Zodiac Animal": natal_animal,
+        "Fixed / Heavenly Element": natal_element,
+        "Yin / Yang Polarity": natal_polarity,
+        "Birth Year Reduction": str(birth_yr_red),
+        "Flip Status": "Flipped" if has_flipped else "Pre-Flip",
+        "Game Day Life Path": str(game_lp),
+        "Power#": str(power_num),
+        "Game Year Animal & Element": f"{g_element} {g_animal}",
+        "Affinity Status": affinity,
+        "Universal Year (UY)": str(uy),
+        "Universal Month (UM)": str(um),
+        "Universal Day (UD)": str(ud),
+        "Personal Year (PY)": str(py),
+        "Personal Month (PM)": str(pm),
+        "Personal Day (PD)": str(pd_val),
         "Sun Transit": calculate_detailed_transit("Sun", "Sun", g_date, p_bdate),
         "Moon Transit": calculate_detailed_transit("Moon", "Sun", g_date, p_bdate),
         "Mercury Transit": calculate_detailed_transit("Mercury", "Mercury", g_date, p_bdate),
@@ -375,290 +361,146 @@ for g in raw_logs:
         "Uranus Transit": calculate_detailed_transit("Uranus", "Sun", g_date, p_bdate),
         "Neptune Transit": calculate_detailed_transit("Neptune", "Sun", g_date, p_bdate),
         "Pluto Transit": calculate_detailed_transit("Pluto", "Sun", g_date, p_bdate),
-    })
+    }
+    
+    if cat == "QB":
+        row.update({
+            "CMP": str(g.get("CMP")) if not is_pending else "—",
+            "ATT": str(g.get("ATT")) if not is_pending else "—",
+            "CMP%": f"{g.get('CMP%')}%" if not is_pending else "—",
+            "Pass Yds": str(g.get("Pass Yds")) if not is_pending else "—",
+            "Pass TD": str(g.get("Pass TD")) if not is_pending else "—",
+            "Y/A": str(g.get("Y/A")) if not is_pending else "—",
+            "INT": str(g.get("INT")) if not is_pending else "—",
+            "SCK": str(g.get("SCK")) if not is_pending else "—",
+            "Sack Yds Lost": str(g.get("Sack Yds Lost")) if not is_pending else "—",
+            "Fumbles": str(g.get("Fumbles")) if not is_pending else "—",
+            "Fumbles Lost": str(g.get("Fumbles Lost")) if not is_pending else "—",
+            "Passer Rating": str(g.get("Passer Rating")) if not is_pending else "—",
+            "QBR": str(g.get("QBR")) if not is_pending else "—",
+            "Rush Att": str(g.get("Rush Att")) if not is_pending else "—",
+            "Rush Yds": str(g.get("Rush Yds")) if not is_pending else "—",
+            "YPC": str(g.get("YPC")) if not is_pending else "—",
+            "Rush TD": str(g.get("Rush TD")) if not is_pending else "—",
+        })
+    elif cat == "FRANCHISE":
+        row.update({
+            "Total Offense Yds": str(g.get("TotalOffYds")) if not is_pending else "—",
+            "First Downs": str(g.get("FirstDowns")) if not is_pending else "—",
+            "Turnover Diff": str(g.get("TurnoverDiff")) if not is_pending else "—",
+            "3rd Down Eff": str(g.get("ThirdDownEff")) if not is_pending else "—",
+        })
+
     ledger_rows.append(row)
 
 df = pd.DataFrame(ledger_rows)
 
 if not df.empty:
     # ==============================================================================
-    # DYNAMIC MULTI-METRIC CONFLUENCE FILTER & CORRELATOR
+    # DUAL-TIER CONFLUENCE BUILDER & CUSTOM FILTER ENGINE
     # ==============================================================================
     with st.expander("⚡ Multi-Metric Confluence Builder & Custom Filter Engine", expanded=True):
-        st.caption("Select 1, 5, or 20+ variables simultaneously to isolate specific cosmic alignments and calculate exact win rates.")
+        st.caption("Select criteria across the top Metaphysical Tabs, bottom Game Log Tabs, or both simultaneously.")
         
-        b_c1, b_c2 = st.columns([1, 3])
-        with b_c1:
-            confluence_logic = st.radio("Confluence Logic:", ["MATCH ALL (AND)", "MATCH ANY (OR)"], index=0)
+        mode_col1, mode_col2 = st.columns([1, 4])
+        with mode_col1:
+            confluence_logic = st.radio("Combine Logic:", ["MATCH ALL (AND)", "MATCH ANY (OR)"], index=0)
+        with mode_col2:
+            st.info("💡 You can select values in multiple tabs across the Top Row (Metaphysics) and Bottom Row (Game Log Stats).")
+
+        # ----------------------------------------------------
+        # TOP TIER: EXACT 30 METAPHYSICAL TABS SPECIFIED BY USER
+        # ----------------------------------------------------
+        st.markdown("#### 🔮 Top Section: Metaphysical Metrics")
         
-        with b_c2:
-            equality_rules = st.multiselect(
-                "Direct Harmonic Equalities (Check Any Match):",
-                [
-                    "Personal Day (PD) == Power#",
-                    "Personal Day (PD) == Universal Day (UD)",
-                    "Personal Month (PM) == Universal Month (UM)",
-                    "Personal Month (PM) == Universal Day (UD)",
-                    "Personal Year (PY) == Universal Year (UY)",
-                    "Natal Life Path == Game Day Life Path",
-                    "Natal Life Path == Power#",
-                    "Day of Birth Reduced == Power#"
-                ],
-                default=[]
-            )
+        top_metrics_list = [
+            "Life Path Number",
+            "Day of Birth Reduced",
+            "Chinese Zodiac Animal",
+            "Fixed / Heavenly Element",
+            "Yin / Yang Polarity",
+            "Birth Year Reduction",
+            "Flip Status",
+            "Game Day Life Path",
+            "Power#",
+            "Game Year Animal & Element",
+            "Affinity Status",
+            "Universal Year (UY)",
+            "Universal Month (UM)",
+            "Universal Day (UD)",
+            "Personal Year (PY)",
+            "Personal Month (PM)",
+            "Personal Day (PD)",
+            "Sun Transit",
+            "Moon Transit",
+            "Mercury Transit",
+            "Venus Transit",
+            "Mars Transit (to Sun)",
+            "Mars Transit (to Mars)",
+            "Jupiter Transit (to Sun)",
+            "Jupiter Transit (to Mars)",
+            "Saturn Transit (to Sun)",
+            "Saturn Transit (to Mars)",
+            "Uranus Transit",
+            "Neptune Transit",
+            "Pluto Transit"
+        ]
 
-        f_row1, f_row2, f_row3 = st.columns(3)
-        with f_row1:
-            selected_affinities = st.multiselect(
-                "Filter Chinese Astrology Alignment:",
-                list(df["Affinity Status"].unique()),
-                default=[]
-            )
-        with f_row2:
-            all_powers = sorted([int(p) for p in df["Power#"].unique() if pd.notna(p)])
-            selected_powers = st.multiselect(
-                "Filter Power# (Kickoff Day Vibration):",
-                all_powers,
-                default=[]
-            )
-        with f_row3:
-            selected_results = st.multiselect(
-                "Filter Game Result:",
-                ["W", "L", "Pending"],
-                default=[]
-            )
+        active_top_filters = {}
+        top_tab_objects = st.tabs(top_metrics_list)
+        for i, col_name in enumerate(top_metrics_list):
+            with top_tab_objects[i]:
+                if col_name in df.columns:
+                    avail_vals = sorted(list(df[col_name].dropna().unique()))
+                    selected = st.multiselect(
+                        f"Select values for {col_name}:",
+                        options=avail_vals,
+                        default=[],
+                        key=f"filter_top_{i}_{col_name}"
+                    )
+                    if selected:
+                        active_top_filters[col_name] = selected
 
-        # Transit aspect multi-filter across Mars, Jupiter, Saturn
-        transit_filter_planets = st.multiselect(
-            "Filter Active Planetary Transit Aspects (Any Planet):",
-            ["Mars Conj (0°)", "Mars Trine (120°)", "Mars Square (90°)", "Mars Opp (180°)",
-             "Jupiter Conj (0°)", "Jupiter Trine (120°)", "Jupiter Sext (60°)",
-             "Saturn Conj (0°)", "Saturn Square (90°)", "Saturn Opp (180°)"],
-            default=[]
-        )
+        # ----------------------------------------------------
+        # BOTTOM TIER: GAME LOG & STATS TABS
+        # ----------------------------------------------------
+        st.markdown("---")
+        st.markdown("#### 🏈 Bottom Section: Game Log & Performance Stats")
 
-    # Filtering Engine Execution
-    filtered_df = df.copy()
-
-    # Build mask list for equality rules
-    rule_masks = []
-    for rule in equality_rules:
-        if rule == "Personal Day (PD) == Power#":
-            rule_masks.append(df["Personal Day (PD)"] == df["Power#"])
-        elif rule == "Personal Day (PD) == Universal Day (UD)":
-            rule_masks.append(df["Personal Day (PD)"] == df["Universal Day (UD)"])
-        elif rule == "Personal Month (PM) == Universal Month (UM)":
-            rule_masks.append(df["Personal Month (PM)"] == df["Universal Month (UM)"])
-        elif rule == "Personal Month (PM) == Universal Day (UD)":
-            rule_masks.append(df["Personal Month (PM)"] == df["Universal Day (UD)"])
-        elif rule == "Personal Year (PY) == Universal Year (UY)":
-            rule_masks.append(df["Personal Year (PY)"] == df["Universal Year (UY)"])
-        elif rule == "Natal Life Path == Game Day Life Path":
-            rule_masks.append(df["Life Path Number"] == df["Game Day Life Path"])
-        elif rule == "Natal Life Path == Power#":
-            rule_masks.append(df["Life Path Number"] == df["Power#"])
-        elif rule == "Day of Birth Reduced == Power#":
-            rule_masks.append(df["Day of Birth Reduced"] == df["Power#"])
-
-    if rule_masks:
-        if confluence_logic == "MATCH ALL (AND)":
-            combined_mask = rule_masks[0]
-            for m in rule_masks[1:]:
-                combined_mask = combined_mask & m
-            filtered_df = filtered_df[combined_mask]
+        cat = entity_data["category"]
+        if cat == "QB":
+            bottom_metrics_list = [
+                "Week", "Day of Week", "Opponent", "Home/Away", "Stadium / Venue", "Surface",
+                "Game Time", "Final Score", "Result", "Point Diff",
+                "CMP", "ATT", "CMP%", "Pass Yds", "Pass TD", "Y/A",
+                "INT", "SCK", "Sack Yds Lost", "Fumbles", "Fumbles Lost",
+                "Passer Rating", "QBR", "Rush Att", "Rush Yds", "YPC", "Rush TD"
+            ]
+        elif cat == "FRANCHISE":
+            bottom_metrics_list = [
+                "Week", "Day of Week", "Opponent", "Home/Away", "Stadium / Venue", "Surface",
+                "Game Time", "Final Score", "Result", "Point Diff",
+                "Total Offense Yds", "First Downs", "Turnover Diff", "3rd Down Eff"
+            ]
         else:
-            combined_mask = rule_masks[0]
-            for m in rule_masks[1:]:
-                combined_mask = combined_mask | m
-            filtered_df = filtered_df[combined_mask]
+            bottom_metrics_list = [
+                "Week", "Day of Week", "Opponent", "Home/Away", "Stadium / Venue", "Surface",
+                "Game Time", "Final Score", "Result", "Point Diff"
+            ]
 
-    if selected_affinities:
-        filtered_df = filtered_df[filtered_df["Affinity Status"].isin(selected_affinities)]
+        # Only display columns present in current df
+        bottom_metrics_list = [c for c in bottom_metrics_list if c in df.columns]
 
-    if selected_powers:
-        filtered_df = filtered_df[filtered_df["Power#"].isin(selected_powers)]
-
-    if selected_results:
-        filtered_df = filtered_df[filtered_df["Result"].isin(selected_results)]
-
-    if transit_filter_planets:
-        for t_filter in transit_filter_planets:
-            p_name, aspect_str = t_filter.split(" ", 1)
-            t_col = f"{p_name} Transit (to Sun)"
-            if t_col in filtered_df.columns:
-                filtered_df = filtered_df[filtered_df[t_col].str.contains(aspect_str.replace("(", r"\(").replace(")", r"\)"), na=False)]
-
-    def apply_visual_highlights(row):
-        styles = [''] * len(row)
-        aff = str(row.get("Affinity Status", ""))
-        if "San He" in aff or "Liu He" in aff:
-            aff_idx = row.index.get_loc("Affinity Status")
-            styles[aff_idx] = 'background-color: #78350f; color: #fde047; font-weight: bold;'
-        elif "Chong" in aff or "Xing" in aff:
-            aff_idx = row.index.get_loc("Affinity Status")
-            styles[aff_idx] = 'background-color: #7f1d1d; color: #fca5a5; font-weight: bold;'
-            
-        for col_name in ["Life Path Number", "Day of Birth Reduced", "Game Day Life Path", "Power#"]:
-            if col_name in row and row[col_name] in [11, 22, 33]:
-                c_idx = row.index.get_loc(col_name)
-                styles[c_idx] = 'background-color: #3b0764; color: #d8b4fe; font-weight: bold;'
-                
-        for c_idx, col_name in enumerate(row.index):
-            if "Transit" in col_name and str(row[col_name]) != "—":
-                styles[c_idx] = 'background-color: #1e1b4b; color: #93c5fd;'
-        return styles
-
-    styled_df = filtered_df.style.apply(apply_visual_highlights, axis=1)
-    st.dataframe(styled_df, use_container_width=True)
-
-    csv_data = filtered_df.to_csv(index=False).encode('utf-8')
-    st.download_button(
-        label="📥 Export Filtered Ledger to CSV",
-        data=csv_data,
-        file_name=f"{entity_data['name'].replace(' ', '_')}_Metaphysical_Ledger.csv",
-        mime="text/csv",
-    )
-
-    # ==============================================================================
-    # DYNAMIC OUTCOME ANALYTICS ON SELECTED CONFLUENCE
-    # ==============================================================================
-    st.markdown("---")
-    st.subheader("📈 Live Confluence Outcomes (Wins/Losses on Selected Filter Set)")
-
-    completed_filtered = filtered_df[filtered_df["Result"].isin(["W", "L"])].copy()
-    total_matches = len(filtered_df)
-    completed_matches = len(completed_filtered)
-
-    o_c1, o_c2, o_c3, o_c4 = st.columns(4)
-    if completed_matches > 0:
-        completed_filtered["Diff Num"] = pd.to_numeric(completed_filtered["Point Diff"], errors="coerce").fillna(0)
-        wins = (completed_filtered["Result"] == "W").sum()
-        losses = (completed_filtered["Result"] == "L").sum()
-        win_pct = round((wins / completed_matches) * 100, 1)
-        avg_diff = round(completed_filtered["Diff Num"].mean(), 1)
-
-        o_c1.metric("Games Meeting Confluence", f"{total_matches}")
-        o_c2.metric("Record (W - L)", f"{wins} - {losses}")
-        o_c3.metric("Straight-Up Win %", f"{win_pct}%")
-        o_c4.metric("Avg Point Margin", f"{'+' if avg_diff > 0 else ''}{avg_diff}")
-    else:
-        o_c1.metric("Games Meeting Confluence", f"{total_matches}")
-        o_c2.metric("Record (W - L)", "0 - 0")
-        o_c3.metric("Straight-Up Win %", "N/A")
-        o_c4.metric("Avg Point Margin", "N/A")
-
-else:
-    st.info("No season loaded for this entity.")
-
-# ==============================================================================
-# SECTION 3: HEAD-TO-HEAD CLASH & EDGE ENGINE
-# ==============================================================================
-st.markdown("---")
-st.subheader("3. ⚔️ Head-to-Head Clash & Edge Engine")
-st.caption("Compare two teams, coaches, or quarterbacks side-by-side to evaluate the metaphysical edge.")
-
-col_c1, col_c2, col_c3 = st.columns(3)
-with col_c1:
-    ent_a_key = st.selectbox("Primary Subject (Side A):", list(MASTER_DATABASE.keys()), index=0, key="clash_a")
-with col_c2:
-    default_b_idx = list(MASTER_DATABASE.keys()).index("Seattle Seahawks (Franchise)") if "Seattle Seahawks (Franchise)" in MASTER_DATABASE else 1
-    ent_b_key = st.selectbox("Opposing Subject (Side B):", list(MASTER_DATABASE.keys()), index=default_b_idx, key="clash_b")
-with col_c3:
-    matchup_date = st.date_input("Matchup Kickoff Date:", value=datetime.date(2026, 11, 2), key="clash_date_picker")
-
-ent_a = MASTER_DATABASE[ent_a_key]
-ent_b = MASTER_DATABASE[ent_b_key]
-
-# Side A Calculations
-a_bdate = ent_a["birth_date"]
-a_lp = compute_life_path(a_bdate, preserve_masters=True)
-a_animal, a_elem, _ = get_chinese_profile(a_bdate.year)
-a_base = reduce_digits(a_bdate.month + reduce_digits(a_bdate.day, preserve_masters=False), preserve_masters=False)
-
-a_bday_yr = datetime.date(matchup_date.year, a_bdate.month, a_bdate.day)
-a_flipped = matchup_date >= a_bday_yr
-a_cyc = matchup_date.year if a_flipped else matchup_date.year - 1
-a_py = reduce_digits(a_base + reduce_digits(a_cyc, preserve_masters=False), preserve_masters=False)
-a_pm = reduce_digits(a_py + matchup_date.month, preserve_masters=False)
-a_pd = reduce_digits(a_pm + reduce_digits(matchup_date.day, preserve_masters=False), preserve_masters=False)
-
-# Side B Calculations
-b_bdate = ent_b["birth_date"]
-b_lp = compute_life_path(b_bdate, preserve_masters=True)
-b_animal, b_elem, _ = get_chinese_profile(b_bdate.year)
-b_base = reduce_digits(b_bdate.month + reduce_digits(b_bdate.day, preserve_masters=False), preserve_masters=False)
-
-b_bday_yr = datetime.date(matchup_date.year, b_bdate.month, b_bdate.day)
-b_flipped = matchup_date >= b_bday_yr
-b_cyc = matchup_date.year if b_flipped else matchup_date.year - 1
-b_py = reduce_digits(b_base + reduce_digits(b_cyc, preserve_masters=False), preserve_masters=False)
-b_pm = reduce_digits(b_py + matchup_date.month, preserve_masters=False)
-b_pd = reduce_digits(b_pm + reduce_digits(matchup_date.day, preserve_masters=False), preserve_masters=False)
-
-# Kickoff Cycles
-g_power = reduce_digits(matchup_date.day, preserve_masters=True)
-g_uy = reduce_digits(matchup_date.year, preserve_masters=False)
-g_ud = reduce_digits(reduce_digits(g_uy + matchup_date.month, preserve_masters=False) + reduce_digits(matchup_date.day, preserve_masters=False), preserve_masters=False)
-g_animal, g_elem, _ = get_chinese_profile(matchup_date.year)
-
-a_aff = evaluate_affinity(a_animal, g_animal)
-b_aff = evaluate_affinity(b_animal, g_animal)
-
-st.markdown(f"#### 🛡️ Matchup Comparison: {ent_a['name']} vs. {ent_b['name']}")
-comp_c1, comp_c2, comp_c3 = st.columns([2, 1, 2])
-with comp_c1:
-    st.markdown(f"##### 🔵 {ent_a['name']} ({ent_a['team']})")
-    st.write(f"**Natal Life Path:** {a_lp} | **Chinese Sign:** {a_elem} {a_animal}")
-    st.write(f"**Season Alignment:** {a_aff}")
-    st.metric("Personal Day (PD)", f"{a_pd}")
-    st.metric("Personal Year (PY)", f"{a_py}")
-
-with comp_c2:
-    st.markdown("##### ⚡ Game Kickoff")
-    st.metric("Power#", f"{g_power}")
-    st.metric("Universal Day (UD)", f"{g_ud}")
-    st.write(f"**Year Animal:** {g_elem} {g_animal}")
-
-with comp_c3:
-    st.markdown(f"##### 🔴 {ent_b['name']} ({ent_b['team']})")
-    st.write(f"**Natal Life Path:** {b_lp} | **Chinese Sign:** {b_elem} {b_animal}")
-    st.write(f"**Season Alignment:** {b_aff}")
-    st.metric("Personal Day (PD)", f"{b_pd}")
-    st.metric("Personal Year (PY)", f"{b_py}")
-
-# Edge Scoring
-st.markdown("---")
-st.markdown("### 🏆 Pre-Game Metaphysical Advantage Verdict")
-a_score, b_score = 0, 0
-reasons = []
-
-if a_pd == g_power or a_pd == g_ud:
-    a_score += 2
-    reasons.append(f"🔵 **{ent_a['name']}** holds a direct Personal Day alignment with the Kickoff Day ({a_pd}).")
-if b_pd == g_power or b_pd == g_ud:
-    b_score += 2
-    reasons.append(f"🔴 **{ent_b['name']}** holds a direct Personal Day alignment with the Kickoff Day ({b_pd}).")
-
-if "San He" in a_aff or "Liu He" in a_aff:
-    a_score += 2
-    reasons.append(f"🔵 **{ent_a['name']}** benefits from a harmonious Chinese astrological year ({a_aff}).")
-elif "Chong" in a_aff or "Xing" in a_aff:
-    a_score -= 2
-    reasons.append(f"⚠️ **{ent_a['name']}** operates under astrological friction ({a_aff}).")
-
-if "San He" in b_aff or "Liu He" in b_aff:
-    b_score += 2
-    reasons.append(f"🔴 **{ent_b['name']}** benefits from a harmonious Chinese astrological year ({b_aff}).")
-elif "Chong" in b_aff or "Xing" in b_aff:
-    b_score -= 2
-    reasons.append(f"⚠️ **{ent_b['name']}** operates under astrological friction ({b_aff}).")
-
-if a_score > b_score:
-    st.success(f"**Verdict:** Metaphysical Advantage favors **{ent_a['name']}** (Score: {a_score} vs. {b_score})")
-elif b_score > a_score:
-    st.error(f"**Verdict:** Metaphysical Advantage favors **{ent_b['name']}** (Score: {b_score} vs. {a_score})")
-else:
-    st.info(f"**Verdict:** Neutral / Balanced Metaphysical Equilibrium (Score: {a_score} vs. {b_score})")
-
-for r in reasons:
-    st.markdown(f"- {r}")
+        active_bottom_filters = {}
+        bottom_tab_objects = st.tabs(bottom_metrics_list)
+        for j, col_name in enumerate(bottom_metrics_list):
+            with bottom_tab_objects[j]:
+                avail_vals = sorted(list(df[col_name].dropna().unique()))
+                selected = st.multiselect(
+                    f"Select values for {col_name}:",
+                    options=avail_vals,
+                    default=[],
+                    key=f"filter_bottom_{j}_{col_name}"
+                )
+                if selected:
+                    active
