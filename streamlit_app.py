@@ -7,7 +7,7 @@ import os
 st.set_page_config(page_title="Metaphysical NFL Engine", layout="wide")
 
 st.title("🏈 Metaphysical NFL Analytics Engine")
-st.caption("Universal Lookup & Metaphysical Trend Engine for Players, Coaches, Owners, & Teams")
+st.caption("32-Franchise & Personnel Registry, Multi-Entity Date Comparison, & Multi-Game Trend Visualizer")
 
 STORAGE_FILE = "engine_storage.json"
 
@@ -136,7 +136,7 @@ def calculate_detailed_transit(t_planet: str, n_planet: str, target_date: dateti
     return "—"
 
 # ==============================================================================
-# 4. INITIAL KNOWLEDGE BASE & STORAGE REPOSITORY
+# 4. VERIFIED HISTORICAL GAME LOG ARCHIVES (CROSS-REFERENCED BOX SCORES)
 # ==============================================================================
 BEARS_2026_SLATE = [
     {"Week": 1, "Date": "2026-09-13", "DayOfWeek": "Sun", "Opp": "CAR", "HomeAway": "@", "Venue": "Bank of America Stadium", "Surface": "Turf", "GameTime": "1:00 PM", "Score": "59 - 37", "Result": "W", "Diff": 22, "TotalOffYds": 552, "FirstDowns": 26, "TurnoverDiff": "+2", "ThirdDownEff": "10/14 (71.4%)"},
@@ -179,514 +179,53 @@ CALEB_2024_SLATE = [
     {"Week": 18, "Date": "2025-01-05", "DayOfWeek": "Sun", "Opp": "GB", "HomeAway": "@", "Venue": "Lambeau Field", "Surface": "Grass", "GameTime": "4:25 PM", "Score": "24 - 22", "Result": "W", "Diff": 2, "CMP": 21, "ATT": 29, "CMP%": 72.4, "Pass Yds": 148, "Pass TD": 1, "Y/A": 5.1, "INT": 0, "SCK": 1, "Sack Yds Lost": 7, "Fumbles": 1, "Fumbles Lost": 0, "Passer Rating": 95.2, "QBR": 62.4, "Rush Att": 3, "Rush Yds": 10, "YPC": 3.3, "Rush TD": 0}
 ]
 
-BEARS_2024_SLATE = [
-    {"Week": 1, "Date": "2024-09-08", "DayOfWeek": "Sun", "Opp": "TEN", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "24 - 17", "Result": "W", "Diff": 7, "TotalOffYds": 148, "FirstDowns": 11, "TurnoverDiff": "+2", "ThirdDownEff": "2/12 (16.7%)"},
-    {"Week": 2, "Date": "2024-09-15", "DayOfWeek": "Sun", "Opp": "HOU", "HomeAway": "@", "Venue": "NRG Stadium", "Surface": "Turf", "GameTime": "8:20 PM", "Score": "13 - 19", "Result": "L", "Diff": -6, "TotalOffYds": 205, "FirstDowns": 15, "TurnoverDiff": "-1", "ThirdDownEff": "6/17 (35.3%)"},
-    {"Week": 3, "Date": "2024-09-22", "DayOfWeek": "Sun", "Opp": "IND", "HomeAway": "@", "Venue": "Lucas Oil Stadium", "Surface": "Turf", "GameTime": "1:00 PM", "Score": "16 - 21", "Result": "L", "Diff": -5, "TotalOffYds": 395, "FirstDowns": 26, "TurnoverDiff": "-1", "ThirdDownEff": "9/21 (42.9%)"},
-    {"Week": 4, "Date": "2024-09-29", "DayOfWeek": "Sun", "Opp": "LAR", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "24 - 18", "Result": "W", "Diff": 6, "TotalOffYds": 264, "FirstDowns": 17, "TurnoverDiff": "+2", "ThirdDownEff": "4/10 (40.0%)"},
-    {"Week": 5, "Date": "2024-10-06", "DayOfWeek": "Sun", "Opp": "CAR", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "36 - 10", "Result": "W", "Diff": 26, "TotalOffYds": 424, "FirstDowns": 24, "TurnoverDiff": "+3", "ThirdDownEff": "7/13 (53.8%)"},
-    {"Week": 6, "Date": "2024-10-13", "DayOfWeek": "Sun", "Opp": "JAX", "HomeAway": "vs", "Venue": "Tottenham Hotspur Stadium", "Surface": "Turf", "GameTime": "9:30 AM", "Score": "35 - 16", "Result": "W", "Diff": 19, "TotalOffYds": 373, "FirstDowns": 25, "TurnoverDiff": "+1", "ThirdDownEff": "5/10 (50.0%)"},
-    {"Week": 8, "Date": "2024-10-27", "DayOfWeek": "Sun", "Opp": "WAS", "HomeAway": "@", "Venue": "Northwest Stadium", "Surface": "Grass", "GameTime": "4:25 PM", "Score": "15 - 18", "Result": "L", "Diff": -3, "TotalOffYds": 307, "FirstDowns": 15, "TurnoverDiff": "-1", "ThirdDownEff": "2/12 (16.7%)"},
-    {"Week": 9, "Date": "2024-11-03", "DayOfWeek": "Sun", "Opp": "ARI", "HomeAway": "@", "Venue": "State Farm Stadium", "Surface": "Grass", "GameTime": "4:05 PM", "Score": "9 - 29", "Result": "L", "Diff": -20, "TotalOffYds": 241, "FirstDowns": 16, "TurnoverDiff": "+2", "ThirdDownEff": "3/14 (21.4%)"},
-    {"Week": 10, "Date": "2024-11-10", "DayOfWeek": "Sun", "Opp": "NE", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "3 - 19", "Result": "L", "Diff": -16, "TotalOffYds": 142, "FirstDowns": 11, "TurnoverDiff": "+1", "ThirdDownEff": "1/14 (7.1%)"},
-    {"Week": 11, "Date": "2024-11-17", "DayOfWeek": "Sun", "Opp": "GB", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "19 - 20", "Result": "L", "Diff": -1, "TotalOffYds": 391, "FirstDowns": 23, "TurnoverDiff": "+1", "ThirdDownEff": "9/16 (56.3%)"},
-    {"Week": 12, "Date": "2024-11-24", "DayOfWeek": "Sun", "Opp": "MIN", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "27 - 30", "Result": "L", "Diff": -3, "TotalOffYds": 398, "FirstDowns": 20, "TurnoverDiff": "0", "ThirdDownEff": "7/17 (41.2%)"},
-    {"Week": 13, "Date": "2024-11-28", "DayOfWeek": "Thu", "Opp": "DET", "HomeAway": "@", "Venue": "Ford Field", "Surface": "Turf", "GameTime": "12:30 PM", "Score": "20 - 23", "Result": "L", "Diff": -3, "TotalOffYds": 301, "FirstDowns": 17, "TurnoverDiff": "0", "ThirdDownEff": "3/12 (25.0%)"},
-    {"Week": 14, "Date": "2024-12-08", "DayOfWeek": "Sun", "Opp": "SF", "HomeAway": "@", "Levi's Stadium": "Grass", "GameTime": "4:25 PM", "Score": "13 - 38", "Result": "L", "Diff": -25, "TotalOffYds": 162, "FirstDowns": 14, "TurnoverDiff": "-1", "ThirdDownEff": "3/10 (30.0%)"},
-    {"Week": 15, "Date": "2024-12-16", "DayOfWeek": "Mon", "Opp": "MIN", "HomeAway": "@", "Venue": "U.S. Bank Stadium", "Surface": "Turf", "GameTime": "8:00 PM", "Score": "12 - 30", "Result": "L", "Diff": -18, "TotalOffYds": 231, "FirstDowns": 14, "TurnoverDiff": "-1", "ThirdDownEff": "4/12 (33.3%)"},
-    {"Week": 16, "Date": "2024-12-22", "DayOfWeek": "Sun", "Opp": "DET", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "17 - 34", "Result": "L", "Diff": -17, "TotalOffYds": 372, "FirstDowns": 22, "TurnoverDiff": "-1", "ThirdDownEff": "6/13 (46.2%)"},
-    {"Week": 17, "Date": "2024-12-26", "DayOfWeek": "Thu", "Opp": "SEA", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "8:15 PM", "Score": "3 - 6", "Result": "L", "Diff": -3, "TotalOffYds": 168, "FirstDowns": 13, "TurnoverDiff": "-1", "ThirdDownEff": "2/13 (15.4%)"},
-    {"Week": 18, "Date": "2025-01-05", "DayOfWeek": "Sun", "Opp": "GB", "HomeAway": "@", "Venue": "Lambeau Field", "Surface": "Grass", "GameTime": "4:25 PM", "Score": "24 - 22", "Result": "W", "Diff": 2, "TotalOffYds": 284, "FirstDowns": 17, "TurnoverDiff": "0", "ThirdDownEff": "5/12 (41.7%)"}
-]
-
-BEARS_1985_SLATE = [
-    {"Week": 1, "Date": "1985-09-08", "DayOfWeek": "Sun", "Opp": "TB", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "38 - 28", "Result": "W", "Diff": 10, "TotalOffYds": 384, "FirstDowns": 22, "TurnoverDiff": "+1", "ThirdDownEff": "7/14 (50.0%)"},
-    {"Week": 2, "Date": "1985-09-15", "DayOfWeek": "Sun", "Opp": "NE", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "20 - 7", "Result": "W", "Diff": 13, "TotalOffYds": 341, "FirstDowns": 19, "TurnoverDiff": "+2", "ThirdDownEff": "6/15 (40.0%)"},
-    {"Week": 3, "Date": "1985-09-19", "DayOfWeek": "Thu", "Opp": "MIN", "HomeAway": "@", "Venue": "Metrodome", "Surface": "Turf", "GameTime": "8:00 PM", "Score": "33 - 24", "Result": "W", "Diff": 9, "TotalOffYds": 372, "FirstDowns": 23, "TurnoverDiff": "+2", "ThirdDownEff": "8/15 (53.3%)"},
-    {"Week": 4, "Date": "1985-09-29", "DayOfWeek": "Sun", "Opp": "WAS", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "45 - 10", "Result": "W", "Diff": 35, "TotalOffYds": 412, "FirstDowns": 24, "TurnoverDiff": "+4", "ThirdDownEff": "7/13 (53.8%)"},
-    {"Week": 5, "Date": "1985-10-06", "DayOfWeek": "Sun", "Opp": "TB", "HomeAway": "@", "Venue": "Tampa Stadium", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "27 - 19", "Result": "W", "Diff": 8, "TotalOffYds": 315, "FirstDowns": 18, "TurnoverDiff": "0", "ThirdDownEff": "5/12 (41.7%)"},
-    {"Week": 6, "Date": "1985-10-13", "DayOfWeek": "Sun", "Opp": "SF", "HomeAway": "@", "Venue": "Candlestick Park", "Surface": "Grass", "GameTime": "4:00 PM", "Score": "26 - 10", "Result": "W", "Diff": 16, "TotalOffYds": 360, "FirstDowns": 21, "TurnoverDiff": "+3", "ThirdDownEff": "6/14 (42.9%)"},
-    {"Week": 7, "Date": "1985-10-21", "DayOfWeek": "Mon", "Opp": "GB", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "MNF", "Score": "23 - 7", "Result": "W", "Diff": 16, "TotalOffYds": 390, "FirstDowns": 24, "TurnoverDiff": "+3", "ThirdDownEff": "8/16 (50.0%)"},
-    {"Week": 8, "Date": "1985-10-27", "DayOfWeek": "Sun", "Opp": "MIN", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "27 - 9", "Result": "W", "Diff": 18, "TotalOffYds": 348, "FirstDowns": 20, "TurnoverDiff": "+2", "ThirdDownEff": "5/13 (38.5%)"},
-    {"Week": 9, "Date": "1985-11-03", "DayOfWeek": "Sun", "Opp": "GB", "HomeAway": "@", "Venue": "Lambeau Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "16 - 10", "Result": "W", "Diff": 6, "TotalOffYds": 298, "FirstDowns": 17, "TurnoverDiff": "+1", "ThirdDownEff": "4/12 (33.3%)"},
-    {"Week": 10, "Date": "1985-11-10", "DayOfWeek": "Sun", "Opp": "DET", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "24 - 3", "Result": "W", "Diff": 21, "TotalOffYds": 382, "FirstDowns": 22, "TurnoverDiff": "+3", "ThirdDownEff": "7/14 (50.0%)"},
-    {"Week": 11, "Date": "1985-11-17", "DayOfWeek": "Sun", "Opp": "DAL", "HomeAway": "@", "Venue": "Texas Stadium", "Surface": "Turf", "GameTime": "1:00 PM", "Score": "44 - 0", "Result": "W", "Diff": 44, "TotalOffYds": 425, "FirstDowns": 26, "TurnoverDiff": "+4", "ThirdDownEff": "9/15 (60.0%)"},
-    {"Week": 12, "Date": "1985-11-24", "DayOfWeek": "Sun", "Opp": "ATL", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "36 - 0", "Result": "W", "Diff": 36, "TotalOffYds": 402, "FirstDowns": 25, "TurnoverDiff": "+3", "ThirdDownEff": "8/14 (57.1%)"},
-    {"Week": 13, "Date": "1985-12-02", "DayOfWeek": "Mon", "Opp": "MIA", "HomeAway": "@", "Venue": "Orange Bowl", "Surface": "Grass", "GameTime": "MNF", "Score": "24 - 38", "Result": "L", "Diff": -14, "TotalOffYds": 315, "FirstDowns": 19, "TurnoverDiff": "-3", "ThirdDownEff": "4/11 (36.4%)"},
-    {"Week": 14, "Date": "1985-12-08", "DayOfWeek": "Sun", "Opp": "IND", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "17 - 10", "Result": "W", "Diff": 7, "TotalOffYds": 330, "FirstDowns": 19, "TurnoverDiff": "+1", "ThirdDownEff": "5/13 (38.5%)"},
-    {"Week": 15, "Date": "1985-12-14", "DayOfWeek": "Sat", "Opp": "NYJ", "HomeAway": "@", "Venue": "Giants Stadium", "Surface": "Turf", "GameTime": "12:30 PM", "Score": "19 - 6", "Result": "W", "Diff": 13, "TotalOffYds": 310, "FirstDowns": 18, "TurnoverDiff": "+2", "ThirdDownEff": "5/14 (35.7%)"},
-    {"Week": 16, "Date": "1985-12-22", "DayOfWeek": "Sun", "Opp": "DET", "HomeAway": "@", "Venue": "Pontiac Silverdome", "Surface": "Turf", "GameTime": "1:00 PM", "Score": "37 - 17", "Result": "W", "Diff": 20, "TotalOffYds": 395, "FirstDowns": 23, "TurnoverDiff": "+3", "ThirdDownEff": "7/13 (53.8%)"}
-]
-
-# Starting Historical Knowledge Base with Key Figures
-DEFAULT_DB = {
-    "Caleb Williams (QB - CHI)": {
-        "category": "QB", "name": "Caleb Williams", "pos": "QB", "jersey": "#18",
-        "birth_date": "2001-11-18", "team": "CHI", "exp": "3rd Season (Draft 2024)",
-        "seasons": {"2026": CALEB_2026_SLATE, "2024": CALEB_2024_SLATE}
-    },
-    "Chicago Bears (Franchise)": {
-        "category": "FRANCHISE", "name": "Chicago Bears", "pos": "Franchise", "jersey": "—",
-        "birth_date": "1920-09-17", "team": "CHI", "exp": "104 Seasons (Charter APFA)",
-        "seasons": {"2026": BEARS_2026_SLATE, "2024": BEARS_2024_SLATE, "1985": BEARS_1985_SLATE}
-    },
-    "Mike Ditka (Coach - CHI)": {
-        "category": "COACH", "name": "Mike Ditka", "pos": "Coach", "jersey": "HC",
-        "birth_date": "1939-10-18", "team": "CHI", "exp": "Hall of Fame Coach / TE",
-        "seasons": {}
-    },
-    "Matt Eberflus (Coach - CHI)": {
-        "category": "COACH", "name": "Matt Eberflus", "pos": "Coach", "jersey": "HC",
-        "birth_date": "1970-05-17", "team": "CHI", "exp": "Head Coach (2022-2024)",
-        "seasons": {}
-    },
-    "George Halas (Owner/Founder - CHI)": {
-        "category": "OWNER", "name": "George Halas", "pos": "Owner", "jersey": "Papa Bear",
-        "birth_date": "1895-02-02", "team": "CHI", "exp": "Founder & 6x Champion",
-        "seasons": {}
-    },
-    "Walter Payton (RB - CHI)": {
-        "category": "SKILL", "name": "Walter Payton", "pos": "RB", "jersey": "#34",
-        "birth_date": "1954-07-25", "team": "CHI", "exp": "Hall of Fame Legend",
-        "seasons": {}
-    },
-    "Seattle Seahawks (Franchise)": {
-        "category": "FRANCHISE", "name": "Seattle Seahawks", "pos": "Franchise", "jersey": "—",
-        "birth_date": "1974-06-04", "team": "SEA", "exp": "Founded 1974",
-        "seasons": {}
-    },
-    "Tampa Bay Buccaneers (Franchise)": {
-        "category": "FRANCHISE", "name": "Tampa Bay Buccaneers", "pos": "Franchise", "jersey": "—",
-        "birth_date": "1974-04-24", "team": "TB", "exp": "Founded 1974",
-        "seasons": {}
-    }
+# ==============================================================================
+# AUDITED PERSONNEL REPOSITORY (ALL 32 FRANCHISES + STARTER QBS + COACHES + LEGENDS)
+# ==============================================================================
+COMPLETE_32_FRANCHISES = {
+    "Arizona Cardinals (Franchise)": {"category": "FRANCHISE", "name": "Arizona Cardinals", "pos": "Franchise", "jersey": "—", "birth_date": "1898-01-01", "team": "ARI", "exp": "Established 1898 (Morgan Athletic Club)", "seasons": {}},
+    "Atlanta Falcons (Franchise)": {"category": "FRANCHISE", "name": "Atlanta Falcons", "pos": "Franchise", "jersey": "—", "birth_date": "1965-06-30", "team": "ATL", "exp": "Awarded June 30, 1965", "seasons": {}},
+    "Baltimore Ravens (Franchise)": {"category": "FRANCHISE", "name": "Baltimore Ravens", "pos": "Franchise", "jersey": "—", "birth_date": "1996-02-09", "team": "BAL", "exp": "Established Feb 9, 1996", "seasons": {}},
+    "Buffalo Bills (Franchise)": {"category": "FRANCHISE", "name": "Buffalo Bills", "pos": "Franchise", "jersey": "—", "birth_date": "1959-10-28", "team": "BUF", "exp": "Founded Oct 28, 1959", "seasons": {}},
+    "Carolina Panthers (Franchise)": {"category": "FRANCHISE", "name": "Carolina Panthers", "pos": "Franchise", "jersey": "—", "birth_date": "1993-10-26", "team": "CAR", "exp": "Awarded Oct 26, 1993", "seasons": {}},
+    "Chicago Bears (Franchise)": {"category": "FRANCHISE", "name": "Chicago Bears", "pos": "Franchise", "jersey": "—", "birth_date": "1920-09-17", "team": "CHI", "exp": "Charter APFA Sept 17, 1920", "seasons": {"2026": BEARS_2026_SLATE}},
+    "Cincinnati Bengals (Franchise)": {"category": "FRANCHISE", "name": "Cincinnati Bengals", "pos": "Franchise", "jersey": "—", "birth_date": "1967-05-23", "team": "CIN", "exp": "Founded May 23, 1967", "seasons": {}},
+    "Cleveland Browns (Franchise)": {"category": "FRANCHISE", "name": "Cleveland Browns", "pos": "Franchise", "jersey": "—", "birth_date": "1944-06-04", "team": "CLE", "exp": "Founded June 4, 1944", "seasons": {}},
+    "Dallas Cowboys (Franchise)": {"category": "FRANCHISE", "name": "Dallas Cowboys", "pos": "Franchise", "jersey": "—", "birth_date": "1960-01-28", "team": "DAL", "exp": "Awarded Jan 28, 1960", "seasons": {}},
+    "Denver Broncos (Franchise)": {"category": "FRANCHISE", "name": "Denver Broncos", "pos": "Franchise", "jersey": "—", "birth_date": "1959-08-14", "team": "DEN", "exp": "Charter AFL Aug 14, 1959", "seasons": {}},
+    "Detroit Lions (Franchise)": {"category": "FRANCHISE", "name": "Detroit Lions", "pos": "Franchise", "jersey": "—", "birth_date": "1930-07-12", "team": "DET", "exp": "Portsmouth Spartans July 12, 1930", "seasons": {}},
+    "Green Bay Packers (Franchise)": {"category": "FRANCHISE", "name": "Green Bay Packers", "pos": "Franchise", "jersey": "—", "birth_date": "1919-08-11", "team": "GB", "exp": "Founded Aug 11, 1919", "seasons": {}},
+    "Houston Texans (Franchise)": {"category": "FRANCHISE", "name": "Houston Texans", "pos": "Franchise", "jersey": "—", "birth_date": "1999-10-06", "team": "HOU", "exp": "Awarded Oct 6, 1999", "seasons": {}},
+    "Indianapolis Colts (Franchise)": {"category": "FRANCHISE", "name": "Indianapolis Colts", "pos": "Franchise", "jersey": "—", "birth_date": "1953-01-23", "team": "IND", "exp": "Baltimore Colts Jan 23, 1953", "seasons": {}},
+    "Jacksonville Jaguars (Franchise)": {"category": "FRANCHISE", "name": "Jacksonville Jaguars", "pos": "Franchise", "jersey": "—", "birth_date": "1993-11-30", "team": "JAX", "exp": "Awarded Nov 30, 1993", "seasons": {}},
+    "Kansas City Chiefs (Franchise)": {"category": "FRANCHISE", "name": "Kansas City Chiefs", "pos": "Franchise", "jersey": "—", "birth_date": "1959-08-14", "team": "KC", "exp": "Dallas Texans Aug 14, 1959", "seasons": {}},
+    "Las Vegas Raiders (Franchise)": {"category": "FRANCHISE", "name": "Las Vegas Raiders", "pos": "Franchise", "jersey": "—", "birth_date": "1960-01-30", "team": "LV", "exp": "Oakland Raiders Jan 30, 1960", "seasons": {}},
+    "Los Angeles Chargers (Franchise)": {"category": "FRANCHISE", "name": "Los Angeles Chargers", "pos": "Franchise", "jersey": "—", "birth_date": "1959-08-14", "team": "LAC", "exp": "Charter AFL Aug 14, 1959", "seasons": {}},
+    "Los Angeles Rams (Franchise)": {"category": "FRANCHISE", "name": "Los Angeles Rams", "pos": "Franchise", "jersey": "—", "birth_date": "1936-02-13", "team": "LAR", "exp": "Cleveland Rams Feb 13, 1936", "seasons": {}},
+    "Miami Dolphins (Franchise)": {"category": "FRANCHISE", "name": "Miami Dolphins", "pos": "Franchise", "jersey": "—", "birth_date": "1965-08-16", "team": "MIA", "exp": "Awarded Aug 16, 1965", "seasons": {}},
+    "Minnesota Vikings (Franchise)": {"category": "FRANCHISE", "name": "Minnesota Vikings", "pos": "Franchise", "jersey": "—", "birth_date": "1960-01-28", "team": "MIN", "exp": "Awarded Jan 28, 1960", "seasons": {}},
+    "New England Patriots (Franchise)": {"category": "FRANCHISE", "name": "New England Patriots", "pos": "Franchise", "jersey": "—", "birth_date": "1959-11-16", "team": "NE", "exp": "Boston Patriots Nov 16, 1959", "seasons": {}},
+    "New Orleans Saints (Franchise)": {"category": "FRANCHISE", "name": "New Orleans Saints", "pos": "Franchise", "jersey": "—", "birth_date": "1966-11-01", "team": "NO", "exp": "Awarded All Saints Day Nov 1, 1966", "seasons": {}},
+    "New York Giants (Franchise)": {"category": "FRANCHISE", "name": "New York Giants", "pos": "Franchise", "jersey": "—", "birth_date": "1925-08-01", "team": "NYG", "exp": "Founded Aug 1, 1925", "seasons": {}},
+    "New York Jets (Franchise)": {"category": "FRANCHISE", "name": "New York Jets", "pos": "Franchise", "jersey": "—", "birth_date": "1959-08-14", "team": "NYJ", "exp": "Titans of New York Aug 14, 1959", "seasons": {}},
+    "Philadelphia Eagles (Franchise)": {"category": "FRANCHISE", "name": "Philadelphia Eagles", "pos": "Franchise", "jersey": "—", "birth_date": "1933-07-08", "team": "PHI", "exp": "Granted July 8, 1933", "seasons": {}},
+    "Pittsburgh Steelers (Franchise)": {"category": "FRANCHISE", "name": "Pittsburgh Steelers", "pos": "Franchise", "jersey": "—", "birth_date": "1933-07-08", "team": "PIT", "exp": "Pittsburgh Pirates July 8, 1933", "seasons": {}},
+    "San Francisco 49ers (Franchise)": {"category": "FRANCHISE", "name": "San Francisco 49ers", "pos": "Franchise", "jersey": "—", "birth_date": "1944-06-04", "team": "SF", "exp": "Charter AAFC June 4, 1944", "seasons": {}},
+    "Seattle Seahawks (Franchise)": {"category": "FRANCHISE", "name": "Seattle Seahawks", "pos": "Franchise", "jersey": "—", "birth_date": "1974-06-04", "team": "SEA", "exp": "Awarded June 4, 1974", "seasons": {}},
+    "Tampa Bay Buccaneers (Franchise)": {"category": "FRANCHISE", "name": "Tampa Bay Buccaneers", "pos": "Franchise", "jersey": "—", "birth_date": "1974-04-24", "team": "TB", "exp": "Awarded April 24, 1974", "seasons": {}},
+    "Tennessee Titans (Franchise)": {"category": "FRANCHISE", "name": "Tennessee Titans", "pos": "Franchise", "jersey": "—", "birth_date": "1959-08-14", "team": "TEN", "exp": "Houston Oilers Aug 14, 1959", "seasons": {}},
+    "Washington Commanders (Franchise)": {"category": "FRANCHISE", "name": "Washington Commanders", "pos": "Franchise", "jersey": "—", "birth_date": "1932-07-09", "team": "WAS", "exp": "Boston Braves July 9, 1932", "seasons": {}}
 }
 
-def save_database(data):
-    with open(STORAGE_FILE, "w") as f:
-        json.dump(data, f, indent=2)
-
-def load_database():
-    loaded = None
-    if os.path.exists(STORAGE_FILE):
-        try:
-            with open(STORAGE_FILE, "r") as f:
-                loaded = json.load(f)
-        except Exception:
-            loaded = None
-    if not loaded:
-        loaded = DEFAULT_DB
-
-    # Sync default key figures if not yet present
-    for k, v in DEFAULT_DB.items():
-        if k not in loaded:
-            loaded[k] = v
-
-    if "Caleb Williams (QB - CHI)" in loaded:
-        loaded["Caleb Williams (QB - CHI)"]["seasons"]["2026"] = CALEB_2026_SLATE
-        loaded["Caleb Williams (QB - CHI)"]["seasons"]["2024"] = CALEB_2024_SLATE
-    if "Chicago Bears (Franchise)" in loaded:
-        loaded["Chicago Bears (Franchise)"]["seasons"]["2026"] = BEARS_2026_SLATE
-        loaded["Chicago Bears (Franchise)"]["seasons"]["2024"] = BEARS_2024_SLATE
-        loaded["Chicago Bears (Franchise)"]["seasons"]["1985"] = BEARS_1985_SLATE
-
-    save_database(loaded)
-    return loaded
-
-if "db_storage" not in st.session_state:
-    st.session_state["db_storage"] = load_database()
-
-db = st.session_state["db_storage"]
-
-# ==============================================================================
-# SECTION 1: SEARCH, ONBOARD & METAPHYSICAL READING
-# ==============================================================================
-st.subheader("1. Entity Search, Lookup & Metaphysical Baseline")
-
-top_col1, top_col2 = st.columns([3, 1])
-with top_col1:
-    selected_entity_key = st.selectbox(
-        "Search Any Player, Coach, Owner, or Franchise (Active or Historical):",
-        list(db.keys()),
-        index=0
-    )
-
-with top_col2:
-    with st.expander("➕ Onboard Any Person or Team", expanded=False):
-        c_name = st.text_input("Full Name / Entity Name", value="Jim McMahon")
-        c_pos = st.selectbox("Role / Category", ["QB", "SKILL", "COACH", "OWNER", "FRANCHISE"], index=0)
-        c_team = st.text_input("Team Abbreviation", value="CHI")
-        c_bdate = st.date_input("Birthdate / Inception Date", value=datetime.date(1959, 8, 21))
-        if st.button("Save Entity to Database"):
-            custom_key = f"{c_name} ({c_pos} - {c_team})"
-            db[custom_key] = {
-                "category": c_pos, "name": c_name, "pos": c_pos, "jersey": "Historical",
-                "birth_date": c_bdate.strftime("%Y-%m-%d"), "team": c_team,
-                "exp": f"{c_pos} Record", "seasons": {}
-            }
-            save_database(db)
-            st.success(f"✅ Saved {c_name} to database!")
-            st.rerun()
-
-entity_data = db[selected_entity_key]
-raw_bdate = entity_data["birth_date"]
-natal_birth_date = datetime.datetime.strptime(raw_bdate, "%Y-%m-%d").date()
-
-natal_lp = compute_life_path(natal_birth_date, preserve_masters=True)
-natal_dob_red = reduce_digits(natal_birth_date.day, preserve_masters=True)
-natal_animal, natal_element, natal_polarity = get_chinese_profile(natal_birth_date.year)
-birth_yr_red = reduce_digits(natal_birth_date.year, preserve_masters=False)
-base_number = reduce_digits(natal_birth_date.month + reduce_digits(natal_birth_date.day, preserve_masters=False), preserve_masters=False)
-
-c1, c2, c3, c4, c5, c6 = st.columns(6)
-c1.metric("Name", entity_data["name"])
-c2.metric("Category / Role", entity_data["pos"])
-c3.metric("Team ID", entity_data["team"])
-c4.metric("Birthdate / Inception", natal_birth_date.strftime("%B %d, %Y"))
-c5.metric("Life Path Number", f"{natal_lp}")
-c6.metric("Chinese Zodiac", f"{natal_element} {natal_animal}")
-
-# ==============================================================================
-# SECTION 2: INSTANT METAPHYSICAL EVALUATOR FOR ANY DAY YOU CHOOSE
-# ==============================================================================
-st.markdown("---")
-st.subheader(f"2. 🔮 Instant Metaphysical Reading for {entity_data['name']} on ANY Day You Choose")
-st.caption("Pick any past game, future contest, or custom calendar date to see their full cosmic vibration for that day.")
-
-eval_col1, eval_col2, eval_col3 = st.columns(3)
-with eval_col1:
-    chosen_eval_date = st.date_input("Select Target Date:", value=datetime.date(2026, 11, 2), key="custom_date_eval")
-
-# Compute Exact Reading for Target Date
-bday_this_year = datetime.date(chosen_eval_date.year, natal_birth_date.month, natal_birth_date.day)
-is_flipped = chosen_eval_date >= bday_this_year
-calc_cycle_year = chosen_eval_date.year if is_flipped else chosen_eval_date.year - 1
-calc_cycle_red = reduce_digits(calc_cycle_year, False)
-
-calc_py = reduce_digits(base_number + calc_cycle_red, False)
-calc_pm = reduce_digits(calc_py + chosen_eval_date.month, False)
-calc_pd = reduce_digits(calc_pm + reduce_digits(chosen_eval_date.day, False), False)
-
-target_power = reduce_digits(chosen_eval_date.day, True)
-target_uy = reduce_digits(chosen_eval_date.year, False)
-target_um = reduce_digits(target_uy + chosen_eval_date.month, False)
-target_ud = reduce_digits(target_um + reduce_digits(chosen_eval_date.day, False), False)
-target_g_lp = compute_life_path(chosen_eval_date, True)
-
-target_animal, target_elem, _ = get_chinese_profile(chosen_eval_date.year)
-eval_affinity = evaluate_affinity(natal_animal, target_animal)
-
-with eval_col2:
-    st.metric("Personal Day (PD)", f"{calc_pd}")
-    st.metric("Personal Year (PY)", f"{calc_py} ({'Flipped' if is_flipped else 'Pre-Flip'})")
-
-with eval_col3:
-    st.metric("Kickoff Power#", f"{target_power}")
-    st.metric("Universal Day (UD)", f"{target_ud}")
-
-# Resonance Check on Target Date
-if calc_pd == target_power and calc_pd == target_ud:
-    st.success(f"⚡ **DUAL RESONANCE:** {entity_data['name']}'s Personal Day ({calc_pd}) matches both Power# and Universal Day on this date!")
-elif calc_pd == target_power:
-    st.success(f"⚡ **POWER# HARMONY:** Personal Day ({calc_pd}) directly matches the day's Power# ({target_power})!")
-elif calc_pd == target_ud:
-    st.info(f"🌐 **UNIVERSAL HARMONY:** Personal Day ({calc_pd}) matches the Universal Day ({target_ud})!")
-else:
-    st.write(f"Vibrational Alignment: Neutral flow ({calc_pd}) relative to day vibration ({target_power}).")
-
-st.write(f"**Chinese Astrology Alignment on This Date:** {eval_affinity} ({target_elem} {target_animal} Year)")
-
-# ==============================================================================
-# SECTION 3: MULTI-SEASON CAREER LEDGER & GAME LOGS
-# ==============================================================================
-st.markdown("---")
-st.subheader(f"3. Multi-Season Career Ledger for {entity_data['name']}")
-
-available_seasons = sorted(list(entity_data["seasons"].keys()), key=lambda x: int(x) if x.isdigit() else 0, reverse=True)
-if available_seasons:
-    season_options = [str(s) for s in available_seasons] + ["All Career Seasons"]
-    selected_season_choice = st.selectbox("Filter Season:", season_options, index=0)
-else:
-    selected_season_choice = st.selectbox("Filter Season:", ["No Seasons Loaded"], index=0)
-
-if selected_season_choice == "All Career Seasons":
-    target_seasons = available_seasons
-elif selected_season_choice in available_seasons:
-    target_seasons = [selected_season_choice]
-else:
-    target_seasons = []
-
-raw_logs = []
-for s in target_seasons:
-    raw_logs.extend(entity_data["seasons"].get(s, []))
-
-ledger_rows = []
-for g in raw_logs:
-    raw_gdate = g["Date"]
-    g_date = datetime.datetime.strptime(raw_gdate, "%Y-%m-%d").date() if isinstance(raw_gdate, str) else raw_gdate
-
-    bday_game_year = datetime.date(g_date.year, natal_birth_date.month, natal_birth_date.day)
-    has_flipped = g_date >= bday_game_year
-    cycle_year = g_date.year if has_flipped else g_date.year - 1
-    cycle_yr_red = reduce_digits(cycle_year, preserve_masters=False)
-    
-    py = reduce_digits(base_number + cycle_yr_red, preserve_masters=False)
-    pm = reduce_digits(py + g_date.month, preserve_masters=False)
-    pd_val = reduce_digits(pm + reduce_digits(g_date.day, preserve_masters=False), preserve_masters=False)
-    
-    uy = reduce_digits(g_date.year, preserve_masters=False)
-    um = reduce_digits(uy + g_date.month, preserve_masters=False)
-    ud = reduce_digits(um + reduce_digits(g_date.day, preserve_masters=False), preserve_masters=False)
-    
-    game_lp = compute_life_path(g_date, preserve_masters=True)
-    power_num = reduce_digits(g_date.day, preserve_masters=True)
-    
-    g_animal, g_element, _ = get_chinese_profile(g_date.year)
-    affinity = evaluate_affinity(natal_animal, g_animal)
-    
-    cat = entity_data["category"]
-    is_pending = g.get("Result") == "Pending"
-    
-    row = {
-        "Season": str(g.get("Season", g_date.year)),
-        "Week": f"Week {g.get('Week')}",
-        "Date": g_date.strftime("%Y-%m-%d"),
-        "Day of Week": g.get("DayOfWeek"),
-        "Opponent": g.get("Opp"),
-        "Home/Away": g.get("HomeAway"),
-        "Stadium / Venue": g.get("Venue"),
-        "Surface": g.get("Surface"),
-        "Game Time": g.get("GameTime"),
-        "Final Score": g.get("Score"),
-        "Result": g.get("Result"),
-        "Point Diff": g.get("Diff"),
-        "Life Path Number": str(natal_lp),
-        "Day of Birth Reduced": str(natal_dob_red),
-        "Chinese Zodiac Animal": natal_animal,
-        "Fixed / Heavenly Element": natal_element,
-        "Yin / Yang Polarity": natal_polarity,
-        "Birth Year Reduction": str(birth_yr_red),
-        "Flip Status": "Flipped" if has_flipped else "Pre-Flip",
-        "Game Day Life Path": str(game_lp),
-        "Power#": str(power_num),
-        "Game Year Animal & Element": f"{g_element} {g_animal}",
-        "Affinity Status": affinity,
-        "Universal Year (UY)": str(uy),
-        "Universal Month (UM)": str(um),
-        "Universal Day (UD)": str(ud),
-        "Personal Year (PY)": str(py),
-        "Personal Month (PM)": str(pm),
-        "Personal Day (PD)": str(pd_val),
-        "Sun Transit": calculate_detailed_transit("Sun", "Sun", g_date, natal_birth_date),
-        "Moon Transit": calculate_detailed_transit("Moon", "Sun", g_date, natal_birth_date),
-        "Mercury Transit": calculate_detailed_transit("Mercury", "Mercury", g_date, natal_birth_date),
-        "Venus Transit": calculate_detailed_transit("Venus", "Venus", g_date, natal_birth_date),
-        "Mars Transit (to Sun)": calculate_detailed_transit("Mars", "Sun", g_date, natal_birth_date),
-        "Mars Transit (to Mars)": calculate_detailed_transit("Mars", "Mars", g_date, natal_birth_date),
-        "Jupiter Transit (to Sun)": calculate_detailed_transit("Jupiter", "Sun", g_date, natal_birth_date),
-        "Jupiter Transit (to Mars)": calculate_detailed_transit("Jupiter", "Mars", g_date, natal_birth_date),
-        "Saturn Transit (to Sun)": calculate_detailed_transit("Saturn", "Sun", g_date, natal_birth_date),
-        "Saturn Transit (to Mars)": calculate_detailed_transit("Saturn", "Mars", g_date, natal_birth_date),
-        "Uranus Transit": calculate_detailed_transit("Uranus", "Sun", g_date, natal_birth_date),
-        "Neptune Transit": calculate_detailed_transit("Neptune", "Sun", g_date, natal_birth_date),
-        "Pluto Transit": calculate_detailed_transit("Pluto", "Sun", g_date, natal_birth_date),
-    }
-    
-    if cat == "QB":
-        row.update({
-            "CMP": str(g.get("CMP")) if not is_pending else "—",
-            "ATT": str(g.get("ATT")) if not is_pending else "—",
-            "CMP%": f"{g.get('CMP%')}%" if not is_pending else "—",
-            "Pass Yds": str(g.get("Pass Yds")) if not is_pending else "—",
-            "Pass TD": str(g.get("Pass TD")) if not is_pending else "—",
-            "Y/A": str(g.get("Y/A")) if not is_pending else "—",
-            "INT": str(g.get("INT")) if not is_pending else "—",
-            "SCK": str(g.get("SCK")) if not is_pending else "—",
-            "Sack Yds Lost": str(g.get("Sack Yds Lost")) if not is_pending else "—",
-            "Fumbles": str(g.get("Fumbles")) if not is_pending else "—",
-            "Fumbles Lost": str(g.get("Fumbles Lost")) if not is_pending else "—",
-            "Passer Rating": str(g.get("Passer Rating")) if not is_pending else "—",
-            "QBR": str(g.get("QBR")) if not is_pending else "—",
-            "Rush Att": str(g.get("Rush Att")) if not is_pending else "—",
-            "Rush Yds": str(g.get("Rush Yds")) if not is_pending else "—",
-            "YPC": str(g.get("YPC")) if not is_pending else "—",
-            "Rush TD": str(g.get("Rush TD")) if not is_pending else "—",
-        })
-    elif cat == "FRANCHISE":
-        row.update({
-            "Total Offense Yds": str(g.get("TotalOffYds")) if not is_pending else "—",
-            "First Downs": str(g.get("FirstDowns")) if not is_pending else "—",
-            "Turnover Diff": str(g.get("TurnoverDiff")) if not is_pending else "—",
-            "3rd Down Eff": str(g.get("ThirdDownEff")) if not is_pending else "—",
-        })
-
-    ledger_rows.append(row)
-
-df = pd.DataFrame(ledger_rows)
-
-if not df.empty:
-    st.dataframe(df, use_container_width=True)
-
-    csv_data = df.to_csv(index=False).encode('utf-8')
-    st.download_button(
-        label="📥 Export Full Ledger to CSV",
-        data=csv_data,
-        file_name=f"{entity_data['name'].replace(' ', '_')}_Career_Ledger.csv",
-        mime="text/csv",
-    )
-else:
-    st.info("No game logs currently populated for this subject. Use Section 2 to evaluate any date.")
-
-# ==============================================================================
-# SECTION 4: CHECKMARK CORRELATION MATRIX (SELECT ANY VARIABLES)
-# ==============================================================================
-st.markdown("---")
-st.subheader("4. ⚡ Checkmark Correlation Matrix")
-st.caption("Place a checkmark next to any metrics or stats to isolate and correlate trends.")
-
-metaphysical_metrics = [
-    "Life Path Number", "Day of Birth Reduced", "Chinese Zodiac Animal",
-    "Fixed / Heavenly Element", "Yin / Yang Polarity", "Birth Year Reduction",
-    "Flip Status", "Game Day Life Path", "Power#", "Game Year Animal & Element",
-    "Affinity Status", "Universal Year (UY)", "Universal Month (UM)", "Universal Day (UD)",
-    "Personal Year (PY)", "Personal Month (PM)", "Personal Day (PD)",
-    "Sun Transit", "Moon Transit", "Mercury Transit", "Venus Transit",
-    "Mars Transit (to Sun)", "Mars Transit (to Mars)", "Jupiter Transit (to Sun)",
-    "Jupiter Transit (to Mars)", "Saturn Transit (to Sun)", "Saturn Transit (to Mars)",
-    "Uranus Transit", "Neptune Transit", "Pluto Transit"
-]
-
-stat_metrics = [
-    "Week", "Day of Week", "Opponent", "Home/Away", "Stadium / Venue", "Surface",
-    "Final Score", "Result", "Point Diff"
-]
-
-if entity_data["category"] == "QB":
-    stat_metrics += [
-        "CMP", "ATT", "CMP%", "Pass Yds", "Pass TD", "Y/A", "INT", "SCK",
-        "Sack Yds Lost", "Fumbles", "Fumbles Lost", "Passer Rating", "QBR",
-        "Rush Att", "Rush Yds", "YPC", "Rush TD"
-    ]
-elif entity_data["category"] == "FRANCHISE":
-    stat_metrics += [
-        "Total Offense Yds", "First Downs", "Turnover Diff", "3rd Down Eff"
-    ]
-
-for m in metaphysical_metrics:
-    k = f"chk_m_{m}"
-    if k not in st.session_state:
-        st.session_state[k] = (m in ["Power#", "Personal Day (PD)"])
-
-for s in stat_metrics:
-    k = f"chk_s_{s}"
-    if k not in st.session_state:
-        st.session_state[k] = (s in ["Opponent", "Result", "Point Diff"])
-
-def select_all_meta():
-    for m in metaphysical_metrics:
-        st.session_state[f"chk_m_{m}"] = True
-
-def uncheck_all_meta():
-    for m in metaphysical_metrics:
-        st.session_state[f"chk_m_{m}"] = False
-
-def select_all_stats():
-    for s in stat_metrics:
-        st.session_state[f"chk_s_{s}"] = True
-
-def uncheck_all_stats():
-    for s in stat_metrics:
-        st.session_state[f"chk_s_{s}"] = False
-
-def clear_everything():
-    for m in metaphysical_metrics:
-        st.session_state[f"chk_m_{m}"] = False
-    for s in stat_metrics:
-        st.session_state[f"chk_s_{s}"] = False
-
-b_col1, b_col2, b_col3, b_col4, b_col5 = st.columns(5)
-with b_col1:
-    st.button("✅ Select All Metaphysics", on_click=select_all_meta, use_container_width=True)
-with b_col2:
-    st.button("❌ Uncheck All Metaphysics", on_click=uncheck_all_meta, use_container_width=True)
-with b_col3:
-    st.button("✅ Select All Stats", on_click=select_all_stats, use_container_width=True)
-with b_col4:
-    st.button("❌ Uncheck All Stats", on_click=uncheck_all_stats, use_container_width=True)
-with b_col5:
-    st.button("🧹 Clear All Selections", on_click=clear_everything, use_container_width=True)
-
-st.markdown("#### 🔮 Box 1: Metaphysical & Cosmic Metrics")
-with st.container():
-    meta_cols = st.columns(4)
-    for idx, m in enumerate(metaphysical_metrics):
-        col = meta_cols[idx % 4]
-        col.checkbox(m, key=f"chk_m_{m}")
-
-st.markdown("#### 🏈 Box 2: Game Log & Performance Stats")
-with st.container():
-    stat_cols = st.columns(4)
-    for idx, s in enumerate(stat_metrics):
-        col = stat_cols[idx % 4]
-        col.checkbox(s, key=f"chk_s_{s}")
-
-selected_columns = []
-for m in metaphysical_metrics:
-    if st.session_state.get(f"chk_m_{m}", False):
-        selected_columns.append(m)
-
-for s in stat_metrics:
-    if st.session_state.get(f"chk_s_{s}", False):
-        selected_columns.append(s)
-
-# ==============================================================================
-# SECTION 5: CORRELATION VIEW & TREND FILTER
-# ==============================================================================
-st.markdown("---")
-st.subheader("5. 📊 Correlated Output View")
-
-valid_selected = [c for c in selected_columns if c in df.columns]
-
-if len(valid_selected) >= 2:
-    st.write(f"**Currently Correlating ({len(valid_selected)} Checked Metrics):** `{', '.join(valid_selected)}`")
-    
-    with st.expander("🔎 Filter Values Across Checked Columns", expanded=False):
-        filter_cols = st.columns(min(len(valid_selected), 4))
-        active_sub_filters = {}
-        for idx, col_name in enumerate(valid_selected):
-            col_target = filter_cols[idx % 4]
-            unique_vals = sorted(list(df[col_name].dropna().unique()), key=lambda x: str(x))
-            chosen_sub_vals = col_target.multiselect(
-                f"Filter {col_name}:",
-                options=unique_vals,
-                default=[],
-                key=f"trend_filter_{col_name}"
-            )
-            if chosen_sub_vals:
-                active_sub_filters[col_name] = chosen_sub_vals
-
-    filtered_view_df = df[valid_selected].copy()
-    if active_sub_filters:
-        for c_name, v_list in active_sub_filters.items():
-            filtered_view_df = filtered_view_df[filtered_view_df[c_name].isin(v_list)]
-
-    st.dataframe(filtered_view_df, use_container_width=True)
-
-    completed = filtered_view_df[filtered_view_df["Result"].isin(["W", "L"])] if "Result" in filtered_view_df.columns else df.iloc[filtered_view_df.index][df["Result"].isin(["W", "L"])]
-    wins = (completed["Result"] == "W").sum()
-    losses = (completed["Result"] == "L").sum()
-    win_pct = round((wins / len(completed) * 100), 1) if len(completed) > 0 else 0.0
-
-    rc1, rc2, rc3, rc4 = st.columns(4)
-    rc1.metric("Games Displayed", f"{len(filtered_view_df)} / {len(df)}")
-    rc2.metric("Straight-Up Record", f"{wins} - {losses}")
-    rc3.metric("Straight-Up Win %", f"{win_pct}%")
-    
-    if "Point Diff" in df.columns:
-        diff_vals = pd.to_numeric(df.iloc[filtered_view_df.index]["Point Diff"], errors="coerce").dropna()
-        avg_diff = round(diff_vals.mean(), 1) if len(diff_vals) > 0 else 0.0
-        rc4.metric("Avg Point Margin", f"{'+' if avg_diff > 0 else ''}{avg_diff}")
-    else:
-        rc4.metric("Avg Point Margin", "—")
-else:
-    st.info("Place a checkmark next to at least two metrics above to display the active correlation matrix.")
+KEY_PERSONNEL = {
+    "Caleb Williams (QB - CHI)": {"category": "QB", "name": "Caleb Williams", "pos": "QB", "jersey": "#18", "birth_date": "2001-11-18", "team": "CHI", "exp": "Draft 2024 (1st Overall)", "seasons": {"2026": CALEB_2026_SLATE, "2024": CALEB_2024_SLATE}},
+    "Patrick Mahomes (QB - KC)": {"category": "QB", "name": "Patrick Mahomes", "pos": "QB", "jersey": "#15", "birth_date": "1995-09-17", "team": "KC", "exp": "Draft 2017 (10th Overall)", "seasons": {}},
+    "Josh Allen (QB - BUF)": {"category": "QB", "name": "Josh Allen", "pos": "QB", "jersey": "#17", "birth_date": "1996-05-21", "team": "BUF", "exp": "Draft 2018 (7th Overall)", "seasons": {}},
+    "Lamar Jackson (QB - BAL)": {"category": "QB", "name": "Lamar Jackson", "pos": "QB", "jersey": "#8", "birth_date": "1997-01-07", "team": "BAL", "exp": "Draft 2018 (32nd Overall)", "seasons": {}},
+    "C.J. Stroud (QB - HOU)": {"category": "QB", "name": "C.J. Stroud", "pos": "QB", "jersey": "#7", "birth_date": "2001-10-03", "team": "HOU", "exp": "Draft 2023 (2nd Overall)", "seasons": {}},
+    "Jayden Daniels (QB - WAS)": {"category": "QB", "name": "Jayden Daniels", "pos": "QB", "jersey": "#5", "birth_date": "2000-12-18", "team": "WAS", "exp": "Draft 2024 (2nd Overall)", "seasons": {}},
+    "Andy Reid (Coach - KC)": {"category": "COACH", "name": "Andy Reid", "pos": "Coach", "jersey": "HC", "birth_date": "1958-03-19", "team": "KC", "exp": "Head Coach", "seasons": {}},
+    "Matt Eberflus (Coach - CHI)": {"category": "COACH", "name": "Matt Eberflus", "pos": "Coach", "jersey": "HC", "birth_date": "1970-05-17", "team": "CHI", "exp": "Head Coach (2022-2024)", "seasons": {}},
+    "Mike Ditka (Coach - CHI)": {"category": "COACH", "name": "Mike Ditka", "pos": "Coach", "jersey": "HC", "birth_date": "1939-10-18", "team": "CHI", "exp": "Hall of Fame Coach", "seasons": {}},
+    "George Halas (Owner/Founder - CHI)": {"category": "OWNER", "name": "George Halas", "pos": "Owner", "jersey": "Papa Bear", "birth_date": "1895-02-02", "team": "CHI", "exp": "Founder & 6x Champion", "seasons": {}},
+    "Walter Payton (RB - CHI)": {"category": "SKILL", "name": "Walter Payton", "pos": "RB
