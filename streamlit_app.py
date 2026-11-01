@@ -1,11 +1,15 @@
 import streamlit as st  # type: ignore
 import pandas as pd     # type: ignore
 import datetime
+import json
+import os
 
 st.set_page_config(page_title="Metaphysical Analytics Engine", layout="wide")
 
 st.title("🏈 Metaphysical Analytics Engine")
-st.caption("Step 4: Verified Multi-Season Ledgers, Checkmark Matrix, & Head-to-Head Clash Forecaster")
+st.caption("Step 5: Persistent Storage, Custom Subject Onboarding, Checkmark Correlation Matrix, & Clash Engine")
+
+STORAGE_FILE = "engine_storage.json"
 
 # ==============================================================================
 # 1. CORE NUMEROLOGY & VIBRATIONAL ENGINE (PRESERVES MASTER NUMBERS)
@@ -78,7 +82,7 @@ def evaluate_affinity(natal_animal: str, game_year_animal: str) -> str:
     return "Neutral Alignment"
 
 # ==============================================================================
-# 3. WESTERN ASTROLOGY (ALL 10 BODIES)
+# 3. WESTERN ASTROLOGY (10 BODIES)
 # ==============================================================================
 SIGNS_ORDER = [
     "Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo",
@@ -132,23 +136,23 @@ def calculate_detailed_transit(t_planet: str, n_planet: str, game_date: datetime
     return "—"
 
 # ==============================================================================
-# 4. 100% VERIFIED OFFICIAL NFL GAME LOGS
+# 4. STORAGE & DEFAULT VERIFIED DATA
 # ==============================================================================
 BEARS_2026_SLATE = [
-    {"Week": 1, "Date": datetime.date(2026, 9, 13), "DayOfWeek": "Sun", "Opp": "CAR", "HomeAway": "@", "Venue": "Bank of America Stadium", "Surface": "Turf", "GameTime": "1:00 PM", "Score": "59 - 37", "Result": "W", "Diff": 22, "TotalOffYds": 552, "FirstDowns": 26, "TurnoverDiff": "+2", "ThirdDownEff": "10/14 (71.4%)"},
-    {"Week": 2, "Date": datetime.date(2026, 9, 20), "DayOfWeek": "Sun", "Opp": "MIN", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "3 - 9", "Result": "L", "Diff": -6, "TotalOffYds": 248, "FirstDowns": 14, "TurnoverDiff": "-1", "ThirdDownEff": "3/13 (23.1%)"},
-    {"Week": 3, "Date": datetime.date(2026, 9, 28), "DayOfWeek": "Mon", "Opp": "PHI", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "MNF", "Score": "27 - 7", "Result": "W", "Diff": 20, "TotalOffYds": 374, "FirstDowns": 20, "TurnoverDiff": "+3", "ThirdDownEff": "6/14 (42.9%)"},
-    {"Week": 4, "Date": datetime.date(2026, 10, 4), "DayOfWeek": "Sun", "Opp": "NYJ", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "23 - 12", "Result": "W", "Diff": 11, "TotalOffYds": 492, "FirstDowns": 24, "TurnoverDiff": "+1", "ThirdDownEff": "7/15 (46.7%)"},
-    {"Week": 5, "Date": datetime.date(2026, 10, 11), "DayOfWeek": "Sun", "Opp": "GB", "HomeAway": "@", "Venue": "Lambeau Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "7 - 31", "Result": "L", "Diff": -24, "TotalOffYds": 238, "FirstDowns": 12, "TurnoverDiff": "-2", "ThirdDownEff": "2/11 (18.2%)"},
-    {"Week": 6, "Date": datetime.date(2026, 10, 18), "DayOfWeek": "Sun", "Opp": "ATL", "HomeAway": "@", "Venue": "Mercedes-Benz Stadium", "Surface": "Turf", "GameTime": "1:00 PM", "Score": "31 - 23", "Result": "W", "Diff": 8, "TotalOffYds": 421, "FirstDowns": 23, "TurnoverDiff": "+1", "ThirdDownEff": "8/14 (57.1%)"},
-    {"Week": 7, "Date": datetime.date(2026, 10, 22), "DayOfWeek": "Thu", "Opp": "NE", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "TNF", "Score": "30 - 24", "Result": "W", "Diff": 6, "TotalOffYds": 405, "FirstDowns": 22, "TurnoverDiff": "0", "ThirdDownEff": "6/13 (46.2%)"},
-    {"Week": 8, "Date": datetime.date(2026, 11, 2), "DayOfWeek": "Mon", "Opp": "SEA", "HomeAway": "@", "Venue": "Lumen Field", "Surface": "Turf", "GameTime": "MNF", "Score": "Pending", "Result": "Pending", "Diff": 0, "TotalOffYds": 0, "FirstDowns": 0, "TurnoverDiff": "0", "ThirdDownEff": "Pending"},
-    {"Week": 9, "Date": datetime.date(2026, 11, 8), "DayOfWeek": "Sun", "Opp": "TB", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "SNF", "Score": "Pending", "Result": "Pending", "Diff": 0, "TotalOffYds": 0, "FirstDowns": 0, "TurnoverDiff": "0", "ThirdDownEff": "Pending"}
+    {"Week": 1, "Date": "2026-09-13", "DayOfWeek": "Sun", "Opp": "CAR", "HomeAway": "@", "Venue": "Bank of America Stadium", "Surface": "Turf", "GameTime": "1:00 PM", "Score": "59 - 37", "Result": "W", "Diff": 22, "TotalOffYds": 552, "FirstDowns": 26, "TurnoverDiff": "+2", "ThirdDownEff": "10/14 (71.4%)"},
+    {"Week": 2, "Date": "2026-09-20", "DayOfWeek": "Sun", "Opp": "MIN", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "3 - 9", "Result": "L", "Diff": -6, "TotalOffYds": 248, "FirstDowns": 14, "TurnoverDiff": "-1", "ThirdDownEff": "3/13 (23.1%)"},
+    {"Week": 3, "Date": "2026-09-28", "DayOfWeek": "Mon", "Opp": "PHI", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "MNF", "Score": "27 - 7", "Result": "W", "Diff": 20, "TotalOffYds": 374, "FirstDowns": 20, "TurnoverDiff": "+3", "ThirdDownEff": "6/14 (42.9%)"},
+    {"Week": 4, "Date": "2026-10-04", "DayOfWeek": "Sun", "Opp": "NYJ", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "23 - 12", "Result": "W", "Diff": 11, "TotalOffYds": 492, "FirstDowns": 24, "TurnoverDiff": "+1", "ThirdDownEff": "7/15 (46.7%)"},
+    {"Week": 5, "Date": "2026-10-11", "DayOfWeek": "Sun", "Opp": "GB", "HomeAway": "@", "Venue": "Lambeau Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "7 - 31", "Result": "L", "Diff": -24, "TotalOffYds": 238, "FirstDowns": 12, "TurnoverDiff": "-2", "ThirdDownEff": "2/11 (18.2%)"},
+    {"Week": 6, "Date": "2026-10-18", "DayOfWeek": "Sun", "Opp": "ATL", "HomeAway": "@", "Venue": "Mercedes-Benz Stadium", "Surface": "Turf", "GameTime": "1:00 PM", "Score": "31 - 23", "Result": "W", "Diff": 8, "TotalOffYds": 421, "FirstDowns": 23, "TurnoverDiff": "+1", "ThirdDownEff": "8/14 (57.1%)"},
+    {"Week": 7, "Date": "2026-10-22", "DayOfWeek": "Thu", "Opp": "NE", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "TNF", "Score": "30 - 24", "Result": "W", "Diff": 6, "TotalOffYds": 405, "FirstDowns": 22, "TurnoverDiff": "0", "ThirdDownEff": "6/13 (46.2%)"},
+    {"Week": 8, "Date": "2026-11-02", "DayOfWeek": "Mon", "Opp": "SEA", "HomeAway": "@", "Venue": "Lumen Field", "Surface": "Turf", "GameTime": "MNF", "Score": "Pending", "Result": "Pending", "Diff": 0, "TotalOffYds": 0, "FirstDowns": 0, "TurnoverDiff": "0", "ThirdDownEff": "Pending"},
+    {"Week": 9, "Date": "2026-11-08", "DayOfWeek": "Sun", "Opp": "TB", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "SNF", "Score": "Pending", "Result": "Pending", "Diff": 0, "TotalOffYds": 0, "FirstDowns": 0, "TurnoverDiff": "0", "ThirdDownEff": "Pending"}
 ]
 
 CALEB_2026_SLATE = [
     {
-        "Week": 1, "Date": datetime.date(2026, 9, 13), "DayOfWeek": "Sun", "Opp": "CAR", "HomeAway": "@",
+        "Week": 1, "Date": "2026-09-13", "DayOfWeek": "Sun", "Opp": "CAR", "HomeAway": "@",
         "Venue": "Bank of America Stadium", "Surface": "Turf", "GameTime": "1:00 PM", "Score": "59 - 37", "Result": "W", "Diff": 22,
         "CMP": 21, "ATT": 29, "CMP%": 72.4, "Pass Yds": 269, "Pass TD": 2, "Y/A": 9.3,
         "INT": 0, "SCK": 2, "Sack Yds Lost": 14, "Fumbles": 0, "Fumbles Lost": 0,
@@ -156,7 +160,7 @@ CALEB_2026_SLATE = [
         "Rush Att": 10, "Rush Yds": 65, "YPC": 6.5, "Rush TD": 2
     },
     {
-        "Week": 2, "Date": datetime.date(2026, 9, 20), "DayOfWeek": "Sun", "Opp": "MIN", "HomeAway": "vs",
+        "Week": 2, "Date": "2026-09-20", "DayOfWeek": "Sun", "Opp": "MIN", "HomeAway": "vs",
         "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "3 - 9", "Result": "L", "Diff": -6,
         "CMP": 15, "ATT": 26, "CMP%": 57.7, "Pass Yds": 138, "Pass TD": 0, "Y/A": 5.3,
         "INT": 1, "SCK": 3, "Sack Yds Lost": 21, "Fumbles": 1, "Fumbles Lost": 0,
@@ -164,7 +168,7 @@ CALEB_2026_SLATE = [
         "Rush Att": 5, "Rush Yds": 42, "YPC": 8.4, "Rush TD": 0
     },
     {
-        "Week": 6, "Date": datetime.date(2026, 10, 18), "DayOfWeek": "Sun", "Opp": "ATL", "HomeAway": "@",
+        "Week": 6, "Date": "2026-10-18", "DayOfWeek": "Sun", "Opp": "ATL", "HomeAway": "@",
         "Venue": "Mercedes-Benz Stadium", "Surface": "Turf", "GameTime": "1:00 PM", "Score": "31 - 23", "Result": "W", "Diff": 8,
         "CMP": 30, "ATT": 36, "CMP%": 83.3, "Pass Yds": 305, "Pass TD": 1, "Y/A": 8.5,
         "INT": 0, "SCK": 4, "Sack Yds Lost": 26, "Fumbles": 1, "Fumbles Lost": 0,
@@ -172,7 +176,7 @@ CALEB_2026_SLATE = [
         "Rush Att": 4, "Rush Yds": 3, "YPC": 0.8, "Rush TD": 0
     },
     {
-        "Week": 7, "Date": datetime.date(2026, 10, 22), "DayOfWeek": "Thu", "Opp": "NE", "HomeAway": "vs",
+        "Week": 7, "Date": "2026-10-22", "DayOfWeek": "Thu", "Opp": "NE", "HomeAway": "vs",
         "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "TNF", "Score": "30 - 24", "Result": "W", "Diff": 6,
         "CMP": 22, "ATT": 33, "CMP%": 66.7, "Pass Yds": 308, "Pass TD": 2, "Y/A": 9.3,
         "INT": 0, "SCK": 3, "Sack Yds Lost": 19, "Fumbles": 0, "Fumbles Lost": 0,
@@ -180,7 +184,7 @@ CALEB_2026_SLATE = [
         "Rush Att": 5, "Rush Yds": 18, "YPC": 3.6, "Rush TD": 0
     },
     {
-        "Week": 8, "Date": datetime.date(2026, 11, 2), "DayOfWeek": "Mon", "Opp": "SEA", "HomeAway": "@",
+        "Week": 8, "Date": "2026-11-02", "DayOfWeek": "Mon", "Opp": "SEA", "HomeAway": "@",
         "Venue": "Lumen Field", "Surface": "Turf", "GameTime": "MNF", "Score": "Pending", "Result": "Pending", "Diff": 0,
         "CMP": 0, "ATT": 0, "CMP%": 0.0, "Pass Yds": 0, "Pass TD": 0, "Y/A": 0.0,
         "INT": 0, "SCK": 0, "Sack Yds Lost": 0, "Fumbles": 0, "Fumbles Lost": 0,
@@ -188,7 +192,7 @@ CALEB_2026_SLATE = [
         "Rush Att": 0, "Rush Yds": 0, "YPC": 0.0, "Rush TD": 0
     },
     {
-        "Week": 9, "Date": datetime.date(2026, 11, 8), "DayOfWeek": "Sun", "Opp": "TB", "HomeAway": "vs",
+        "Week": 9, "Date": "2026-11-08", "DayOfWeek": "Sun", "Opp": "TB", "HomeAway": "vs",
         "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "SNF", "Score": "Pending", "Result": "Pending", "Diff": 0,
         "CMP": 0, "ATT": 0, "CMP%": 0.0, "Pass Yds": 0, "Pass TD": 0, "Y/A": 0.0,
         "INT": 0, "SCK": 0, "Sack Yds Lost": 0, "Fumbles": 0, "Fumbles Lost": 0,
@@ -198,63 +202,83 @@ CALEB_2026_SLATE = [
 ]
 
 BEARS_1985_SLATE = [
-    {"Week": 1, "Date": datetime.date(1985, 9, 8), "DayOfWeek": "Sun", "Opp": "TB", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "38 - 28", "Result": "W", "Diff": 10, "TotalOffYds": 384, "FirstDowns": 22, "TurnoverDiff": "+1", "ThirdDownEff": "7/14 (50.0%)"},
-    {"Week": 2, "Date": datetime.date(1985, 9, 15), "DayOfWeek": "Sun", "Opp": "NE", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "20 - 7", "Result": "W", "Diff": 13, "TotalOffYds": 341, "FirstDowns": 19, "TurnoverDiff": "+2", "ThirdDownEff": "6/15 (40.0%)"},
-    {"Week": 7, "Date": datetime.date(1985, 10, 21), "DayOfWeek": "Mon", "Opp": "GB", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "MNF", "Score": "23 - 7", "Result": "W", "Diff": 16, "TotalOffYds": 390, "FirstDowns": 24, "TurnoverDiff": "+3", "ThirdDownEff": "8/16 (50.0%)"},
-    {"Week": 11, "Date": datetime.date(1985, 11, 17), "DayOfWeek": "Sun", "Opp": "DAL", "HomeAway": "@", "Venue": "Texas Stadium", "Surface": "Turf", "GameTime": "1:00 PM", "Score": "44 - 0", "Result": "W", "Diff": 44, "TotalOffYds": 425, "FirstDowns": 26, "TurnoverDiff": "+4", "ThirdDownEff": "9/15 (60.0%)"}
+    {"Week": 1, "Date": "1985-09-08", "DayOfWeek": "Sun", "Opp": "TB", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "38 - 28", "Result": "W", "Diff": 10, "TotalOffYds": 384, "FirstDowns": 22, "TurnoverDiff": "+1", "ThirdDownEff": "7/14 (50.0%)"},
+    {"Week": 2, "Date": "1985-09-15", "DayOfWeek": "Sun", "Opp": "NE", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "20 - 7", "Result": "W", "Diff": 13, "TotalOffYds": 341, "FirstDowns": 19, "TurnoverDiff": "+2", "ThirdDownEff": "6/15 (40.0%)"},
+    {"Week": 7, "Date": "1985-10-21", "DayOfWeek": "Mon", "Opp": "GB", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "MNF", "Score": "23 - 7", "Result": "W", "Diff": 16, "TotalOffYds": 390, "FirstDowns": 24, "TurnoverDiff": "+3", "ThirdDownEff": "8/16 (50.0%)"},
+    {"Week": 11, "Date": "1985-11-17", "DayOfWeek": "Sun", "Opp": "DAL", "HomeAway": "@", "Venue": "Texas Stadium", "Surface": "Turf", "GameTime": "1:00 PM", "Score": "44 - 0", "Result": "W", "Diff": 44, "TotalOffYds": 425, "FirstDowns": 26, "TurnoverDiff": "+4", "ThirdDownEff": "9/15 (60.0%)"}
 ]
 
-ALL_32_FRANCHISES = {
-    "Chicago Bears": datetime.date(1920, 9, 17),
-    "Seattle Seahawks": datetime.date(1974, 6, 4),
-    "Tampa Bay Buccaneers": datetime.date(1974, 4, 24),
-    "Green Bay Packers": datetime.date(1919, 8, 11),
-    "Kansas City Chiefs": datetime.date(1959, 8, 14),
-    "Buffalo Bills": datetime.date(1959, 10, 28),
-    "Detroit Lions": datetime.date(1930, 7, 12),
-    "Minnesota Vikings": datetime.date(1960, 1, 28)
-}
-
-MASTER_DATABASE = {
+DEFAULT_DB = {
     "Caleb Williams (QB - CHI)": {
         "category": "QB", "name": "Caleb Williams", "pos": "QB", "jersey": "#18",
-        "birth_date": datetime.date(2001, 11, 18), "team": "CHI", "exp": "3rd Season (Draft 2024)",
-        "seasons": {2026: CALEB_2026_SLATE}
+        "birth_date": "2001-11-18", "team": "CHI", "exp": "3rd Season (Draft 2024)",
+        "seasons": {"2026": CALEB_2026_SLATE}
     },
     "Chicago Bears (Franchise)": {
         "category": "FRANCHISE", "name": "Chicago Bears", "pos": "Franchise", "jersey": "—",
-        "birth_date": datetime.date(1920, 9, 17), "team": "CHI", "exp": "104 Seasons (Charter APFA)",
-        "seasons": {2026: BEARS_2026_SLATE, 1985: BEARS_1985_SLATE}
+        "birth_date": "1920-09-17", "team": "CHI", "exp": "104 Seasons (Charter APFA)",
+        "seasons": {"2026": BEARS_2026_SLATE, "1985": BEARS_1985_SLATE}
     },
     "Seattle Seahawks (Franchise)": {
         "category": "FRANCHISE", "name": "Seattle Seahawks", "pos": "Franchise", "jersey": "—",
-        "birth_date": datetime.date(1974, 6, 4), "team": "SEA", "exp": "Founded 1974",
+        "birth_date": "1974-06-04", "team": "SEA", "exp": "Founded 1974",
         "seasons": {}
     },
     "Tampa Bay Buccaneers (Franchise)": {
         "category": "FRANCHISE", "name": "Tampa Bay Buccaneers", "pos": "Franchise", "jersey": "—",
-        "birth_date": datetime.date(1974, 4, 24), "team": "TB", "exp": "Founded 1974",
+        "birth_date": "1974-04-24", "team": "TB", "exp": "Founded 1974",
         "seasons": {}
     }
 }
 
-for f_name, f_bdate in ALL_32_FRANCHISES.items():
-    f_key = f"{f_name} (Franchise)"
-    if f_key not in MASTER_DATABASE:
-        MASTER_DATABASE[f_key] = {
-            "category": "FRANCHISE", "name": f_name, "pos": "Franchise", "jersey": "—",
-            "birth_date": f_bdate, "team": f_name[:3].upper(), "exp": f"Founded {f_bdate.year}",
-            "seasons": {}
-        }
+def load_database():
+    if os.path.exists(STORAGE_FILE):
+        try:
+            with open(STORAGE_FILE, "r") as f:
+                return json.load(f)
+        except Exception:
+            return DEFAULT_DB
+    return DEFAULT_DB
+
+def save_database(data):
+    with open(STORAGE_FILE, "w") as f:
+        json.dump(data, f, indent=2)
+
+if "db_storage" not in st.session_state:
+    st.session_state["db_storage"] = load_database()
+
+db = st.session_state["db_storage"]
 
 # ==============================================================================
-# SECTION 1: ENTITY SELECTION & METAPHYSICAL PROFILE
+# SECTION 1: ENTITY SELECTION, CUSTOM ONBOARDING & METAPHYSICAL PROFILE
 # ==============================================================================
 st.subheader("1. Entity Selection & Metaphysical Baseline")
-selected_entity_key = st.selectbox("Search & Select Subject:", list(MASTER_DATABASE.keys()), index=0)
-entity_data = MASTER_DATABASE[selected_entity_key]
 
-natal_birth_date = entity_data["birth_date"]
+top_col1, top_col2 = st.columns([3, 1])
+with top_col1:
+    selected_entity_key = st.selectbox("Search & Select Subject:", list(db.keys()), index=0)
+
+with top_col2:
+    with st.expander("➕ Onboard Custom Subject", expanded=False):
+        c_name = st.text_input("Full Name", value="Jayden Daniels")
+        c_pos = st.selectbox("Position / Role", ["QB", "SKILL", "COACH", "FRANCHISE"], index=0)
+        c_team = st.text_input("Team Abbreviation", value="WAS")
+        c_bdate = st.date_input("Birthdate / Inception", value=datetime.date(2000, 12, 18))
+        if st.button("Save to Persistent Storage"):
+            custom_key = f"{c_name} ({c_pos} - {c_team})"
+            db[custom_key] = {
+                "category": c_pos, "name": c_name, "pos": c_pos, "jersey": "Custom",
+                "birth_date": c_bdate.strftime("%Y-%m-%d"), "team": c_team,
+                "exp": "Custom Profile", "seasons": {}
+            }
+            save_database(db)
+            st.success(f"✅ Saved {c_name} permanently to local storage!")
+            st.rerun()
+
+entity_data = db[selected_entity_key]
+raw_bdate = entity_data["birth_date"]
+natal_birth_date = datetime.datetime.strptime(raw_bdate, "%Y-%m-%d").date()
+
 natal_lp = compute_life_path(natal_birth_date, preserve_masters=True)
 natal_dob_red = reduce_digits(natal_birth_date.day, preserve_masters=True)
 natal_animal, natal_element, natal_polarity = get_chinese_profile(natal_birth_date.year)
@@ -276,12 +300,18 @@ st.markdown("---")
 st.subheader(f"2. Multi-Season Career Ledger for {entity_data['name']}")
 
 available_seasons = sorted(list(entity_data["seasons"].keys()), reverse=True)
-selected_season_choice = st.selectbox("Filter Season:", [str(s) for s in available_seasons] + ["All Career Seasons"], index=0)
+if available_seasons:
+    season_options = [str(s) for s in available_seasons] + ["All Career Seasons"]
+    selected_season_choice = st.selectbox("Filter Season:", season_options, index=0)
+else:
+    selected_season_choice = st.selectbox("Filter Season:", ["No Seasons Loaded"], index=0)
 
 if selected_season_choice == "All Career Seasons":
     target_seasons = available_seasons
+elif selected_season_choice in available_seasons:
+    target_seasons = [selected_season_choice]
 else:
-    target_seasons = [int(selected_season_choice)]
+    target_seasons = []
 
 raw_logs = []
 for s in target_seasons:
@@ -289,7 +319,9 @@ for s in target_seasons:
 
 ledger_rows = []
 for g in raw_logs:
-    g_date = g["Date"]
+    raw_gdate = g["Date"]
+    g_date = datetime.datetime.strptime(raw_gdate, "%Y-%m-%d").date() if isinstance(raw_gdate, str) else raw_gdate
+
     bday_game_year = datetime.date(g_date.year, natal_birth_date.month, natal_birth_date.day)
     has_flipped = g_date >= bday_game_year
     cycle_year = g_date.year if has_flipped else g_date.year - 1
@@ -389,23 +421,25 @@ for g in raw_logs:
 
 df = pd.DataFrame(ledger_rows)
 
-# Full Career Ledger Display
-st.dataframe(df, use_container_width=True)
+if not df.empty:
+    st.dataframe(df, use_container_width=True)
 
-csv_data = df.to_csv(index=False).encode('utf-8')
-st.download_button(
-    label="📥 Export Full Ledger to CSV",
-    data=csv_data,
-    file_name=f"{entity_data['name'].replace(' ', '_')}_Career_Ledger.csv",
-    mime="text/csv",
-)
+    csv_data = df.to_csv(index=False).encode('utf-8')
+    st.download_button(
+        label="📥 Export Full Ledger to CSV",
+        data=csv_data,
+        file_name=f"{entity_data['name'].replace(' ', '_')}_Career_Ledger.csv",
+        mime="text/csv",
+    )
+else:
+    st.info("No game logs currently populated for this subject. Ingest a season slate or add game logs above.")
 
 # ==============================================================================
 # SECTION 3: CHECKMARK CORRELATION BOX (WITH INSTANT UNCHECK BUTTONS)
 # ==============================================================================
 st.markdown("---")
 st.subheader("⚡ Checkmark Correlation & Trend Matrix")
-st.caption("Place a checkmark next to any metrics or stats to correlate them. Select two, several, or all.")
+st.caption("Place a checkmark next to any metrics or stats to isolate them in the correlation view.")
 
 metaphysical_metrics = [
     "Life Path Number", "Day of Birth Reduced", "Chinese Zodiac Animal",
@@ -535,7 +569,7 @@ else:
     st.info("Place a checkmark next to at least two metrics above to display the active correlation matrix.")
 
 # ==============================================================================
-# SECTION 5: STEP 4 HEAD-TO-HEAD CLASH & MATCHUP FORECASTER
+# SECTION 5: HEAD-TO-HEAD CLASH & MATCHUP FORECASTER
 # ==============================================================================
 st.markdown("---")
 st.subheader("5. ⚔️ Head-to-Head Clash & Matchup Edge Forecaster")
@@ -561,23 +595,24 @@ with st.expander("⚡ Quick-Load Active 2026 Matchups", expanded=True):
             st.session_state["h2h_date"] = datetime.date(2026, 11, 8)
         st.rerun()
 
-default_a = st.session_state.get("h2h_side_a", list(MASTER_DATABASE.keys())[0])
-default_b = st.session_state.get("h2h_side_b", "Seattle Seahawks (Franchise)" if "Seattle Seahawks (Franchise)" in MASTER_DATABASE else list(MASTER_DATABASE.keys())[1])
+default_a = st.session_state.get("h2h_side_a", list(db.keys())[0])
+default_b = st.session_state.get("h2h_side_b", "Seattle Seahawks (Franchise)" if "Seattle Seahawks (Franchise)" in db else list(db.keys())[1])
 default_d = st.session_state.get("h2h_date", datetime.date(2026, 11, 2))
 
 c_col1, c_col2, c_col3 = st.columns(3)
 with c_col1:
-    h2h_a_key = st.selectbox("Side A (Primary):", list(MASTER_DATABASE.keys()), index=list(MASTER_DATABASE.keys()).index(default_a))
+    h2h_a_key = st.selectbox("Side A (Primary):", list(db.keys()), index=list(db.keys()).index(default_a))
 with c_col2:
-    h2h_b_key = st.selectbox("Side B (Opponent):", list(MASTER_DATABASE.keys()), index=list(MASTER_DATABASE.keys()).index(default_b))
+    h2h_b_key = st.selectbox("Side B (Opponent):", list(db.keys()), index=list(db.keys()).index(default_b))
 with c_col3:
     h2h_game_date = st.date_input("Kickoff Date:", value=default_d, key="h2h_date_input")
 
-ent_a = MASTER_DATABASE[h2h_a_key]
-ent_b = MASTER_DATABASE[h2h_b_key]
+ent_a = db[h2h_a_key]
+ent_b = db[h2h_b_key]
 
-# Side A Calculations
-a_bdate = ent_a["birth_date"]
+raw_a_bdate = ent_a["birth_date"]
+a_bdate = datetime.datetime.strptime(raw_a_bdate, "%Y-%m-%d").date() if isinstance(raw_a_bdate, str) else raw_a_bdate
+
 a_lp = compute_life_path(a_bdate, preserve_masters=True)
 a_dob_red = reduce_digits(a_bdate.day, preserve_masters=True)
 a_animal, a_elem, _ = get_chinese_profile(a_bdate.year)
@@ -590,8 +625,9 @@ a_py = reduce_digits(a_base + reduce_digits(a_cyc, preserve_masters=False), pres
 a_pm = reduce_digits(a_py + h2h_game_date.month, preserve_masters=False)
 a_pd = reduce_digits(a_pm + reduce_digits(h2h_game_date.day, preserve_masters=False), preserve_masters=False)
 
-# Side B Calculations
-b_bdate = ent_b["birth_date"]
+raw_b_bdate = ent_b["birth_date"]
+b_bdate = datetime.datetime.strptime(raw_b_bdate, "%Y-%m-%d").date() if isinstance(raw_b_bdate, str) else raw_b_bdate
+
 b_lp = compute_life_path(b_bdate, preserve_masters=True)
 b_dob_red = reduce_digits(b_bdate.day, preserve_masters=True)
 b_animal, b_elem, _ = get_chinese_profile(b_bdate.year)
@@ -604,7 +640,6 @@ b_py = reduce_digits(b_base + reduce_digits(b_cyc, preserve_masters=False), pres
 b_pm = reduce_digits(b_py + h2h_game_date.month, preserve_masters=False)
 b_pd = reduce_digits(b_pm + reduce_digits(h2h_game_date.day, preserve_masters=False), preserve_masters=False)
 
-# Kickoff Vibrations
 g_power = reduce_digits(h2h_game_date.day, preserve_masters=True)
 g_uy = reduce_digits(h2h_game_date.year, preserve_masters=False)
 g_ud = reduce_digits(reduce_digits(g_uy + h2h_game_date.month, preserve_masters=False) + reduce_digits(h2h_game_date.day, preserve_masters=False), preserve_masters=False)
