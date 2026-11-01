@@ -5,7 +5,7 @@ import datetime
 st.set_page_config(page_title="Metaphysical Analytics Engine", layout="wide")
 
 st.title("🏈 Metaphysical Analytics Engine")
-st.caption("Custom Checkmark Correlation Engine: Select Two, Multiple, or All Metrics")
+st.caption("Step 4: Verified Multi-Season Ledgers, Checkmark Matrix, & Head-to-Head Clash Forecaster")
 
 # ==============================================================================
 # 1. CORE NUMEROLOGY & VIBRATIONAL ENGINE (PRESERVES MASTER NUMBERS)
@@ -204,6 +204,17 @@ BEARS_1985_SLATE = [
     {"Week": 11, "Date": datetime.date(1985, 11, 17), "DayOfWeek": "Sun", "Opp": "DAL", "HomeAway": "@", "Venue": "Texas Stadium", "Surface": "Turf", "GameTime": "1:00 PM", "Score": "44 - 0", "Result": "W", "Diff": 44, "TotalOffYds": 425, "FirstDowns": 26, "TurnoverDiff": "+4", "ThirdDownEff": "9/15 (60.0%)"}
 ]
 
+ALL_32_FRANCHISES = {
+    "Chicago Bears": datetime.date(1920, 9, 17),
+    "Seattle Seahawks": datetime.date(1974, 6, 4),
+    "Tampa Bay Buccaneers": datetime.date(1974, 4, 24),
+    "Green Bay Packers": datetime.date(1919, 8, 11),
+    "Kansas City Chiefs": datetime.date(1959, 8, 14),
+    "Buffalo Bills": datetime.date(1959, 10, 28),
+    "Detroit Lions": datetime.date(1930, 7, 12),
+    "Minnesota Vikings": datetime.date(1960, 1, 28)
+}
+
 MASTER_DATABASE = {
     "Caleb Williams (QB - CHI)": {
         "category": "QB", "name": "Caleb Williams", "pos": "QB", "jersey": "#18",
@@ -214,8 +225,27 @@ MASTER_DATABASE = {
         "category": "FRANCHISE", "name": "Chicago Bears", "pos": "Franchise", "jersey": "—",
         "birth_date": datetime.date(1920, 9, 17), "team": "CHI", "exp": "104 Seasons (Charter APFA)",
         "seasons": {2026: BEARS_2026_SLATE, 1985: BEARS_1985_SLATE}
+    },
+    "Seattle Seahawks (Franchise)": {
+        "category": "FRANCHISE", "name": "Seattle Seahawks", "pos": "Franchise", "jersey": "—",
+        "birth_date": datetime.date(1974, 6, 4), "team": "SEA", "exp": "Founded 1974",
+        "seasons": {}
+    },
+    "Tampa Bay Buccaneers (Franchise)": {
+        "category": "FRANCHISE", "name": "Tampa Bay Buccaneers", "pos": "Franchise", "jersey": "—",
+        "birth_date": datetime.date(1974, 4, 24), "team": "TB", "exp": "Founded 1974",
+        "seasons": {}
     }
 }
+
+for f_name, f_bdate in ALL_32_FRANCHISES.items():
+    f_key = f"{f_name} (Franchise)"
+    if f_key not in MASTER_DATABASE:
+        MASTER_DATABASE[f_key] = {
+            "category": "FRANCHISE", "name": f_name, "pos": "Franchise", "jersey": "—",
+            "birth_date": f_bdate, "team": f_name[:3].upper(), "exp": f"Founded {f_bdate.year}",
+            "seasons": {}
+        }
 
 # ==============================================================================
 # SECTION 1: ENTITY SELECTION & METAPHYSICAL PROFILE
@@ -359,7 +389,7 @@ for g in raw_logs:
 
 df = pd.DataFrame(ledger_rows)
 
-# Display Verified Full Career Ledger
+# Full Career Ledger Display
 st.dataframe(df, use_container_width=True)
 
 csv_data = df.to_csv(index=False).encode('utf-8')
@@ -503,3 +533,141 @@ if len(valid_selected) >= 2:
         rc3.metric("Straight-Up Win %", f"{win_pct}%")
 else:
     st.info("Place a checkmark next to at least two metrics above to display the active correlation matrix.")
+
+# ==============================================================================
+# SECTION 5: STEP 4 HEAD-TO-HEAD CLASH & MATCHUP FORECASTER
+# ==============================================================================
+st.markdown("---")
+st.subheader("5. ⚔️ Head-to-Head Clash & Matchup Edge Forecaster")
+st.caption("Compare two teams, coaches, or players side-by-side to calculate pre-game metaphysical advantages.")
+
+# 1-Click Primetime Matchup Loader
+with st.expander("⚡ Quick-Load Active 2026 Matchups", expanded=True):
+    quick_m = st.selectbox(
+        "Select Active Slate Matchup:",
+        [
+            "Week 8: Chicago Bears @ Seattle Seahawks (MNF - Nov 2, 2026)",
+            "Week 9: Tampa Bay Buccaneers @ Chicago Bears (SNF - Nov 8, 2026)"
+        ]
+    )
+    if st.button("Load Matchup Directly"):
+        if "Week 8" in quick_m:
+            st.session_state["h2h_side_a"] = "Chicago Bears (Franchise)"
+            st.session_state["h2h_side_b"] = "Seattle Seahawks (Franchise)"
+            st.session_state["h2h_date"] = datetime.date(2026, 11, 2)
+        else:
+            st.session_state["h2h_side_a"] = "Chicago Bears (Franchise)"
+            st.session_state["h2h_side_b"] = "Tampa Bay Buccaneers (Franchise)"
+            st.session_state["h2h_date"] = datetime.date(2026, 11, 8)
+        st.rerun()
+
+default_a = st.session_state.get("h2h_side_a", list(MASTER_DATABASE.keys())[0])
+default_b = st.session_state.get("h2h_side_b", "Seattle Seahawks (Franchise)" if "Seattle Seahawks (Franchise)" in MASTER_DATABASE else list(MASTER_DATABASE.keys())[1])
+default_d = st.session_state.get("h2h_date", datetime.date(2026, 11, 2))
+
+c_col1, c_col2, c_col3 = st.columns(3)
+with c_col1:
+    h2h_a_key = st.selectbox("Side A (Primary):", list(MASTER_DATABASE.keys()), index=list(MASTER_DATABASE.keys()).index(default_a))
+with c_col2:
+    h2h_b_key = st.selectbox("Side B (Opponent):", list(MASTER_DATABASE.keys()), index=list(MASTER_DATABASE.keys()).index(default_b))
+with c_col3:
+    h2h_game_date = st.date_input("Kickoff Date:", value=default_d, key="h2h_date_input")
+
+ent_a = MASTER_DATABASE[h2h_a_key]
+ent_b = MASTER_DATABASE[h2h_b_key]
+
+# Side A Calculations
+a_bdate = ent_a["birth_date"]
+a_lp = compute_life_path(a_bdate, preserve_masters=True)
+a_dob_red = reduce_digits(a_bdate.day, preserve_masters=True)
+a_animal, a_elem, _ = get_chinese_profile(a_bdate.year)
+a_base = reduce_digits(a_bdate.month + reduce_digits(a_bdate.day, preserve_masters=False), preserve_masters=False)
+
+a_bday_yr = datetime.date(h2h_game_date.year, a_bdate.month, a_bdate.day)
+a_flipped = h2h_game_date >= a_bday_yr
+a_cyc = h2h_game_date.year if a_flipped else h2h_game_date.year - 1
+a_py = reduce_digits(a_base + reduce_digits(a_cyc, preserve_masters=False), preserve_masters=False)
+a_pm = reduce_digits(a_py + h2h_game_date.month, preserve_masters=False)
+a_pd = reduce_digits(a_pm + reduce_digits(h2h_game_date.day, preserve_masters=False), preserve_masters=False)
+
+# Side B Calculations
+b_bdate = ent_b["birth_date"]
+b_lp = compute_life_path(b_bdate, preserve_masters=True)
+b_dob_red = reduce_digits(b_bdate.day, preserve_masters=True)
+b_animal, b_elem, _ = get_chinese_profile(b_bdate.year)
+b_base = reduce_digits(b_bdate.month + reduce_digits(b_bdate.day, preserve_masters=False), preserve_masters=False)
+
+b_bday_yr = datetime.date(h2h_game_date.year, b_bdate.month, b_bdate.day)
+b_flipped = h2h_game_date >= b_bday_yr
+b_cyc = h2h_game_date.year if b_flipped else h2h_game_date.year - 1
+b_py = reduce_digits(b_base + reduce_digits(b_cyc, preserve_masters=False), preserve_masters=False)
+b_pm = reduce_digits(b_py + h2h_game_date.month, preserve_masters=False)
+b_pd = reduce_digits(b_pm + reduce_digits(h2h_game_date.day, preserve_masters=False), preserve_masters=False)
+
+# Kickoff Vibrations
+g_power = reduce_digits(h2h_game_date.day, preserve_masters=True)
+g_uy = reduce_digits(h2h_game_date.year, preserve_masters=False)
+g_ud = reduce_digits(reduce_digits(g_uy + h2h_game_date.month, preserve_masters=False) + reduce_digits(h2h_game_date.day, preserve_masters=False), preserve_masters=False)
+g_animal, g_elem, _ = get_chinese_profile(h2h_game_date.year)
+
+a_aff = evaluate_affinity(a_animal, g_animal)
+b_aff = evaluate_affinity(b_animal, g_animal)
+
+st.markdown(f"#### 🛡️ Matchup Comparison: {ent_a['name']} vs. {ent_b['name']}")
+h_col1, h_col2, h_col3 = st.columns([2, 1, 2])
+with h_col1:
+    st.markdown(f"##### 🔵 {ent_a['name']} ({ent_a['team']})")
+    st.write(f"**Natal Life Path:** {a_lp} | **Day of Birth Reduced:** {a_dob_red}")
+    st.write(f"**Chinese Sign:** {a_elem} {a_animal} ({a_aff})")
+    st.metric("Personal Day (PD)", f"{a_pd}")
+    st.metric("Personal Year (PY)", f"{a_py}")
+
+with h_col2:
+    st.markdown("##### ⚡ Game Kickoff")
+    st.metric("Power#", f"{g_power}")
+    st.metric("Universal Day (UD)", f"{g_ud}")
+    st.write(f"**Year Animal:** {g_elem} {g_animal}")
+
+with h_col3:
+    st.markdown(f"##### 🔴 {ent_b['name']} ({ent_b['team']})")
+    st.write(f"**Natal Life Path:** {b_lp} | **Day of Birth Reduced:** {b_dob_red}")
+    st.write(f"**Chinese Sign:** {b_elem} {b_animal} ({b_aff})")
+    st.metric("Personal Day (PD)", f"{b_pd}")
+    st.metric("Personal Year (PY)", f"{b_py}")
+
+# Edge Scoring Algorithm
+st.markdown("---")
+st.markdown("### 🏆 Pre-Game Metaphysical Advantage Scorecard")
+a_score, b_score = 0, 0
+reasons = []
+
+if a_pd == g_power or a_pd == g_ud:
+    a_score += 2
+    reasons.append(f"🔵 **{ent_a['name']}** holds a direct Personal Day alignment with Kickoff ({a_pd}).")
+if b_pd == g_power or b_pd == g_ud:
+    b_score += 2
+    reasons.append(f"🔴 **{ent_b['name']}** holds a direct Personal Day alignment with Kickoff ({b_pd}).")
+
+if "San He" in a_aff or "Liu He" in a_aff:
+    a_score += 2
+    reasons.append(f"🔵 **{ent_a['name']}** operates in a harmonious Chinese astrological year ({a_aff}).")
+elif "Chong" in a_aff or "Xing" in a_aff:
+    a_score -= 2
+    reasons.append(f"⚠️ **{ent_a['name']}** operates under astrological friction ({a_aff}).")
+
+if "San He" in b_aff or "Liu He" in b_aff:
+    b_score += 2
+    reasons.append(f"🔴 **{ent_b['name']}** operates in a harmonious Chinese astrological year ({b_aff}).")
+elif "Chong" in b_aff or "Xing" in b_aff:
+    b_score -= 2
+    reasons.append(f"⚠️ **{ent_b['name']}** operates under astrological friction ({b_aff}).")
+
+if a_score > b_score:
+    st.success(f"**Verdict:** Metaphysical Advantage favors **{ent_a['name']}** (Score: {a_score} vs. {b_score})")
+elif b_score > a_score:
+    st.error(f"**Verdict:** Metaphysical Advantage favors **{ent_b['name']}** (Score: {b_score} vs. {a_score})")
+else:
+    st.info(f"**Verdict:** Neutral / Balanced Metaphysical Equilibrium (Score: {a_score} vs. {b_score})")
+
+for r in reasons:
+    st.markdown(f"- {r}")
