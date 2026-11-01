@@ -286,25 +286,32 @@ DEFAULT_DB = {
     }
 }
 
+def save_database(data):
+    with open(STORAGE_FILE, "w") as f:
+        json.dump(data, f, indent=2)
+
 def load_database():
+    loaded = None
     if os.path.exists(STORAGE_FILE):
         try:
             with open(STORAGE_FILE, "r") as f:
                 loaded = json.load(f)
-                # Ensure 2024 and 1985 keys are synced to existing storage
-                if "Caleb Williams (QB - CHI)" in loaded:
-                    loaded["Caleb Williams (QB - CHI)"]["seasons"]["2024"] = CALEB_2024_SLATE
-                if "Chicago Bears (Franchise)" in loaded:
-                    loaded["Chicago Bears (Franchise)"]["seasons"]["2024"] = BEARS_2024_SLATE
-                    loaded["Chicago Bears (Franchise)"]["seasons"]["1985"] = BEARS_1985_SLATE
-                return loaded
         except Exception:
-            return DEFAULT_DB
-    return DEFAULT_DB
+            loaded = None
+    if not loaded:
+        loaded = DEFAULT_DB
 
-def save_database(data):
-    with open(STORAGE_FILE, "w") as f:
-        json.dump(data, f, indent=2)
+    # Force sync all historical slates into the active database
+    if "Caleb Williams (QB - CHI)" in loaded:
+        loaded["Caleb Williams (QB - CHI)"]["seasons"]["2026"] = CALEB_2026_SLATE
+        loaded["Caleb Williams (QB - CHI)"]["seasons"]["2024"] = CALEB_2024_SLATE
+    if "Chicago Bears (Franchise)" in loaded:
+        loaded["Chicago Bears (Franchise)"]["seasons"]["2026"] = BEARS_2026_SLATE
+        loaded["Chicago Bears (Franchise)"]["seasons"]["2024"] = BEARS_2024_SLATE
+        loaded["Chicago Bears (Franchise)"]["seasons"]["1985"] = BEARS_1985_SLATE
+
+    save_database(loaded)
+    return loaded
 
 if "db_storage" not in st.session_state:
     st.session_state["db_storage"] = load_database()
@@ -361,7 +368,8 @@ c6.metric("Chinese Zodiac", f"{natal_element} {natal_animal}")
 st.markdown("---")
 st.subheader(f"2. Multi-Season Career Ledger for {entity_data['name']}")
 
-available_seasons = sorted(list(entity_data["seasons"].keys()), reverse=True)
+# Sort seasons descending numerically
+available_seasons = sorted(list(entity_data["seasons"].keys()), key=lambda x: int(x) if x.isdigit() else 0, reverse=True)
 if available_seasons:
     season_options = [str(s) for s in available_seasons] + ["All Career Seasons"]
     selected_season_choice = st.selectbox("Filter Season:", season_options, index=0)
