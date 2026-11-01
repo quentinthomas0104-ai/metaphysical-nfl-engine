@@ -414,4 +414,324 @@ ACTIVE_PERSONNEL = [
         "string": "1st String (Starter)",
         "dob": "2000-04-05",
         "type": "Player",
-        "exp
+        "exp": "6th Season"
+    },
+    {
+        "name": "Sean McDermott",
+        "team": "Buffalo Bills",
+        "pos": "COACH",
+        "string": "Head Coach",
+        "dob": "1974-03-21",
+        "type": "Associated Personnel",
+        "exp": "Head Coach"
+    },
+
+    # Houston Texans
+    {
+        "name": "C.J. Stroud",
+        "team": "Houston Texans",
+        "pos": "QB",
+        "string": "1st String (Starter)",
+        "dob": "2001-10-03",
+        "type": "Player",
+        "exp": "4th Season"
+    },
+    {
+        "name": "Joe Mixon",
+        "team": "Houston Texans",
+        "pos": "RB",
+        "string": "1st String (Starter)",
+        "dob": "1996-07-24",
+        "type": "Player",
+        "exp": "10th Season"
+    },
+    {
+        "name": "Nico Collins",
+        "team": "Houston Texans",
+        "pos": "WR",
+        "string": "1st String (Starter)",
+        "dob": "1999-03-19",
+        "type": "Player",
+        "exp": "6th Season"
+    },
+    {
+        "name": "Will Anderson Jr.",
+        "team": "Houston Texans",
+        "pos": "DE",
+        "string": "1st String (Starter)",
+        "dob": "2001-09-02",
+        "type": "Player",
+        "exp": "4th Season"
+    },
+    {
+        "name": "DeMeco Ryans",
+        "team": "Houston Texans",
+        "pos": "COACH",
+        "string": "Head Coach",
+        "dob": "1984-07-28",
+        "type": "Associated Personnel",
+        "exp": "Head Coach"
+    },
+
+    # Washington Commanders
+    {
+        "name": "Jayden Daniels",
+        "team": "Washington Commanders",
+        "pos": "QB",
+        "string": "1st String (Starter)",
+        "dob": "2000-12-18",
+        "type": "Player",
+        "exp": "3rd Season"
+    },
+    {
+        "name": "Brian Robinson Jr.",
+        "team": "Washington Commanders",
+        "pos": "RB",
+        "string": "1st String (Starter)",
+        "dob": "1999-03-22",
+        "type": "Player",
+        "exp": "5th Season"
+    },
+    {
+        "name": "Terry McLaurin",
+        "team": "Washington Commanders",
+        "pos": "WR",
+        "string": "1st String (Starter)",
+        "dob": "1995-09-15",
+        "type": "Player",
+        "exp": "8th Season"
+    },
+    {
+        "name": "Dan Quinn",
+        "team": "Washington Commanders",
+        "pos": "COACH",
+        "string": "Head Coach",
+        "dob": "1970-09-11",
+        "type": "Associated Personnel",
+        "exp": "Head Coach"
+    }
+]
+
+NON_ACTIVE_PERSONNEL = [
+    {
+        "name": "Walter Payton",
+        "team": "Chicago Bears",
+        "pos": "RB",
+        "role": "Hall of Fame Player",
+        "dob": "1954-07-25",
+        "era": "1975–1987"
+    },
+    {
+        "name": "Mike Ditka",
+        "team": "Chicago Bears",
+        "pos": "TE / HC",
+        "role": "Hall of Fame Coach & Player",
+        "dob": "1939-10-18",
+        "era": "1961–1992"
+    },
+    {
+        "name": "George Halas",
+        "team": "Chicago Bears",
+        "pos": "FOUNDER / HC",
+        "role": "Franchise Founder & 6x Champion",
+        "dob": "1895-02-02",
+        "era": "1920–1983"
+    },
+    {
+        "name": "Dick Butkus",
+        "team": "Chicago Bears",
+        "pos": "LB",
+        "role": "Hall of Fame Player",
+        "dob": "1942-12-09",
+        "era": "1965–1973"
+    },
+    {
+        "name": "Jim McMahon",
+        "team": "Chicago Bears",
+        "pos": "QB",
+        "role": "Super Bowl XX Champion QB",
+        "dob": "1959-08-21",
+        "era": "1982–1996"
+    },
+    {
+        "name": "Matt Eberflus",
+        "team": "Chicago Bears",
+        "pos": "HC",
+        "role": "Former Head Coach",
+        "dob": "1970-05-17",
+        "era": "2022–2024"
+    },
+    {
+        "name": "Tom Brady",
+        "team": "New England Patriots",
+        "pos": "QB",
+        "role": "7x Super Bowl Champion",
+        "dob": "1977-08-03",
+        "era": "2000–2022"
+    },
+    {
+        "name": "Peyton Manning",
+        "team": "Indianapolis Colts",
+        "pos": "QB",
+        "role": "Hall of Fame Player",
+        "dob": "1976-03-24",
+        "era": "1998–2015"
+    },
+    {
+        "name": "Ray Lewis",
+        "team": "Baltimore Ravens",
+        "pos": "LB",
+        "role": "Hall of Fame Player",
+        "dob": "1975-05-15",
+        "era": "1996–2012"
+    },
+    {
+        "name": "Bill Belichick",
+        "team": "New England Patriots",
+        "pos": "HC",
+        "role": "6x Super Bowl Champion Coach",
+        "dob": "1952-04-16",
+        "era": "1975–2023"
+    },
+    {
+        "name": "Don Shula",
+        "team": "Miami Dolphins",
+        "pos": "HC",
+        "role": "All-Time Winningest Coach",
+        "dob": "1930-01-04",
+        "era": "1963–1995"
+    },
+    {
+        "name": "Vince Lombardi",
+        "team": "Green Bay Packers",
+        "pos": "HC",
+        "role": "Hall of Fame Coach",
+        "dob": "1913-06-11",
+        "era": "1959–1969"
+    }
+]
+
+# ==============================================================================
+# TOP-LEFT TAB SWITCHER & HEADER
+# ==============================================================================
+left_switch_col, right_title_col = st.columns([1.2, 3.8])
+
+with left_switch_col:
+    active_mode = st.radio(
+        "NFL Status",
+        options=["Active", "Non-Active"],
+        horizontal=True,
+        label_visibility="visible"
+    )
+
+with right_title_col:
+    st.markdown("### 🏈 Metaphysical NFL Intelligence")
+    st.caption("Active Live Roster Feeds & Historical Personnel Archive")
+
+st.markdown("---")
+
+# ==============================================================================
+# VIEW 1: ACTIVE TAB
+# ==============================================================================
+if active_mode == "Active":
+    active_sub_tab1, active_sub_tab2 = st.tabs(["🏟️ By Team (Latest Depth Chart)", "🎯 By Position (All Active Players)"])
+    
+    # Sub-Tab 1: By Team (Depth Chart Ordered)
+    with active_sub_tab1:
+        st.markdown("#### Team Personnel & Depth Chart")
+        available_teams = sorted(list(set(p["team"] for p in ACTIVE_PERSONNEL)))
+        
+        def_team_idx = available_teams.index("Chicago Bears") if "Chicago Bears" in available_teams else 0
+        selected_team = st.selectbox("Select Team:", available_teams, index=def_team_idx)
+        
+        team_people = [p for p in ACTIVE_PERSONNEL if p["team"] == selected_team]
+        team_people.sort(key=lambda x: DEPTH_ORDER.get(x["pos"], 99))
+        
+        df_team = pd.DataFrame(team_people)
+        df_team.rename(columns={
+            "name": "Full Name",
+            "pos": "Position",
+            "string": "Depth Chart Rank / Assignment",
+            "type": "Category",
+            "dob": "Date of Birth",
+            "exp": "NFL Experience"
+        }, inplace=True)
+        
+        st.dataframe(
+            df_team[["Position", "Depth Chart Rank / Assignment", "Full Name", "Date of Birth", "Category", "NFL Experience"]],
+            use_container_width=True,
+            hide_index=True
+        )
+
+    # Sub-Tab 2: By Position (All Active Players)
+    with active_sub_tab2:
+        st.markdown("#### Active Players Filtered by Position")
+        
+        all_players = [p for p in ACTIVE_PERSONNEL if p["type"] == "Player"]
+        
+        all_positions = sorted(list(set(p["pos"] for p in all_players)), key=lambda x: DEPTH_ORDER.get(x, 99))
+        selected_pos = st.selectbox("Select Position:", all_positions, index=0)
+        
+        pos_players = [p for p in all_players if p["pos"] == selected_pos]
+        pos_players.sort(key=lambda x: (x["team"], x["string"]))
+        
+        df_pos = pd.DataFrame(pos_players)
+        df_pos.rename(columns={
+            "name": "Player Name",
+            "team": "NFL Team",
+            "pos": "Position",
+            "string": "Depth Chart Status",
+            "dob": "Date of Birth",
+            "exp": "Experience"
+        }, inplace=True)
+        
+        st.dataframe(
+            df_pos[["Player Name", "NFL Team", "Position", "Depth Chart Status", "Date of Birth", "Experience"]],
+            use_container_width=True,
+            hide_index=True
+        )
+
+# ==============================================================================
+# VIEW 2: NON-ACTIVE / RETIRED TAB
+# ==============================================================================
+else:
+    non_active_tab1, non_active_tab2 = st.tabs(["🏛️ Hall of Fame & Legends by Franchise", "📜 All Non-Active Personnel by Era"])
+    
+    with non_active_tab1:
+        st.markdown("#### Historical Legends & Personnel by Franchise")
+        ret_teams = sorted(list(set(p["team"] for p in NON_ACTIVE_PERSONNEL)))
+        sel_ret_team = st.selectbox("Select Historic Franchise:", ret_teams, index=0)
+        
+        franchise_legends = [p for p in NON_ACTIVE_PERSONNEL if p["team"] == sel_ret_team]
+        df_legends = pd.DataFrame(franchise_legends)
+        df_legends.rename(columns={
+            "name": "Personnel Name",
+            "pos": "Role / Position",
+            "role": "Historical Distinction",
+            "dob": "Date of Birth",
+            "era": "Active Career Era"
+        }, inplace=True)
+        
+        st.dataframe(
+            df_legends[["Personnel Name", "Role / Position", "Historical Distinction", "Date of Birth", "Active Career Era"]],
+            use_container_width=True,
+            hide_index=True
+        )
+        
+    with non_active_tab2:
+        st.markdown("#### Complete Historical Archive")
+        df_all_ret = pd.DataFrame(NON_ACTIVE_PERSONNEL)
+        df_all_ret.rename(columns={
+            "name": "Personnel Name",
+            "team": "Primary Franchise",
+            "pos": "Position / Title",
+            "role": "Distinction",
+            "dob": "Date of Birth",
+            "era": "Career Era"
+        }, inplace=True)
+        
+        st.dataframe(
+            df_all_ret[["Personnel Name", "Primary Franchise", "Position / Title", "Distinction", "Date of Birth", "Career Era"]],
+            use_container_width=True,
+            hide_index=True
+        )
