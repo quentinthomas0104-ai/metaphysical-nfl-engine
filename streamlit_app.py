@@ -7,7 +7,7 @@ import os
 st.set_page_config(page_title="Metaphysical Analytics Engine", layout="wide")
 
 st.title("🏈 Metaphysical Analytics Engine")
-st.caption("Step 7: Multi-Season Historical Ingestion (1985, 2024 & 2026 Slates), Checkmark Matrix, & Clash Engine")
+st.caption("Step 8: Multi-Variable Correlation Filter, Trend Query Engine, & Historical Ledgers")
 
 STORAGE_FILE = "engine_storage.json"
 
@@ -201,7 +201,6 @@ CALEB_2026_SLATE = [
     }
 ]
 
-# Complete 2024 Caleb Williams Rookie Season Game Log (Weeks 1-18)
 CALEB_2024_SLATE = [
     {"Week": 1, "Date": "2024-09-08", "DayOfWeek": "Sun", "Opp": "TEN", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "24 - 17", "Result": "W", "Diff": 7, "CMP": 14, "ATT": 29, "CMP%": 48.3, "Pass Yds": 93, "Pass TD": 0, "Y/A": 3.2, "INT": 0, "SCK": 2, "Sack Yds Lost": 29, "Fumbles": 1, "Fumbles Lost": 0, "Passer Rating": 55.7, "QBR": 32.4, "Rush Att": 5, "Rush Yds": 15, "YPC": 3.0, "Rush TD": 0},
     {"Week": 2, "Date": "2024-09-15", "DayOfWeek": "Sun", "Opp": "HOU", "HomeAway": "@", "Venue": "NRG Stadium", "Surface": "Turf", "GameTime": "8:20 PM", "Score": "13 - 19", "Result": "L", "Diff": -6, "CMP": 23, "ATT": 37, "CMP%": 62.2, "Pass Yds": 174, "Pass TD": 0, "Y/A": 4.7, "INT": 2, "SCK": 7, "Sack Yds Lost": 40, "Fumbles": 0, "Fumbles Lost": 0, "Passer Rating": 51.0, "QBR": 24.1, "Rush Att": 5, "Rush Yds": 44, "YPC": 8.8, "Rush TD": 0},
@@ -222,7 +221,6 @@ CALEB_2024_SLATE = [
     {"Week": 18, "Date": "2025-01-05", "DayOfWeek": "Sun", "Opp": "GB", "HomeAway": "@", "Venue": "Lambeau Field", "Surface": "Grass", "GameTime": "4:25 PM", "Score": "24 - 22", "Result": "W", "Diff": 2, "CMP": 21, "ATT": 29, "CMP%": 72.4, "Pass Yds": 148, "Pass TD": 1, "Y/A": 5.1, "INT": 0, "SCK": 1, "Sack Yds Lost": 7, "Fumbles": 1, "Fumbles Lost": 0, "Passer Rating": 95.2, "QBR": 62.4, "Rush Att": 3, "Rush Yds": 10, "YPC": 3.3, "Rush TD": 0}
 ]
 
-# Complete 2024 Chicago Bears Team Slate
 BEARS_2024_SLATE = [
     {"Week": 1, "Date": "2024-09-08", "DayOfWeek": "Sun", "Opp": "TEN", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "24 - 17", "Result": "W", "Diff": 7, "TotalOffYds": 148, "FirstDowns": 11, "TurnoverDiff": "+2", "ThirdDownEff": "2/12 (16.7%)"},
     {"Week": 2, "Date": "2024-09-15", "DayOfWeek": "Sun", "Opp": "HOU", "HomeAway": "@", "Venue": "NRG Stadium", "Surface": "Turf", "GameTime": "8:20 PM", "Score": "13 - 19", "Result": "L", "Diff": -6, "TotalOffYds": 205, "FirstDowns": 15, "TurnoverDiff": "-1", "ThirdDownEff": "6/17 (35.3%)"},
@@ -243,7 +241,6 @@ BEARS_2024_SLATE = [
     {"Week": 18, "Date": "2025-01-05", "DayOfWeek": "Sun", "Opp": "GB", "HomeAway": "@", "Venue": "Lambeau Field", "Surface": "Grass", "GameTime": "4:25 PM", "Score": "24 - 22", "Result": "W", "Diff": 2, "TotalOffYds": 284, "FirstDowns": 17, "TurnoverDiff": "0", "ThirdDownEff": "5/12 (41.7%)"}
 ]
 
-# Complete 1985 Chicago Bears Regular Season (15-1)
 BEARS_1985_SLATE = [
     {"Week": 1, "Date": "1985-09-08", "DayOfWeek": "Sun", "Opp": "TB", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "38 - 28", "Result": "W", "Diff": 10, "TotalOffYds": 384, "FirstDowns": 22, "TurnoverDiff": "+1", "ThirdDownEff": "7/14 (50.0%)"},
     {"Week": 2, "Date": "1985-09-15", "DayOfWeek": "Sun", "Opp": "NE", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "20 - 7", "Result": "W", "Diff": 13, "TotalOffYds": 341, "FirstDowns": 19, "TurnoverDiff": "+2", "ThirdDownEff": "6/15 (40.0%)"},
@@ -301,7 +298,6 @@ def load_database():
     if not loaded:
         loaded = DEFAULT_DB
 
-    # Force sync all historical slates into the active database
     if "Caleb Williams (QB - CHI)" in loaded:
         loaded["Caleb Williams (QB - CHI)"]["seasons"]["2026"] = CALEB_2026_SLATE
         loaded["Caleb Williams (QB - CHI)"]["seasons"]["2024"] = CALEB_2024_SLATE
@@ -368,7 +364,6 @@ c6.metric("Chinese Zodiac", f"{natal_element} {natal_animal}")
 st.markdown("---")
 st.subheader(f"2. Multi-Season Career Ledger for {entity_data['name']}")
 
-# Sort seasons descending numerically
 available_seasons = sorted(list(entity_data["seasons"].keys()), key=lambda x: int(x) if x.isdigit() else 0, reverse=True)
 if available_seasons:
     season_options = [str(s) for s in available_seasons] + ["All Career Seasons"]
@@ -383,7 +378,6 @@ elif selected_season_choice in available_seasons:
 else:
     target_seasons = []
 
-# Pending Game-Day Finalizer
 active_season_key = target_seasons[0] if target_seasons else None
 if active_season_key:
     season_games = entity_data["seasons"].get(active_season_key, [])
@@ -675,29 +669,57 @@ for s in stat_metrics:
         selected_columns.append(s)
 
 # ==============================================================================
-# SECTION 4: CORRELATION VIEW OF SELECTED CHECKED METRICS
+# SECTION 4: STEP 8 MULTI-VARIABLE CORRELATION FILTER & TREND QUERY ENGINE
 # ==============================================================================
 st.markdown("---")
-st.subheader("📊 Active Correlation Matrix (Your Checked Selections)")
+st.subheader("📊 Active Correlation Matrix & Multi-Variable Query Filter")
 
 valid_selected = [c for c in selected_columns if c in df.columns]
 
 if len(valid_selected) >= 2:
     st.write(f"**Currently Correlating ({len(valid_selected)} Checked Metrics):** `{', '.join(valid_selected)}`")
     
-    correlation_df = df[valid_selected].copy()
-    st.dataframe(correlation_df, use_container_width=True)
+    # Dynamic Filter Drawer for Checked Columns
+    with st.expander("🔎 Filter Values Across Checked Columns", expanded=False):
+        filter_cols = st.columns(min(len(valid_selected), 4))
+        active_sub_filters = {}
+        for idx, col_name in enumerate(valid_selected):
+            col_target = filter_cols[idx % 4]
+            unique_vals = sorted(list(df[col_name].dropna().unique()))
+            chosen_sub_vals = col_target.multiselect(
+                f"Filter {col_name}:",
+                options=unique_vals,
+                default=[],
+                key=f"trend_filter_{col_name}"
+            )
+            if chosen_sub_vals:
+                active_sub_filters[col_name] = chosen_sub_vals
 
-    if "Result" in valid_selected:
-        completed = df[df["Result"].isin(["W", "L"])]
-        wins = (completed["Result"] == "W").sum()
-        losses = (completed["Result"] == "L").sum()
-        win_pct = round((wins / len(completed) * 100), 1) if len(completed) > 0 else 0.0
+    filtered_view_df = df[valid_selected].copy()
+    if active_sub_filters:
+        for c_name, v_list in active_sub_filters.items():
+            filtered_view_df = filtered_view_df[filtered_view_df[c_name].isin(v_list)]
 
-        rc1, rc2, rc3 = st.columns(3)
-        rc1.metric("Games in Dataset", f"{len(df)}")
-        rc2.metric("Straight-Up Record (W - L)", f"{wins} - {losses}")
-        rc3.metric("Straight-Up Win %", f"{win_pct}%")
+    st.dataframe(filtered_view_df, use_container_width=True)
+
+    # Outcome Summary on Current Selection
+    completed = filtered_view_df[filtered_view_df["Result"].isin(["W", "L"])] if "Result" in filtered_view_df.columns else df.iloc[filtered_view_df.index][df["Result"].isin(["W", "L"])]
+    wins = (completed["Result"] == "W").sum()
+    losses = (completed["Result"] == "L").sum()
+    win_pct = round((wins / len(completed) * 100), 1) if len(completed) > 0 else 0.0
+
+    rc1, rc2, rc3, rc4 = st.columns(4)
+    rc1.metric("Games Filtered", f"{len(filtered_view_df)} / {len(df)}")
+    rc2.metric("Straight-Up Record", f"{wins} - {losses}")
+    rc3.metric("Straight-Up Win %", f"{win_pct}%")
+    
+    # Point Diff calculation if present
+    if "Point Diff" in df.columns:
+        diff_vals = pd.to_numeric(df.iloc[filtered_view_df.index]["Point Diff"], errors="coerce").fillna(0)
+        avg_diff = round(diff_vals.mean(), 1) if len(diff_vals) > 0 else 0.0
+        rc4.metric("Avg Point Margin", f"{'+' if avg_diff > 0 else ''}{avg_diff}")
+    else:
+        rc4.metric("Avg Point Margin", "—")
 else:
     st.info("Place a checkmark next to at least two metrics above to display the active correlation matrix.")
 
