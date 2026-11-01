@@ -7,7 +7,7 @@ import os
 st.set_page_config(page_title="Metaphysical Analytics Engine", layout="wide")
 
 st.title("🏈 Metaphysical Analytics Engine")
-st.caption("Step 8: Multi-Variable Correlation Filter, Trend Query Engine, & Historical Ledgers")
+st.caption("Step 9: Predictive Target Matrix, Historical Vibration Ranges, & Clash Engine")
 
 STORAGE_FILE = "engine_storage.json"
 
@@ -151,54 +151,12 @@ BEARS_2026_SLATE = [
 ]
 
 CALEB_2026_SLATE = [
-    {
-        "Week": 1, "Date": "2026-09-13", "DayOfWeek": "Sun", "Opp": "CAR", "HomeAway": "@",
-        "Venue": "Bank of America Stadium", "Surface": "Turf", "GameTime": "1:00 PM", "Score": "59 - 37", "Result": "W", "Diff": 22,
-        "CMP": 21, "ATT": 29, "CMP%": 72.4, "Pass Yds": 269, "Pass TD": 2, "Y/A": 9.3,
-        "INT": 0, "SCK": 2, "Sack Yds Lost": 14, "Fumbles": 0, "Fumbles Lost": 0,
-        "Passer Rating": 124.1, "QBR": 88.4,
-        "Rush Att": 10, "Rush Yds": 65, "YPC": 6.5, "Rush TD": 2
-    },
-    {
-        "Week": 2, "Date": "2026-09-20", "DayOfWeek": "Sun", "Opp": "MIN", "HomeAway": "vs",
-        "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "3 - 9", "Result": "L", "Diff": -6,
-        "CMP": 15, "ATT": 26, "CMP%": 57.7, "Pass Yds": 138, "Pass TD": 0, "Y/A": 5.3,
-        "INT": 1, "SCK": 3, "Sack Yds Lost": 21, "Fumbles": 1, "Fumbles Lost": 0,
-        "Passer Rating": 56.2, "QBR": 38.1,
-        "Rush Att": 5, "Rush Yds": 42, "YPC": 8.4, "Rush TD": 0
-    },
-    {
-        "Week": 6, "Date": "2026-10-18", "DayOfWeek": "Sun", "Opp": "ATL", "HomeAway": "@",
-        "Venue": "Mercedes-Benz Stadium", "Surface": "Turf", "GameTime": "1:00 PM", "Score": "31 - 23", "Result": "W", "Diff": 8,
-        "CMP": 30, "ATT": 36, "CMP%": 83.3, "Pass Yds": 305, "Pass TD": 1, "Y/A": 8.5,
-        "INT": 0, "SCK": 4, "Sack Yds Lost": 26, "Fumbles": 1, "Fumbles Lost": 0,
-        "Passer Rating": 111.2, "QBR": 79.5,
-        "Rush Att": 4, "Rush Yds": 3, "YPC": 0.8, "Rush TD": 0
-    },
-    {
-        "Week": 7, "Date": "2026-10-22", "DayOfWeek": "Thu", "Opp": "NE", "HomeAway": "vs",
-        "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "TNF", "Score": "30 - 24", "Result": "W", "Diff": 6,
-        "CMP": 22, "ATT": 33, "CMP%": 66.7, "Pass Yds": 308, "Pass TD": 2, "Y/A": 9.3,
-        "INT": 0, "SCK": 3, "Sack Yds Lost": 19, "Fumbles": 0, "Fumbles Lost": 0,
-        "Passer Rating": 116.7, "QBR": 84.2,
-        "Rush Att": 5, "Rush Yds": 18, "YPC": 3.6, "Rush TD": 0
-    },
-    {
-        "Week": 8, "Date": "2026-11-02", "DayOfWeek": "Mon", "Opp": "SEA", "HomeAway": "@",
-        "Venue": "Lumen Field", "Surface": "Turf", "GameTime": "MNF", "Score": "Pending", "Result": "Pending", "Diff": 0,
-        "CMP": 0, "ATT": 0, "CMP%": 0.0, "Pass Yds": 0, "Pass TD": 0, "Y/A": 0.0,
-        "INT": 0, "SCK": 0, "Sack Yds Lost": 0, "Fumbles": 0, "Fumbles Lost": 0,
-        "Passer Rating": 0.0, "QBR": 0.0,
-        "Rush Att": 0, "Rush Yds": 0, "YPC": 0.0, "Rush TD": 0
-    },
-    {
-        "Week": 9, "Date": "2026-11-08", "DayOfWeek": "Sun", "Opp": "TB", "HomeAway": "vs",
-        "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "SNF", "Score": "Pending", "Result": "Pending", "Diff": 0,
-        "CMP": 0, "ATT": 0, "CMP%": 0.0, "Pass Yds": 0, "Pass TD": 0, "Y/A": 0.0,
-        "INT": 0, "SCK": 0, "Sack Yds Lost": 0, "Fumbles": 0, "Fumbles Lost": 0,
-        "Passer Rating": 0.0, "QBR": 0.0,
-        "Rush Att": 0, "Rush Yds": 0, "YPC": 0.0, "Rush TD": 0
-    }
+    {"Week": 1, "Date": "2026-09-13", "DayOfWeek": "Sun", "Opp": "CAR", "HomeAway": "@", "Venue": "Bank of America Stadium", "Surface": "Turf", "GameTime": "1:00 PM", "Score": "59 - 37", "Result": "W", "Diff": 22, "CMP": 21, "ATT": 29, "CMP%": 72.4, "Pass Yds": 269, "Pass TD": 2, "Y/A": 9.3, "INT": 0, "SCK": 2, "Sack Yds Lost": 14, "Fumbles": 0, "Fumbles Lost": 0, "Passer Rating": 124.1, "QBR": 88.4, "Rush Att": 10, "Rush Yds": 65, "YPC": 6.5, "Rush TD": 2},
+    {"Week": 2, "Date": "2026-09-20", "DayOfWeek": "Sun", "Opp": "MIN", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "3 - 9", "Result": "L", "Diff": -6, "CMP": 15, "ATT": 26, "CMP%": 57.7, "Pass Yds": 138, "Pass TD": 0, "Y/A": 5.3, "INT": 1, "SCK": 3, "Sack Yds Lost": 21, "Fumbles": 1, "Fumbles Lost": 0, "Passer Rating": 56.2, "QBR": 38.1, "Rush Att": 5, "Rush Yds": 42, "YPC": 8.4, "Rush TD": 0},
+    {"Week": 6, "Date": "2026-10-18", "DayOfWeek": "Sun", "Opp": "ATL", "HomeAway": "@", "Venue": "Mercedes-Benz Stadium", "Surface": "Turf", "GameTime": "1:00 PM", "Score": "31 - 23", "Result": "W", "Diff": 8, "CMP": 30, "ATT": 36, "CMP%": 83.3, "Pass Yds": 305, "Pass TD": 1, "Y/A": 8.5, "INT": 0, "SCK": 4, "Sack Yds Lost": 26, "Fumbles": 1, "Fumbles Lost": 0, "Passer Rating": 111.2, "QBR": 79.5, "Rush Att": 4, "Rush Yds": 3, "YPC": 0.8, "Rush TD": 0},
+    {"Week": 7, "Date": "2026-10-22", "DayOfWeek": "Thu", "Opp": "NE", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "TNF", "Score": "30 - 24", "Result": "W", "Diff": 6, "CMP": 22, "ATT": 33, "CMP%": 66.7, "Pass Yds": 308, "Pass TD": 2, "Y/A": 9.3, "INT": 0, "SCK": 3, "Sack Yds Lost": 19, "Fumbles": 0, "Fumbles Lost": 0, "Passer Rating": 116.7, "QBR": 84.2, "Rush Att": 5, "Rush Yds": 18, "YPC": 3.6, "Rush TD": 0},
+    {"Week": 8, "Date": "2026-11-02", "DayOfWeek": "Mon", "Opp": "SEA", "HomeAway": "@", "Venue": "Lumen Field", "Surface": "Turf", "GameTime": "MNF", "Score": "Pending", "Result": "Pending", "Diff": 0, "CMP": 0, "ATT": 0, "CMP%": 0.0, "Pass Yds": 0, "Pass TD": 0, "Y/A": 0.0, "INT": 0, "SCK": 0, "Sack Yds Lost": 0, "Fumbles": 0, "Fumbles Lost": 0, "Passer Rating": 0.0, "QBR": 0.0, "Rush Att": 0, "Rush Yds": 0, "YPC": 0.0, "Rush TD": 0},
+    {"Week": 9, "Date": "2026-11-08", "DayOfWeek": "Sun", "Opp": "TB", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "SNF", "Score": "Pending", "Result": "Pending", "Diff": 0, "CMP": 0, "ATT": 0, "CMP%": 0.0, "Pass Yds": 0, "Pass TD": 0, "Y/A": 0.0, "INT": 0, "SCK": 0, "Sack Yds Lost": 0, "Fumbles": 0, "Fumbles Lost": 0, "Passer Rating": 0.0, "QBR": 0.0, "Rush Att": 0, "Rush Yds": 0, "YPC": 0.0, "Rush TD": 0}
 ]
 
 CALEB_2024_SLATE = [
@@ -669,7 +627,7 @@ for s in stat_metrics:
         selected_columns.append(s)
 
 # ==============================================================================
-# SECTION 4: STEP 8 MULTI-VARIABLE CORRELATION FILTER & TREND QUERY ENGINE
+# SECTION 4: CORRELATION VIEW OF SELECTED CHECKED METRICS
 # ==============================================================================
 st.markdown("---")
 st.subheader("📊 Active Correlation Matrix & Multi-Variable Query Filter")
@@ -679,7 +637,6 @@ valid_selected = [c for c in selected_columns if c in df.columns]
 if len(valid_selected) >= 2:
     st.write(f"**Currently Correlating ({len(valid_selected)} Checked Metrics):** `{', '.join(valid_selected)}`")
     
-    # Dynamic Filter Drawer for Checked Columns
     with st.expander("🔎 Filter Values Across Checked Columns", expanded=False):
         filter_cols = st.columns(min(len(valid_selected), 4))
         active_sub_filters = {}
@@ -702,7 +659,6 @@ if len(valid_selected) >= 2:
 
     st.dataframe(filtered_view_df, use_container_width=True)
 
-    # Outcome Summary on Current Selection
     completed = filtered_view_df[filtered_view_df["Result"].isin(["W", "L"])] if "Result" in filtered_view_df.columns else df.iloc[filtered_view_df.index][df["Result"].isin(["W", "L"])]
     wins = (completed["Result"] == "W").sum()
     losses = (completed["Result"] == "L").sum()
@@ -713,7 +669,6 @@ if len(valid_selected) >= 2:
     rc2.metric("Straight-Up Record", f"{wins} - {losses}")
     rc3.metric("Straight-Up Win %", f"{win_pct}%")
     
-    # Point Diff calculation if present
     if "Point Diff" in df.columns:
         diff_vals = pd.to_numeric(df.iloc[filtered_view_df.index]["Point Diff"], errors="coerce").fillna(0)
         avg_diff = round(diff_vals.mean(), 1) if len(diff_vals) > 0 else 0.0
@@ -859,3 +814,99 @@ else:
 
 for r in reasons:
     st.markdown(f"- {r}")
+
+# ==============================================================================
+# SECTION 6: STEP 9 PREDICTIVE TARGET MATRIX & HISTORICAL RANGE CALCULATOR
+# ==============================================================================
+st.markdown("---")
+st.subheader("6. 🎯 Predictive Target Matrix & Historical Range Calculator")
+st.caption("Empirical performance ranges for Caleb Williams and the Chicago Bears under kickoff vibrations.")
+
+p_col1, p_col2 = st.columns(2)
+
+# Full Career Archive across all loaded seasons for Caleb Williams
+all_caleb_games = []
+if "Caleb Williams (QB - CHI)" in db:
+    for s_id, s_list in db["Caleb Williams (QB - CHI)"]["seasons"].items():
+        all_caleb_games.extend(s_list)
+
+# Full Career Archive across all loaded seasons for Chicago Bears
+all_bears_games = []
+if "Chicago Bears (Franchise)" in db:
+    for s_id, s_list in db["Chicago Bears (Franchise)"]["seasons"].items():
+        all_bears_games.extend(s_list)
+
+# Parse full dataframe histories
+def build_history_dataframe(games_list, natal_date_val, is_qb=True):
+    rows = []
+    base_val = reduce_digits(natal_date_val.month + reduce_digits(natal_date_val.day, preserve_masters=False), preserve_masters=False)
+    for g in games_list:
+        raw_d = g["Date"]
+        d_obj = datetime.datetime.strptime(raw_d, "%Y-%m-%d").date() if isinstance(raw_d, str) else raw_d
+        b_yr = datetime.date(d_obj.year, natal_date_val.month, natal_date_val.day)
+        cyc = d_obj.year if d_obj >= b_yr else d_obj.year - 1
+        py = reduce_digits(base_val + reduce_digits(cyc, preserve_masters=False), preserve_masters=False)
+        pm = reduce_digits(py + d_obj.month, preserve_masters=False)
+        pd_val = reduce_digits(pm + reduce_digits(d_obj.day, preserve_masters=False), preserve_masters=False)
+        power = reduce_digits(d_obj.day, preserve_masters=True)
+        ud = reduce_digits(reduce_digits(reduce_digits(d_obj.year, False) + d_obj.month, False) + reduce_digits(d_obj.day, False), False)
+        
+        row_dict = {
+            "Date": d_obj, "Opp": g.get("Opp"), "Result": g.get("Result"),
+            "Diff": g.get("Diff", 0), "PD": pd_val, "Power#": power, "UD": ud
+        }
+        if is_qb:
+            row_dict.update({
+                "Pass Yds": g.get("Pass Yds", 0), "Pass TD": g.get("Pass TD", 0),
+                "Rating": g.get("Passer Rating", 0.0), "CMP%": g.get("CMP%", 0.0)
+            })
+        else:
+            row_dict.update({
+                "TotalOffYds": g.get("TotalOffYds", 0), "FirstDowns": g.get("FirstDowns", 0)
+            })
+        rows.append(row_dict)
+    return pd.DataFrame(rows)
+
+caleb_bdate = datetime.date(2001, 11, 18)
+bears_bdate = datetime.date(1920, 9, 17)
+
+df_caleb_all = build_history_dataframe(all_caleb_games, caleb_bdate, is_qb=True)
+df_bears_all = build_history_dataframe(all_bears_games, bears_bdate, is_qb=False)
+
+with p_col1:
+    st.markdown("##### 🔵 Caleb Williams Vibration Baselines")
+    st.write(f"Targeting **Personal Day {a_pd}** & **Power# {g_power}** (Week 8 @ SEA)")
+    
+    # Filter completed games on Personal Day
+    caleb_pd_matches = df_caleb_all[(df_caleb_all["PD"] == a_pd) & (df_caleb_all["Result"].isin(["W", "L"]))]
+    caleb_power_matches = df_caleb_all[(df_caleb_all["Power#"] == g_power) & (df_caleb_all["Result"].isin(["W", "L"]))]
+    
+    if not caleb_pd_matches.empty:
+        w_cnt = (caleb_pd_matches["Result"] == "W").sum()
+        l_cnt = (caleb_pd_matches["Result"] == "L").sum()
+        avg_pass = round(caleb_pd_matches["Pass Yds"].mean(), 1)
+        avg_rtg = round(caleb_pd_matches["Rating"].mean(), 1)
+        st.success(f"**Personal Day {a_pd} Games:** {w_cnt}-{l_cnt} Record | Avg Pass Yds: `{avg_pass}` | Avg Rating: `{avg_rtg}`")
+    else:
+        st.info(f"No completed career games on Personal Day {a_pd} in archive.")
+        
+    if not caleb_power_matches.empty:
+        w_cnt_p = (caleb_power_matches["Result"] == "W").sum()
+        l_cnt_p = (caleb_power_matches["Result"] == "L").sum()
+        avg_pass_p = round(caleb_power_matches["Pass Yds"].mean(), 1)
+        st.success(f"**Power# {g_power} Games:** {w_cnt_p}-{l_cnt_p} Record | Avg Pass Yds: `{avg_pass_p}`")
+    else:
+        st.info(f"No completed career games on Power# {g_power} in archive.")
+
+with p_col2:
+    st.markdown("##### 🐻 Chicago Bears Franchise Vibration Baselines")
+    st.write(f"Targeting **Universal Day {g_ud}** (Week 8 Kickoff Energy)")
+    
+    bears_ud_matches = df_bears_all[(df_bears_all["UD"] == g_ud) & (df_bears_all["Result"].isin(["W", "L"]))]
+    if not bears_ud_matches.empty:
+        b_w = (bears_ud_matches["Result"] == "W").sum()
+        b_l = (bears_ud_matches["Result"] == "L").sum()
+        b_diff = round(pd.to_numeric(bears_ud_matches["Diff"], errors="coerce").fillna(0).mean(), 1)
+        st.success(f"**Universal Day {g_ud} Games:** {b_w}-{b_l} Record | Avg Point Differential: `{'+' if b_diff > 0 else ''}{b_diff}`")
+    else:
+        st.info(f"No completed games on Universal Day {g_ud} in franchise archive.")
