@@ -78,7 +78,7 @@ def evaluate_affinity(natal_animal: str, game_year_animal: str) -> str:
     return "Neutral Alignment"
 
 # ==============================================================================
-# 3. WESTERN ASTROLOGY (10 BODIES)
+# 3. WESTERN ASTROLOGY (ALL 10 BODIES)
 # ==============================================================================
 SIGNS_ORDER = [
     "Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo",
@@ -359,7 +359,7 @@ for g in raw_logs:
 
 df = pd.DataFrame(ledger_rows)
 
-# Full Career Ledger Displayed
+# Display Verified Full Career Ledger
 st.dataframe(df, use_container_width=True)
 
 csv_data = df.to_csv(index=False).encode('utf-8')
@@ -371,11 +371,11 @@ st.download_button(
 )
 
 # ==============================================================================
-# SECTION 3: CHECKMARK CORRELATION BOX (SELECT TWO, SEVERAL, OR ALL)
+# SECTION 3: CHECKMARK CORRELATION BOX (WITH INSTANT UNCHECK BUTTONS)
 # ==============================================================================
 st.markdown("---")
 st.subheader("⚡ Checkmark Correlation & Trend Matrix")
-st.caption("Place a checkmark next to any metrics or stats to isolate them in the correlation view.")
+st.caption("Place a checkmark next to any metrics or stats to correlate them. Select two, several, or all.")
 
 metaphysical_metrics = [
     "Life Path Number", "Day of Birth Reduced", "Chinese Zodiac Animal",
@@ -404,35 +404,78 @@ else:
         "Total Offense Yds", "First Downs", "Turnover Diff", "3rd Down Eff"
     ]
 
-# Master Toggle Controls
-ctrl_col1, ctrl_col2, ctrl_col3 = st.columns([1, 1, 2])
-with ctrl_col1:
-    select_all_meta = st.checkbox("Select All Metaphysics", value=False)
-with ctrl_col2:
-    select_all_stats = st.checkbox("Select All Stats", value=False)
+# Initialize individual session state checkbox keys if not set
+for m in metaphysical_metrics:
+    k = f"chk_m_{m}"
+    if k not in st.session_state:
+        st.session_state[k] = (m in ["Power#", "Personal Day (PD)"])
 
-selected_columns = []
+for s in stat_metrics:
+    k = f"chk_s_{s}"
+    if k not in st.session_state:
+        st.session_state[k] = (s in ["Opponent", "Result", "Point Diff"])
 
-# Box 1: Metaphysical Metrics
+# Callback Functions for Instant Checking / Unchecking
+def select_all_meta():
+    for m in metaphysical_metrics:
+        st.session_state[f"chk_m_{m}"] = True
+
+def uncheck_all_meta():
+    for m in metaphysical_metrics:
+        st.session_state[f"chk_m_{m}"] = False
+
+def select_all_stats():
+    for s in stat_metrics:
+        st.session_state[f"chk_s_{s}"] = True
+
+def uncheck_all_stats():
+    for s in stat_metrics:
+        st.session_state[f"chk_s_{s}"] = False
+
+def clear_everything():
+    for m in metaphysical_metrics:
+        st.session_state[f"chk_m_{m}"] = False
+    for s in stat_metrics:
+        st.session_state[f"chk_s_{s}"] = False
+
+# Action Buttons Bar
+b_col1, b_col2, b_col3, b_col4, b_col5 = st.columns(5)
+with b_col1:
+    st.button("✅ Select All Metaphysics", on_click=select_all_meta, use_container_width=True)
+with b_col2:
+    st.button("❌ Uncheck All Metaphysics", on_click=uncheck_all_meta, use_container_width=True)
+with b_col3:
+    st.button("✅ Select All Stats", on_click=select_all_stats, use_container_width=True)
+with b_col4:
+    st.button("❌ Uncheck All Stats", on_click=uncheck_all_stats, use_container_width=True)
+with b_col5:
+    st.button("🧹 Clear All Selections", on_click=clear_everything, use_container_width=True)
+
+# Box 1: Metaphysical Metrics Checkboxes
 st.markdown("#### 🔮 Box 1: Metaphysical & Cosmic Metrics")
 with st.container():
     meta_cols = st.columns(4)
     for idx, m in enumerate(metaphysical_metrics):
         col = meta_cols[idx % 4]
-        # Default checked if select_all is active, or default to Power# and PD for quick start
-        default_val = True if select_all_meta else (m in ["Power#", "Personal Day (PD)"])
-        if col.checkbox(m, value=default_val, key=f"chk_m_{m}"):
-            selected_columns.append(m)
+        col.checkbox(m, key=f"chk_m_{m}")
 
-# Box 2: Game Log & Box Score Stats
+# Box 2: Game Log & Box Score Stats Checkboxes
 st.markdown("#### 🏈 Box 2: Game Log & Box Score Stats")
 with st.container():
     stat_cols = st.columns(4)
     for idx, s in enumerate(stat_metrics):
         col = stat_cols[idx % 4]
-        default_val = True if select_all_stats else (s in ["Opponent", "Result", "Point Diff"])
-        if col.checkbox(s, value=default_val, key=f"chk_s_{s}"):
-            selected_columns.append(s)
+        col.checkbox(s, key=f"chk_s_{s}")
+
+# Gather Checked Columns
+selected_columns = []
+for m in metaphysical_metrics:
+    if st.session_state.get(f"chk_m_{m}", False):
+        selected_columns.append(m)
+
+for s in stat_metrics:
+    if st.session_state.get(f"chk_s_{s}", False):
+        selected_columns.append(s)
 
 # ==============================================================================
 # SECTION 4: CORRELATION VIEW OF SELECTED CHECKED METRICS
