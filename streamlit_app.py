@@ -4,10 +4,10 @@ import datetime
 import json
 import os
 
-st.set_page_config(page_title="Metaphysical Analytics Engine", layout="wide")
+st.set_page_config(page_title="Metaphysical NFL Engine", layout="wide")
 
-st.title("🏈 Metaphysical Analytics Engine")
-st.caption("Step 11: Automated NFL Schedule & Roster Sync, Vegas ATS Engine, & Clash Forecaster")
+st.title("🏈 Metaphysical NFL Analytics Engine")
+st.caption("Universal Lookup & Metaphysical Trend Engine for Players, Coaches, Owners, & Teams")
 
 STORAGE_FILE = "engine_storage.json"
 
@@ -127,8 +127,8 @@ def get_aspect_name(deg1: float, deg2: float) -> str:
         return "Opp (180°)"
     return ""
 
-def calculate_detailed_transit(t_planet: str, n_planet: str, game_date: datetime.date, natal_date: datetime.date) -> str:
-    g_deg, g_sign, _ = get_planet_position(t_planet, game_date)
+def calculate_detailed_transit(t_planet: str, n_planet: str, target_date: datetime.date, natal_date: datetime.date) -> str:
+    g_deg, g_sign, _ = get_planet_position(t_planet, target_date)
     n_deg, n_sign, _ = get_planet_position(n_planet, natal_date)
     aspect = get_aspect_name(g_deg, n_deg)
     if aspect:
@@ -136,88 +136,89 @@ def calculate_detailed_transit(t_planet: str, n_planet: str, game_date: datetime
     return "—"
 
 # ==============================================================================
-# 4. VERIFIED HISTORICAL & BETTING DATA ARCHIVES
+# 4. INITIAL KNOWLEDGE BASE & STORAGE REPOSITORY
 # ==============================================================================
 BEARS_2026_SLATE = [
-    {"Week": 1, "Date": "2026-09-13", "DayOfWeek": "Sun", "Opp": "CAR", "HomeAway": "@", "Venue": "Bank of America Stadium", "Surface": "Turf", "GameTime": "1:00 PM", "Score": "59 - 37", "Result": "W", "Diff": 22, "Spread": -3.5, "ATS": "Cover", "CoverMargin": 18.5, "TotalLine": 43.5, "OU": "Over", "TotalOffYds": 552, "FirstDowns": 26, "TurnoverDiff": "+2", "ThirdDownEff": "10/14 (71.4%)"},
-    {"Week": 2, "Date": "2026-09-20", "DayOfWeek": "Sun", "Opp": "MIN", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "3 - 9", "Result": "L", "Diff": -6, "Spread": -2.5, "ATS": "No Cover", "CoverMargin": -8.5, "TotalLine": 41.0, "OU": "Under", "TotalOffYds": 248, "FirstDowns": 14, "TurnoverDiff": "-1", "ThirdDownEff": "3/13 (23.1%)"},
-    {"Week": 3, "Date": "2026-09-28", "DayOfWeek": "Mon", "Opp": "PHI", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "MNF", "Score": "27 - 7", "Result": "W", "Diff": 20, "Spread": 2.5, "ATS": "Cover", "CoverMargin": 22.5, "TotalLine": 44.0, "OU": "Under", "TotalOffYds": 374, "FirstDowns": 20, "TurnoverDiff": "+3", "ThirdDownEff": "6/14 (42.9%)"},
-    {"Week": 4, "Date": "2026-10-04", "DayOfWeek": "Sun", "Opp": "NYJ", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "23 - 12", "Result": "W", "Diff": 11, "Spread": -4.0, "ATS": "Cover", "CoverMargin": 7.0, "TotalLine": 40.5, "OU": "Under", "TotalOffYds": 492, "FirstDowns": 24, "TurnoverDiff": "+1", "ThirdDownEff": "7/15 (46.7%)"},
-    {"Week": 5, "Date": "2026-10-11", "DayOfWeek": "Sun", "Opp": "GB", "HomeAway": "@", "Venue": "Lambeau Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "7 - 31", "Result": "L", "Diff": -24, "Spread": 3.0, "ATS": "No Cover", "CoverMargin": -21.0, "TotalLine": 45.0, "OU": "Under", "TotalOffYds": 238, "FirstDowns": 12, "TurnoverDiff": "-2", "ThirdDownEff": "2/11 (18.2%)"},
-    {"Week": 6, "Date": "2026-10-18", "DayOfWeek": "Sun", "Opp": "ATL", "HomeAway": "@", "Venue": "Mercedes-Benz Stadium", "Surface": "Turf", "GameTime": "1:00 PM", "Score": "31 - 23", "Result": "W", "Diff": 8, "Spread": -1.5, "ATS": "Cover", "CoverMargin": 6.5, "TotalLine": 46.5, "OU": "Over", "TotalOffYds": 421, "FirstDowns": 23, "TurnoverDiff": "+1", "ThirdDownEff": "8/14 (57.1%)"},
-    {"Week": 7, "Date": "2026-10-22", "DayOfWeek": "Thu", "Opp": "NE", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "TNF", "Score": "30 - 24", "Result": "W", "Diff": 6, "Spread": -6.5, "ATS": "No Cover", "CoverMargin": -0.5, "TotalLine": 42.0, "OU": "Over", "TotalOffYds": 405, "FirstDowns": 22, "TurnoverDiff": "0", "ThirdDownEff": "6/13 (46.2%)"},
-    {"Week": 8, "Date": "2026-11-02", "DayOfWeek": "Mon", "Opp": "SEA", "HomeAway": "@", "Venue": "Lumen Field", "Surface": "Turf", "GameTime": "MNF", "Score": "Pending", "Result": "Pending", "Diff": 0, "Spread": 1.5, "ATS": "Pending", "CoverMargin": 0.0, "TotalLine": 44.5, "OU": "Pending", "TotalOffYds": 0, "FirstDowns": 0, "TurnoverDiff": "0", "ThirdDownEff": "Pending"},
-    {"Week": 9, "Date": "2026-11-08", "DayOfWeek": "Sun", "Opp": "TB", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "SNF", "Score": "Pending", "Result": "Pending", "Diff": 0, "Spread": -2.5, "ATS": "Pending", "CoverMargin": 0.0, "TotalLine": 45.0, "OU": "Pending", "TotalOffYds": 0, "FirstDowns": 0, "TurnoverDiff": "0", "ThirdDownEff": "Pending"}
+    {"Week": 1, "Date": "2026-09-13", "DayOfWeek": "Sun", "Opp": "CAR", "HomeAway": "@", "Venue": "Bank of America Stadium", "Surface": "Turf", "GameTime": "1:00 PM", "Score": "59 - 37", "Result": "W", "Diff": 22, "TotalOffYds": 552, "FirstDowns": 26, "TurnoverDiff": "+2", "ThirdDownEff": "10/14 (71.4%)"},
+    {"Week": 2, "Date": "2026-09-20", "DayOfWeek": "Sun", "Opp": "MIN", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "3 - 9", "Result": "L", "Diff": -6, "TotalOffYds": 248, "FirstDowns": 14, "TurnoverDiff": "-1", "ThirdDownEff": "3/13 (23.1%)"},
+    {"Week": 3, "Date": "2026-09-28", "DayOfWeek": "Mon", "Opp": "PHI", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "MNF", "Score": "27 - 7", "Result": "W", "Diff": 20, "TotalOffYds": 374, "FirstDowns": 20, "TurnoverDiff": "+3", "ThirdDownEff": "6/14 (42.9%)"},
+    {"Week": 4, "Date": "2026-10-04", "DayOfWeek": "Sun", "Opp": "NYJ", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "23 - 12", "Result": "W", "Diff": 11, "TotalOffYds": 492, "FirstDowns": 24, "TurnoverDiff": "+1", "ThirdDownEff": "7/15 (46.7%)"},
+    {"Week": 5, "Date": "2026-10-11", "DayOfWeek": "Sun", "Opp": "GB", "HomeAway": "@", "Venue": "Lambeau Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "7 - 31", "Result": "L", "Diff": -24, "TotalOffYds": 238, "FirstDowns": 12, "TurnoverDiff": "-2", "ThirdDownEff": "2/11 (18.2%)"},
+    {"Week": 6, "Date": "2026-10-18", "DayOfWeek": "Sun", "Opp": "ATL", "HomeAway": "@", "Venue": "Mercedes-Benz Stadium", "Surface": "Turf", "GameTime": "1:00 PM", "Score": "31 - 23", "Result": "W", "Diff": 8, "TotalOffYds": 421, "FirstDowns": 23, "TurnoverDiff": "+1", "ThirdDownEff": "8/14 (57.1%)"},
+    {"Week": 7, "Date": "2026-10-22", "DayOfWeek": "Thu", "Opp": "NE", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "TNF", "Score": "30 - 24", "Result": "W", "Diff": 6, "TotalOffYds": 405, "FirstDowns": 22, "TurnoverDiff": "0", "ThirdDownEff": "6/13 (46.2%)"},
+    {"Week": 8, "Date": "2026-11-02", "DayOfWeek": "Mon", "Opp": "SEA", "HomeAway": "@", "Venue": "Lumen Field", "Surface": "Turf", "GameTime": "MNF", "Score": "Pending", "Result": "Pending", "Diff": 0, "TotalOffYds": 0, "FirstDowns": 0, "TurnoverDiff": "0", "ThirdDownEff": "Pending"},
+    {"Week": 9, "Date": "2026-11-08", "DayOfWeek": "Sun", "Opp": "TB", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "SNF", "Score": "Pending", "Result": "Pending", "Diff": 0, "TotalOffYds": 0, "FirstDowns": 0, "TurnoverDiff": "0", "ThirdDownEff": "Pending"}
 ]
 
 CALEB_2026_SLATE = [
-    {"Week": 1, "Date": "2026-09-13", "DayOfWeek": "Sun", "Opp": "CAR", "HomeAway": "@", "Venue": "Bank of America Stadium", "Surface": "Turf", "GameTime": "1:00 PM", "Score": "59 - 37", "Result": "W", "Diff": 22, "Spread": -3.5, "ATS": "Cover", "CoverMargin": 18.5, "TotalLine": 43.5, "OU": "Over", "CMP": 21, "ATT": 29, "CMP%": 72.4, "Pass Yds": 269, "Pass TD": 2, "Y/A": 9.3, "INT": 0, "SCK": 2, "Sack Yds Lost": 14, "Fumbles": 0, "Fumbles Lost": 0, "Passer Rating": 124.1, "QBR": 88.4, "Rush Att": 10, "Rush Yds": 65, "YPC": 6.5, "Rush TD": 2},
-    {"Week": 2, "Date": "2026-09-20", "DayOfWeek": "Sun", "Opp": "MIN", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "3 - 9", "Result": "L", "Diff": -6, "Spread": -2.5, "ATS": "No Cover", "CoverMargin": -8.5, "TotalLine": 41.0, "OU": "Under", "CMP": 15, "ATT": 26, "CMP%": 57.7, "Pass Yds": 138, "Pass TD": 0, "Y/A": 5.3, "INT": 1, "SCK": 3, "Sack Yds Lost": 21, "Fumbles": 1, "Fumbles Lost": 0, "Passer Rating": 56.2, "QBR": 38.1, "Rush Att": 5, "Rush Yds": 42, "YPC": 8.4, "Rush TD": 0},
-    {"Week": 6, "Date": "2026-10-18", "DayOfWeek": "Sun", "Opp": "ATL", "HomeAway": "@", "Venue": "Mercedes-Benz Stadium", "Surface": "Turf", "GameTime": "1:00 PM", "Score": "31 - 23", "Result": "W", "Diff": 8, "Spread": -1.5, "ATS": "Cover", "CoverMargin": 6.5, "TotalLine": 46.5, "OU": "Over", "CMP": 30, "ATT": 36, "CMP%": 83.3, "Pass Yds": 305, "Pass TD": 1, "Y/A": 8.5, "INT": 0, "SCK": 4, "Sack Yds Lost": 26, "Fumbles": 1, "Fumbles Lost": 0, "Passer Rating": 111.2, "QBR": 79.5, "Rush Att": 4, "Rush Yds": 3, "YPC": 0.8, "Rush TD": 0},
-    {"Week": 7, "Date": "2026-10-22", "DayOfWeek": "Thu", "Opp": "NE", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "TNF", "Score": "30 - 24", "Result": "W", "Diff": 6, "Spread": -6.5, "ATS": "No Cover", "CoverMargin": -0.5, "TotalLine": 42.0, "OU": "Over", "CMP": 22, "ATT": 33, "CMP%": 66.7, "Pass Yds": 308, "Pass TD": 2, "Y/A": 9.3, "INT": 0, "SCK": 3, "Sack Yds Lost": 19, "Fumbles": 0, "Fumbles Lost": 0, "Passer Rating": 116.7, "QBR": 84.2, "Rush Att": 5, "Rush Yds": 18, "YPC": 3.6, "Rush TD": 0},
-    {"Week": 8, "Date": "2026-11-02", "DayOfWeek": "Mon", "Opp": "SEA", "HomeAway": "@", "Venue": "Lumen Field", "Surface": "Turf", "GameTime": "MNF", "Score": "Pending", "Result": "Pending", "Diff": 0, "Spread": 1.5, "ATS": "Pending", "CoverMargin": 0.0, "TotalLine": 44.5, "OU": "Pending", "CMP": 0, "ATT": 0, "CMP%": 0.0, "Pass Yds": 0, "Pass TD": 0, "Y/A": 0.0, "INT": 0, "SCK": 0, "Sack Yds Lost": 0, "Fumbles": 0, "Fumbles Lost": 0, "Passer Rating": 0.0, "QBR": 0.0, "Rush Att": 0, "Rush Yds": 0, "YPC": 0.0, "Rush TD": 0},
-    {"Week": 9, "Date": "2026-11-08", "DayOfWeek": "Sun", "Opp": "TB", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "SNF", "Score": "Pending", "Result": "Pending", "Diff": 0, "Spread": -2.5, "ATS": "Pending", "CoverMargin": 0.0, "TotalLine": 45.0, "OU": "Pending", "CMP": 0, "ATT": 0, "CMP%": 0.0, "Pass Yds": 0, "Pass TD": 0, "Y/A": 0.0, "INT": 0, "SCK": 0, "Sack Yds Lost": 0, "Fumbles": 0, "Fumbles Lost": 0, "Passer Rating": 0.0, "QBR": 0.0, "Rush Att": 0, "Rush Yds": 0, "YPC": 0.0, "Rush TD": 0}
+    {"Week": 1, "Date": "2026-09-13", "DayOfWeek": "Sun", "Opp": "CAR", "HomeAway": "@", "Venue": "Bank of America Stadium", "Surface": "Turf", "GameTime": "1:00 PM", "Score": "59 - 37", "Result": "W", "Diff": 22, "CMP": 21, "ATT": 29, "CMP%": 72.4, "Pass Yds": 269, "Pass TD": 2, "Y/A": 9.3, "INT": 0, "SCK": 2, "Sack Yds Lost": 14, "Fumbles": 0, "Fumbles Lost": 0, "Passer Rating": 124.1, "QBR": 88.4, "Rush Att": 10, "Rush Yds": 65, "YPC": 6.5, "Rush TD": 2},
+    {"Week": 2, "Date": "2026-09-20", "DayOfWeek": "Sun", "Opp": "MIN", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "3 - 9", "Result": "L", "Diff": -6, "CMP": 15, "ATT": 26, "CMP%": 57.7, "Pass Yds": 138, "Pass TD": 0, "Y/A": 5.3, "INT": 1, "SCK": 3, "Sack Yds Lost": 21, "Fumbles": 1, "Fumbles Lost": 0, "Passer Rating": 56.2, "QBR": 38.1, "Rush Att": 5, "Rush Yds": 42, "YPC": 8.4, "Rush TD": 0},
+    {"Week": 6, "Date": "2026-10-18", "DayOfWeek": "Sun", "Opp": "ATL", "HomeAway": "@", "Venue": "Mercedes-Benz Stadium", "Surface": "Turf", "GameTime": "1:00 PM", "Score": "31 - 23", "Result": "W", "Diff": 8, "CMP": 30, "ATT": 36, "CMP%": 83.3, "Pass Yds": 305, "Pass TD": 1, "Y/A": 8.5, "INT": 0, "SCK": 4, "Sack Yds Lost": 26, "Fumbles": 1, "Fumbles Lost": 0, "Passer Rating": 111.2, "QBR": 79.5, "Rush Att": 4, "Rush Yds": 3, "YPC": 0.8, "Rush TD": 0},
+    {"Week": 7, "Date": "2026-10-22", "DayOfWeek": "Thu", "Opp": "NE", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "TNF", "Score": "30 - 24", "Result": "W", "Diff": 6, "CMP": 22, "ATT": 33, "CMP%": 66.7, "Pass Yds": 308, "Pass TD": 2, "Y/A": 9.3, "INT": 0, "SCK": 3, "Sack Yds Lost": 19, "Fumbles": 0, "Fumbles Lost": 0, "Passer Rating": 116.7, "QBR": 84.2, "Rush Att": 5, "Rush Yds": 18, "YPC": 3.6, "Rush TD": 0},
+    {"Week": 8, "Date": "2026-11-02", "DayOfWeek": "Mon", "Opp": "SEA", "HomeAway": "@", "Venue": "Lumen Field", "Surface": "Turf", "GameTime": "MNF", "Score": "Pending", "Result": "Pending", "Diff": 0, "CMP": 0, "ATT": 0, "CMP%": 0.0, "Pass Yds": 0, "Pass TD": 0, "Y/A": 0.0, "INT": 0, "SCK": 0, "Sack Yds Lost": 0, "Fumbles": 0, "Fumbles Lost": 0, "Passer Rating": 0.0, "QBR": 0.0, "Rush Att": 0, "Rush Yds": 0, "YPC": 0.0, "Rush TD": 0},
+    {"Week": 9, "Date": "2026-11-08", "DayOfWeek": "Sun", "Opp": "TB", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "SNF", "Score": "Pending", "Result": "Pending", "Diff": 0, "CMP": 0, "ATT": 0, "CMP%": 0.0, "Pass Yds": 0, "Pass TD": 0, "Y/A": 0.0, "INT": 0, "SCK": 0, "Sack Yds Lost": 0, "Fumbles": 0, "Fumbles Lost": 0, "Passer Rating": 0.0, "QBR": 0.0, "Rush Att": 0, "Rush Yds": 0, "YPC": 0.0, "Rush TD": 0}
 ]
 
 CALEB_2024_SLATE = [
-    {"Week": 1, "Date": "2024-09-08", "DayOfWeek": "Sun", "Opp": "TEN", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "24 - 17", "Result": "W", "Diff": 7, "Spread": -3.5, "ATS": "Cover", "CoverMargin": 3.5, "TotalLine": 44.5, "OU": "Under", "CMP": 14, "ATT": 29, "CMP%": 48.3, "Pass Yds": 93, "Pass TD": 0, "Y/A": 3.2, "INT": 0, "SCK": 2, "Sack Yds Lost": 29, "Fumbles": 1, "Fumbles Lost": 0, "Passer Rating": 55.7, "QBR": 32.4, "Rush Att": 5, "Rush Yds": 15, "YPC": 3.0, "Rush TD": 0},
-    {"Week": 2, "Date": "2024-09-15", "DayOfWeek": "Sun", "Opp": "HOU", "HomeAway": "@", "Venue": "NRG Stadium", "Surface": "Turf", "GameTime": "8:20 PM", "Score": "13 - 19", "Result": "L", "Diff": -6, "Spread": 6.5, "ATS": "Cover", "CoverMargin": 0.5, "TotalLine": 45.0, "OU": "Under", "CMP": 23, "ATT": 37, "CMP%": 62.2, "Pass Yds": 174, "Pass TD": 0, "Y/A": 4.7, "INT": 2, "SCK": 7, "Sack Yds Lost": 40, "Fumbles": 0, "Fumbles Lost": 0, "Passer Rating": 51.0, "QBR": 24.1, "Rush Att": 5, "Rush Yds": 44, "YPC": 8.8, "Rush TD": 0},
-    {"Week": 3, "Date": "2024-09-22", "DayOfWeek": "Sun", "Opp": "IND", "HomeAway": "@", "Venue": "Lucas Oil Stadium", "Surface": "Turf", "GameTime": "1:00 PM", "Score": "16 - 21", "Result": "L", "Diff": -5, "Spread": -1.0, "ATS": "No Cover", "CoverMargin": -4.0, "TotalLine": 43.5, "OU": "Under", "CMP": 33, "ATT": 52, "CMP%": 63.5, "Pass Yds": 363, "Pass TD": 2, "Y/A": 7.0, "INT": 2, "SCK": 4, "Sack Yds Lost": 31, "Fumbles": 1, "Fumbles Lost": 1, "Passer Rating": 80.8, "QBR": 48.2, "Rush Att": 1, "Rush Yds": 8, "YPC": 8.0, "Rush TD": 0},
-    {"Week": 4, "Date": "2024-09-29", "DayOfWeek": "Sun", "Opp": "LAR", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "24 - 18", "Result": "W", "Diff": 6, "Spread": -3.0, "ATS": "Cover", "CoverMargin": 3.0, "TotalLine": 40.5, "OU": "Over", "CMP": 17, "ATT": 23, "CMP%": 73.9, "Pass Yds": 157, "Pass TD": 1, "Y/A": 6.8, "INT": 0, "SCK": 3, "Sack Yds Lost": 24, "Fumbles": 1, "Fumbles Lost": 0, "Passer Rating": 106.6, "QBR": 70.3, "Rush Att": 5, "Rush Yds": 12, "YPC": 2.4, "Rush TD": 0},
-    {"Week": 5, "Date": "2024-10-06", "DayOfWeek": "Sun", "Opp": "CAR", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "36 - 10", "Result": "W", "Diff": 26, "Spread": -4.0, "ATS": "Cover", "CoverMargin": 22.0, "TotalLine": 41.5, "OU": "Over", "CMP": 20, "ATT": 29, "CMP%": 69.0, "Pass Yds": 304, "Pass TD": 2, "Y/A": 10.5, "INT": 0, "SCK": 1, "Sack Yds Lost": 8, "Fumbles": 0, "Fumbles Lost": 0, "Passer Rating": 126.2, "QBR": 84.1, "Rush Att": 5, "Rush Yds": 34, "YPC": 6.8, "Rush TD": 0},
-    {"Week": 6, "Date": "2024-10-13", "DayOfWeek": "Sun", "Opp": "JAX", "HomeAway": "vs", "Venue": "Tottenham Hotspur Stadium", "Surface": "Turf", "GameTime": "9:30 AM", "Score": "35 - 16", "Result": "W", "Diff": 19, "Spread": -1.0, "ATS": "Cover", "CoverMargin": 18.0, "TotalLine": 44.5, "OU": "Over", "CMP": 23, "ATT": 29, "CMP%": 79.3, "Pass Yds": 226, "Pass TD": 4, "Y/A": 7.8, "INT": 1, "SCK": 3, "Sack Yds Lost": 5, "Fumbles": 0, "Fumbles Lost": 0, "Passer Rating": 124.4, "QBR": 82.5, "Rush Att": 4, "Rush Yds": 56, "YPC": 14.0, "Rush TD": 0},
-    {"Week": 8, "Date": "2024-10-27", "DayOfWeek": "Sun", "Opp": "WAS", "HomeAway": "@", "Venue": "Northwest Stadium", "Surface": "Grass", "GameTime": "4:25 PM", "Score": "15 - 18", "Result": "L", "Diff": -3, "Spread": -1.5, "ATS": "No Cover", "CoverMargin": -4.5, "TotalLine": 43.5, "OU": "Under", "CMP": 10, "ATT": 24, "CMP%": 41.7, "Pass Yds": 131, "Pass TD": 0, "Y/A": 5.5, "INT": 0, "SCK": 3, "Sack Yds Lost": 26, "Fumbles": 1, "Fumbles Lost": 1, "Passer Rating": 59.6, "QBR": 35.8, "Rush Att": 9, "Rush Yds": 47, "YPC": 5.2, "Rush TD": 0},
-    {"Week": 9, "Date": "2024-11-03", "DayOfWeek": "Sun", "Opp": "ARI", "HomeAway": "@", "Venue": "State Farm Stadium", "Surface": "Grass", "GameTime": "4:05 PM", "Score": "9 - 29", "Result": "L", "Diff": -20, "Spread": 1.5, "ATS": "No Cover", "CoverMargin": -18.5, "TotalLine": 44.5, "OU": "Under", "CMP": 22, "ATT": 41, "CMP%": 53.7, "Pass Yds": 217, "Pass TD": 0, "Y/A": 5.3, "INT": 0, "SCK": 6, "Sack Yds Lost": 45, "Fumbles": 0, "Fumbles Lost": 0, "Passer Rating": 68.8, "QBR": 41.2, "Rush Att": 4, "Rush Yds": 5, "YPC": 1.2, "Rush TD": 0},
-    {"Week": 10, "Date": "2024-11-10", "DayOfWeek": "Sun", "Opp": "NE", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "3 - 19", "Result": "L", "Diff": -16, "Spread": -6.0, "ATS": "No Cover", "CoverMargin": -22.0, "TotalLine": 38.5, "OU": "Under", "CMP": 16, "ATT": 30, "CMP%": 53.3, "Pass Yds": 120, "Pass TD": 0, "Y/A": 4.0, "INT": 0, "SCK": 9, "Sack Yds Lost": 51, "Fumbles": 0, "Fumbles Lost": 0, "Passer Rating": 63.2, "QBR": 28.6, "Rush Att": 2, "Rush Yds": 15, "YPC": 7.5, "Rush TD": 0},
-    {"Week": 11, "Date": "2024-11-17", "DayOfWeek": "Sun", "Opp": "GB", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "19 - 20", "Result": "L", "Diff": -1, "Spread": 5.5, "ATS": "Cover", "CoverMargin": 4.5, "TotalLine": 40.5, "OU": "Under", "CMP": 23, "ATT": 31, "CMP%": 74.2, "Pass Yds": 231, "Pass TD": 0, "Y/A": 7.4, "INT": 0, "SCK": 3, "Sack Yds Lost": 19, "Fumbles": 0, "Fumbles Lost": 0, "Passer Rating": 95.0, "QBR": 68.4, "Rush Att": 9, "Rush Yds": 70, "YPC": 7.8, "Rush TD": 0},
-    {"Week": 12, "Date": "2024-11-24", "DayOfWeek": "Sun", "Opp": "MIN", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "27 - 30", "Result": "L", "Diff": -3, "Spread": 3.5, "ATS": "Cover", "CoverMargin": 0.5, "TotalLine": 39.5, "OU": "Over", "CMP": 32, "ATT": 47, "CMP%": 68.1, "Pass Yds": 340, "Pass TD": 2, "Y/A": 7.2, "INT": 0, "SCK": 3, "Sack Yds Lost": 20, "Fumbles": 0, "Fumbles Lost": 0, "Passer Rating": 103.2, "QBR": 74.5, "Rush Att": 6, "Rush Yds": 33, "YPC": 5.5, "Rush TD": 0},
-    {"Week": 13, "Date": "2024-11-28", "DayOfWeek": "Thu", "Opp": "DET", "HomeAway": "@", "Venue": "Ford Field", "Surface": "Turf", "GameTime": "12:30 PM", "Score": "20 - 23", "Result": "L", "Diff": -3, "Spread": 9.5, "ATS": "Cover", "CoverMargin": 6.5, "TotalLine": 52.5, "OU": "Under", "CMP": 20, "ATT": 39, "CMP%": 51.3, "Pass Yds": 256, "Pass TD": 3, "Y/A": 6.6, "INT": 0, "SCK": 5, "Sack Yds Lost": 33, "Fumbles": 0, "Fumbles Lost": 0, "Passer Rating": 97.8, "QBR": 66.8, "Rush Att": 4, "Rush Yds": 39, "YPC": 9.8, "Rush TD": 0},
-    {"Week": 14, "Date": "2024-12-08", "DayOfWeek": "Sun", "Opp": "SF", "HomeAway": "@", "Venue": "Levi's Stadium", "Surface": "Grass", "GameTime": "4:25 PM", "Score": "13 - 38", "Result": "L", "Diff": -25, "Spread": 4.0, "ATS": "No Cover", "CoverMargin": -21.0, "TotalLine": 43.5, "OU": "Over", "CMP": 17, "ATT": 23, "CMP%": 73.9, "Pass Yds": 134, "Pass TD": 2, "Y/A": 5.8, "INT": 0, "SCK": 7, "Sack Yds Lost": 46, "Fumbles": 1, "Fumbles Lost": 1, "Passer Rating": 116.9, "QBR": 55.4, "Rush Att": 4, "Rush Yds": 27, "YPC": 6.8, "Rush TD": 0},
-    {"Week": 15, "Date": "2024-12-16", "DayOfWeek": "Mon", "Opp": "MIN", "HomeAway": "@", "Venue": "U.S. Bank Stadium", "Surface": "Turf", "GameTime": "8:00 PM", "Score": "12 - 30", "Result": "L", "Diff": -18, "Spread": 7.0, "ATS": "No Cover", "CoverMargin": -11.0, "TotalLine": 44.5, "OU": "Under", "CMP": 18, "ATT": 31, "CMP%": 58.1, "Pass Yds": 191, "Pass TD": 1, "Y/A": 6.2, "INT": 0, "SCK": 2, "Sack Yds Lost": 25, "Fumbles": 1, "Fumbles Lost": 1, "Passer Rating": 86.9, "QBR": 44.2, "Rush Att": 4, "Rush Yds": 3, "YPC": 0.8, "Rush TD": 0},
-    {"Week": 16, "Date": "2024-12-22", "DayOfWeek": "Sun", "Opp": "DET", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "17 - 34", "Result": "L", "Diff": -17, "Spread": 7.5, "ATS": "No Cover", "CoverMargin": -9.5, "TotalLine": 47.5, "OU": "Over", "CMP": 26, "ATT": 40, "CMP%": 65.0, "Pass Yds": 334, "Pass TD": 2, "Y/A": 8.4, "INT": 0, "SCK": 2, "Sack Yds Lost": 11, "Fumbles": 2, "Fumbles Lost": 1, "Passer Rating": 107.7, "QBR": 72.1, "Rush Att": 6, "Rush Yds": 34, "YPC": 5.7, "Rush TD": 0},
-    {"Week": 17, "Date": "2024-12-26", "DayOfWeek": "Thu", "Opp": "SEA", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "8:15 PM", "Score": "3 - 6", "Result": "L", "Diff": -3, "Spread": 1.0, "ATS": "No Cover", "CoverMargin": -2.0, "TotalLine": 42.0, "OU": "Under", "CMP": 16, "ATT": 28, "CMP%": 57.1, "Pass Yds": 122, "Pass TD": 0, "Y/A": 4.4, "INT": 1, "SCK": 7, "Sack Yds Lost": 46, "Fumbles": 1, "Fumbles Lost": 0, "Passer Rating": 53.0, "QBR": 30.5, "Rush Att": 5, "Rush Yds": 37, "YPC": 7.4, "Rush TD": 0},
-    {"Week": 18, "Date": "2025-01-05", "DayOfWeek": "Sun", "Opp": "GB", "HomeAway": "@", "Venue": "Lambeau Field", "Surface": "Grass", "GameTime": "4:25 PM", "Score": "24 - 22", "Result": "W", "Diff": 2, "Spread": 10.0, "ATS": "Cover", "CoverMargin": 12.0, "TotalLine": 42.5, "OU": "Over", "CMP": 21, "ATT": 29, "CMP%": 72.4, "Pass Yds": 148, "Pass TD": 1, "Y/A": 5.1, "INT": 0, "SCK": 1, "Sack Yds Lost": 7, "Fumbles": 1, "Fumbles Lost": 0, "Passer Rating": 95.2, "QBR": 62.4, "Rush Att": 3, "Rush Yds": 10, "YPC": 3.3, "Rush TD": 0}
+    {"Week": 1, "Date": "2024-09-08", "DayOfWeek": "Sun", "Opp": "TEN", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "24 - 17", "Result": "W", "Diff": 7, "CMP": 14, "ATT": 29, "CMP%": 48.3, "Pass Yds": 93, "Pass TD": 0, "Y/A": 3.2, "INT": 0, "SCK": 2, "Sack Yds Lost": 29, "Fumbles": 1, "Fumbles Lost": 0, "Passer Rating": 55.7, "QBR": 32.4, "Rush Att": 5, "Rush Yds": 15, "YPC": 3.0, "Rush TD": 0},
+    {"Week": 2, "Date": "2024-09-15", "DayOfWeek": "Sun", "Opp": "HOU", "HomeAway": "@", "Venue": "NRG Stadium", "Surface": "Turf", "GameTime": "8:20 PM", "Score": "13 - 19", "Result": "L", "Diff": -6, "CMP": 23, "ATT": 37, "CMP%": 62.2, "Pass Yds": 174, "Pass TD": 0, "Y/A": 4.7, "INT": 2, "SCK": 7, "Sack Yds Lost": 40, "Fumbles": 0, "Fumbles Lost": 0, "Passer Rating": 51.0, "QBR": 24.1, "Rush Att": 5, "Rush Yds": 44, "YPC": 8.8, "Rush TD": 0},
+    {"Week": 3, "Date": "2024-09-22", "DayOfWeek": "Sun", "Opp": "IND", "HomeAway": "@", "Venue": "Lucas Oil Stadium", "Surface": "Turf", "GameTime": "1:00 PM", "Score": "16 - 21", "Result": "L", "Diff": -5, "CMP": 33, "ATT": 52, "CMP%": 63.5, "Pass Yds": 363, "Pass TD": 2, "Y/A": 7.0, "INT": 2, "SCK": 4, "Sack Yds Lost": 31, "Fumbles": 1, "Fumbles Lost": 1, "Passer Rating": 80.8, "QBR": 48.2, "Rush Att": 1, "Rush Yds": 8, "YPC": 8.0, "Rush TD": 0},
+    {"Week": 4, "Date": "2024-09-29", "DayOfWeek": "Sun", "Opp": "LAR", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "24 - 18", "Result": "W", "Diff": 6, "CMP": 17, "ATT": 23, "CMP%": 73.9, "Pass Yds": 157, "Pass TD": 1, "Y/A": 6.8, "INT": 0, "SCK": 3, "Sack Yds Lost": 24, "Fumbles": 1, "Fumbles Lost": 0, "Passer Rating": 106.6, "QBR": 70.3, "Rush Att": 5, "Rush Yds": 12, "YPC": 2.4, "Rush TD": 0},
+    {"Week": 5, "Date": "2024-10-06", "DayOfWeek": "Sun", "Opp": "CAR", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "36 - 10", "Result": "W", "Diff": 26, "CMP": 20, "ATT": 29, "CMP%": 69.0, "Pass Yds": 304, "Pass TD": 2, "Y/A": 10.5, "INT": 0, "SCK": 1, "Sack Yds Lost": 8, "Fumbles": 0, "Fumbles Lost": 0, "Passer Rating": 126.2, "QBR": 84.1, "Rush Att": 5, "Rush Yds": 34, "YPC": 6.8, "Rush TD": 0},
+    {"Week": 6, "Date": "2024-10-13", "DayOfWeek": "Sun", "Opp": "JAX", "HomeAway": "vs", "Venue": "Tottenham Hotspur Stadium", "Surface": "Turf", "GameTime": "9:30 AM", "Score": "35 - 16", "Result": "W", "Diff": 19, "CMP": 23, "ATT": 29, "CMP%": 79.3, "Pass Yds": 226, "Pass TD": 4, "Y/A": 7.8, "INT": 1, "SCK": 3, "Sack Yds Lost": 5, "Fumbles": 0, "Fumbles Lost": 0, "Passer Rating": 124.4, "QBR": 82.5, "Rush Att": 4, "Rush Yds": 56, "YPC": 14.0, "Rush TD": 0},
+    {"Week": 8, "Date": "2024-10-27", "DayOfWeek": "Sun", "Opp": "WAS", "HomeAway": "@", "Venue": "Northwest Stadium", "Surface": "Grass", "GameTime": "4:25 PM", "Score": "15 - 18", "Result": "L", "Diff": -3, "CMP": 10, "ATT": 24, "CMP%": 41.7, "Pass Yds": 131, "Pass TD": 0, "Y/A": 5.5, "INT": 0, "SCK": 3, "Sack Yds Lost": 26, "Fumbles": 1, "Fumbles Lost": 1, "Passer Rating": 59.6, "QBR": 35.8, "Rush Att": 9, "Rush Yds": 47, "YPC": 5.2, "Rush TD": 0},
+    {"Week": 9, "Date": "2024-11-03", "DayOfWeek": "Sun", "Opp": "ARI", "HomeAway": "@", "Venue": "State Farm Stadium", "Surface": "Grass", "GameTime": "4:05 PM", "Score": "9 - 29", "Result": "L", "Diff": -20, "CMP": 22, "ATT": 41, "CMP%": 53.7, "Pass Yds": 217, "Pass TD": 0, "Y/A": 5.3, "INT": 0, "SCK": 6, "Sack Yds Lost": 45, "Fumbles": 0, "Fumbles Lost": 0, "Passer Rating": 68.8, "QBR": 41.2, "Rush Att": 4, "Rush Yds": 5, "YPC": 1.2, "Rush TD": 0},
+    {"Week": 10, "Date": "2024-11-10", "DayOfWeek": "Sun", "Opp": "NE", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "3 - 19", "Result": "L", "Diff": -16, "CMP": 16, "ATT": 30, "CMP%": 53.3, "Pass Yds": 120, "Pass TD": 0, "Y/A": 4.0, "INT": 0, "SCK": 9, "Sack Yds Lost": 51, "Fumbles": 0, "Fumbles Lost": 0, "Passer Rating": 63.2, "QBR": 28.6, "Rush Att": 2, "Rush Yds": 15, "YPC": 7.5, "Rush TD": 0},
+    {"Week": 11, "Date": "2024-11-17", "DayOfWeek": "Sun", "Opp": "GB", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "19 - 20", "Result": "L", "Diff": -1, "CMP": 23, "ATT": 31, "CMP%": 74.2, "Pass Yds": 231, "Pass TD": 0, "Y/A": 7.4, "INT": 0, "SCK": 3, "Sack Yds Lost": 19, "Fumbles": 0, "Fumbles Lost": 0, "Passer Rating": 95.0, "QBR": 68.4, "Rush Att": 9, "Rush Yds": 70, "YPC": 7.8, "Rush TD": 0},
+    {"Week": 12, "Date": "2024-11-24", "DayOfWeek": "Sun", "Opp": "MIN", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "27 - 30", "Result": "L", "Diff": -3, "CMP": 32, "ATT": 47, "CMP%": 68.1, "Pass Yds": 340, "Pass TD": 2, "Y/A": 7.2, "INT": 0, "SCK": 3, "Sack Yds Lost": 20, "Fumbles": 0, "Fumbles Lost": 0, "Passer Rating": 103.2, "QBR": 74.5, "Rush Att": 6, "Rush Yds": 33, "YPC": 5.5, "Rush TD": 0},
+    {"Week": 13, "Date": "2024-11-28", "DayOfWeek": "Thu", "Opp": "DET", "HomeAway": "@", "Venue": "Ford Field", "Surface": "Turf", "GameTime": "12:30 PM", "Score": "20 - 23", "Result": "L", "Diff": -3, "CMP": 20, "ATT": 39, "CMP%": 51.3, "Pass Yds": 256, "Pass TD": 3, "Y/A": 6.6, "INT": 0, "SCK": 5, "Sack Yds Lost": 33, "Fumbles": 0, "Fumbles Lost": 0, "Passer Rating": 97.8, "QBR": 66.8, "Rush Att": 4, "Rush Yds": 39, "YPC": 9.8, "Rush TD": 0},
+    {"Week": 14, "Date": "2024-12-08", "DayOfWeek": "Sun", "Opp": "SF", "HomeAway": "@", "Venue": "Levi's Stadium", "Surface": "Grass", "GameTime": "4:25 PM", "Score": "13 - 38", "Result": "L", "Diff": -25, "CMP": 17, "ATT": 23, "CMP%": 73.9, "Pass Yds": 134, "Pass TD": 2, "Y/A": 5.8, "INT": 0, "SCK": 7, "Sack Yds Lost": 46, "Fumbles": 1, "Fumbles Lost": 1, "Passer Rating": 116.9, "QBR": 55.4, "Rush Att": 4, "Rush Yds": 27, "YPC": 6.8, "Rush TD": 0},
+    {"Week": 15, "Date": "2024-12-16", "DayOfWeek": "Mon", "Opp": "MIN", "HomeAway": "@", "Venue": "U.S. Bank Stadium", "Surface": "Turf", "GameTime": "8:00 PM", "Score": "12 - 30", "Result": "L", "Diff": -18, "CMP": 18, "ATT": 31, "CMP%": 58.1, "Pass Yds": 191, "Pass TD": 1, "Y/A": 6.2, "INT": 0, "SCK": 2, "Sack Yds Lost": 25, "Fumbles": 1, "Fumbles Lost": 1, "Passer Rating": 86.9, "QBR": 44.2, "Rush Att": 4, "Rush Yds": 3, "YPC": 0.8, "Rush TD": 0},
+    {"Week": 16, "Date": "2024-12-22", "DayOfWeek": "Sun", "Opp": "DET", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "17 - 34", "Result": "L", "Diff": -17, "CMP": 26, "ATT": 40, "CMP%": 65.0, "Pass Yds": 334, "Pass TD": 2, "Y/A": 8.4, "INT": 0, "SCK": 2, "Sack Yds Lost": 11, "Fumbles": 2, "Fumbles Lost": 1, "Passer Rating": 107.7, "QBR": 72.1, "Rush Att": 6, "Rush Yds": 34, "YPC": 5.7, "Rush TD": 0},
+    {"Week": 17, "Date": "2024-12-26", "DayOfWeek": "Thu", "Opp": "SEA", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "8:15 PM", "Score": "3 - 6", "Result": "L", "Diff": -3, "CMP": 16, "ATT": 28, "CMP%": 57.1, "Pass Yds": 122, "Pass TD": 0, "Y/A": 4.4, "INT": 1, "SCK": 7, "Sack Yds Lost": 46, "Fumbles": 1, "Fumbles Lost": 0, "Passer Rating": 53.0, "QBR": 30.5, "Rush Att": 5, "Rush Yds": 37, "YPC": 7.4, "Rush TD": 0},
+    {"Week": 18, "Date": "2025-01-05", "DayOfWeek": "Sun", "Opp": "GB", "HomeAway": "@", "Venue": "Lambeau Field", "Surface": "Grass", "GameTime": "4:25 PM", "Score": "24 - 22", "Result": "W", "Diff": 2, "CMP": 21, "ATT": 29, "CMP%": 72.4, "Pass Yds": 148, "Pass TD": 1, "Y/A": 5.1, "INT": 0, "SCK": 1, "Sack Yds Lost": 7, "Fumbles": 1, "Fumbles Lost": 0, "Passer Rating": 95.2, "QBR": 62.4, "Rush Att": 3, "Rush Yds": 10, "YPC": 3.3, "Rush TD": 0}
 ]
 
 BEARS_2024_SLATE = [
-    {"Week": 1, "Date": "2024-09-08", "DayOfWeek": "Sun", "Opp": "TEN", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "24 - 17", "Result": "W", "Diff": 7, "Spread": -3.5, "ATS": "Cover", "CoverMargin": 3.5, "TotalLine": 44.5, "OU": "Under", "TotalOffYds": 148, "FirstDowns": 11, "TurnoverDiff": "+2", "ThirdDownEff": "2/12 (16.7%)"},
-    {"Week": 2, "Date": "2024-09-15", "DayOfWeek": "Sun", "Opp": "HOU", "HomeAway": "@", "Venue": "NRG Stadium", "Surface": "Turf", "GameTime": "8:20 PM", "Score": "13 - 19", "Result": "L", "Diff": -6, "Spread": 6.5, "ATS": "Cover", "CoverMargin": 0.5, "TotalLine": 45.0, "OU": "Under", "TotalOffYds": 205, "FirstDowns": 15, "TurnoverDiff": "-1", "ThirdDownEff": "6/17 (35.3%)"},
-    {"Week": 3, "Date": "2024-09-22", "DayOfWeek": "Sun", "Opp": "IND", "HomeAway": "@", "Venue": "Lucas Oil Stadium", "Surface": "Turf", "GameTime": "1:00 PM", "Score": "16 - 21", "Result": "L", "Diff": -5, "Spread": -1.0, "ATS": "No Cover", "CoverMargin": -4.0, "TotalLine": 43.5, "OU": "Under", "TotalOffYds": 395, "FirstDowns": 26, "TurnoverDiff": "-1", "ThirdDownEff": "9/21 (42.9%)"},
-    {"Week": 4, "Date": "2024-09-29", "DayOfWeek": "Sun", "Opp": "LAR", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "24 - 18", "Result": "W", "Diff": 6, "Spread": -3.0, "ATS": "Cover", "CoverMargin": 3.0, "TotalLine": 40.5, "OU": "Over", "TotalOffYds": 264, "FirstDowns": 17, "TurnoverDiff": "+2", "ThirdDownEff": "4/10 (40.0%)"},
-    {"Week": 5, "Date": "2024-10-06", "DayOfWeek": "Sun", "Opp": "CAR", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "36 - 10", "Result": "W", "Diff": 26, "Spread": -4.0, "ATS": "Cover", "CoverMargin": 22.0, "TotalLine": 41.5, "OU": "Over", "TotalOffYds": 424, "FirstDowns": 24, "TurnoverDiff": "+3", "ThirdDownEff": "7/13 (53.8%)"},
-    {"Week": 6, "Date": "2024-10-13", "DayOfWeek": "Sun", "Opp": "JAX", "HomeAway": "vs", "Venue": "Tottenham Hotspur Stadium", "Surface": "Turf", "GameTime": "9:30 AM", "Score": "35 - 16", "Result": "W", "Diff": 19, "Spread": -1.0, "ATS": "Cover", "CoverMargin": 18.0, "TotalLine": 44.5, "OU": "Over", "TotalOffYds": 373, "FirstDowns": 25, "TurnoverDiff": "+1", "ThirdDownEff": "5/10 (50.0%)"},
-    {"Week": 8, "Date": "2024-10-27", "DayOfWeek": "Sun", "Opp": "WAS", "HomeAway": "@", "Venue": "Northwest Stadium", "Surface": "Grass", "GameTime": "4:25 PM", "Score": "15 - 18", "Result": "L", "Diff": -3, "Spread": -1.5, "ATS": "No Cover", "CoverMargin": -4.5, "TotalLine": 43.5, "OU": "Under", "TotalOffYds": 307, "FirstDowns": 15, "TurnoverDiff": "-1", "ThirdDownEff": "2/12 (16.7%)"},
-    {"Week": 9, "Date": "2024-11-03", "DayOfWeek": "Sun", "Opp": "ARI", "HomeAway": "@", "Venue": "State Farm Stadium", "Surface": "Grass", "GameTime": "4:05 PM", "Score": "9 - 29", "Result": "L", "Diff": -20, "Spread": 1.5, "ATS": "No Cover", "CoverMargin": -18.5, "TotalLine": 44.5, "OU": "Under", "TotalOffYds": 241, "FirstDowns": 16, "TurnoverDiff": "+2", "ThirdDownEff": "3/14 (21.4%)"},
-    {"Week": 10, "Date": "2024-11-10", "DayOfWeek": "Sun", "Opp": "NE", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "3 - 19", "Result": "L", "Diff": -16, "Spread": -6.0, "ATS": "No Cover", "CoverMargin": -22.0, "TotalLine": 38.5, "OU": "Under", "TotalOffYds": 142, "FirstDowns": 11, "TurnoverDiff": "+1", "ThirdDownEff": "1/14 (7.1%)"},
-    {"Week": 11, "Date": "2024-11-17", "DayOfWeek": "Sun", "Opp": "GB", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "19 - 20", "Result": "L", "Diff": -1, "Spread": 5.5, "ATS": "Cover", "CoverMargin": 4.5, "TotalLine": 40.5, "OU": "Under", "TotalOffYds": 391, "FirstDowns": 23, "TurnoverDiff": "+1", "ThirdDownEff": "9/16 (56.3%)"},
-    {"Week": 12, "Date": "2024-11-24", "DayOfWeek": "Sun", "Opp": "MIN", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "27 - 30", "Result": "L", "Diff": -3, "Spread": 3.5, "ATS": "Cover", "CoverMargin": 0.5, "TotalLine": 39.5, "OU": "Over", "TotalOffYds": 398, "FirstDowns": 20, "TurnoverDiff": "0", "ThirdDownEff": "7/17 (41.2%)"},
-    {"Week": 13, "Date": "2024-11-28", "DayOfWeek": "Thu", "Opp": "DET", "HomeAway": "@", "Venue": "Ford Field", "Surface": "Turf", "GameTime": "12:30 PM", "Score": "20 - 23", "Result": "L", "Diff": -3, "Spread": 9.5, "ATS": "Cover", "CoverMargin": 6.5, "TotalLine": 52.5, "OU": "Under", "TotalOffYds": 301, "FirstDowns": 17, "TurnoverDiff": "0", "ThirdDownEff": "3/12 (25.0%)"},
-    {"Week": 14, "Date": "2024-12-08", "DayOfWeek": "Sun", "Opp": "SF", "HomeAway": "@", "Venue": "Levi's Stadium", "Surface": "Grass", "GameTime": "4:25 PM", "Score": "13 - 38", "Result": "L", "Diff": -25, "Spread": 4.0, "ATS": "No Cover", "CoverMargin": -21.0, "TotalLine": 43.5, "OU": "Over", "TotalOffYds": 162, "FirstDowns": 14, "TurnoverDiff": "-1", "ThirdDownEff": "3/10 (30.0%)"},
-    {"Week": 15, "Date": "2024-12-16", "DayOfWeek": "Mon", "Opp": "MIN", "HomeAway": "@", "Venue": "U.S. Bank Stadium", "Surface": "Turf", "GameTime": "8:00 PM", "Score": "12 - 30", "Result": "L", "Diff": -18, "Spread": 7.0, "ATS": "No Cover", "CoverMargin": -11.0, "TotalLine": 44.5, "OU": "Under", "TotalOffYds": 231, "FirstDowns": 14, "TurnoverDiff": "-1", "ThirdDownEff": "4/12 (33.3%)"},
-    {"Week": 16, "Date": "2024-12-22", "DayOfWeek": "Sun", "Opp": "DET", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "17 - 34", "Result": "L", "Diff": -17, "Spread": 7.5, "ATS": "No Cover", "CoverMargin": -9.5, "TotalLine": 47.5, "OU": "Over", "TotalOffYds": 372, "FirstDowns": 22, "TurnoverDiff": "-1", "ThirdDownEff": "6/13 (46.2%)"},
-    {"Week": 17, "Date": "2024-12-26", "DayOfWeek": "Thu", "Opp": "SEA", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "8:15 PM", "Score": "3 - 6", "Result": "L", "Diff": -3, "Spread": 1.0, "ATS": "No Cover", "CoverMargin": -2.0, "TotalLine": 42.0, "OU": "Under", "TotalOffYds": 168, "FirstDowns": 13, "TurnoverDiff": "-1", "ThirdDownEff": "2/13 (15.4%)"},
-    {"Week": 18, "Date": "2025-01-05", "DayOfWeek": "Sun", "Opp": "GB", "HomeAway": "@", "Venue": "Lambeau Field", "Surface": "Grass", "GameTime": "4:25 PM", "Score": "24 - 22", "Result": "W", "Diff": 2, "Spread": 10.0, "ATS": "Cover", "CoverMargin": 12.0, "TotalLine": 42.5, "OU": "Over", "TotalOffYds": 284, "FirstDowns": 17, "TurnoverDiff": "0", "ThirdDownEff": "5/12 (41.7%)"}
+    {"Week": 1, "Date": "2024-09-08", "DayOfWeek": "Sun", "Opp": "TEN", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "24 - 17", "Result": "W", "Diff": 7, "TotalOffYds": 148, "FirstDowns": 11, "TurnoverDiff": "+2", "ThirdDownEff": "2/12 (16.7%)"},
+    {"Week": 2, "Date": "2024-09-15", "DayOfWeek": "Sun", "Opp": "HOU", "HomeAway": "@", "Venue": "NRG Stadium", "Surface": "Turf", "GameTime": "8:20 PM", "Score": "13 - 19", "Result": "L", "Diff": -6, "TotalOffYds": 205, "FirstDowns": 15, "TurnoverDiff": "-1", "ThirdDownEff": "6/17 (35.3%)"},
+    {"Week": 3, "Date": "2024-09-22", "DayOfWeek": "Sun", "Opp": "IND", "HomeAway": "@", "Venue": "Lucas Oil Stadium", "Surface": "Turf", "GameTime": "1:00 PM", "Score": "16 - 21", "Result": "L", "Diff": -5, "TotalOffYds": 395, "FirstDowns": 26, "TurnoverDiff": "-1", "ThirdDownEff": "9/21 (42.9%)"},
+    {"Week": 4, "Date": "2024-09-29", "DayOfWeek": "Sun", "Opp": "LAR", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "24 - 18", "Result": "W", "Diff": 6, "TotalOffYds": 264, "FirstDowns": 17, "TurnoverDiff": "+2", "ThirdDownEff": "4/10 (40.0%)"},
+    {"Week": 5, "Date": "2024-10-06", "DayOfWeek": "Sun", "Opp": "CAR", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "36 - 10", "Result": "W", "Diff": 26, "TotalOffYds": 424, "FirstDowns": 24, "TurnoverDiff": "+3", "ThirdDownEff": "7/13 (53.8%)"},
+    {"Week": 6, "Date": "2024-10-13", "DayOfWeek": "Sun", "Opp": "JAX", "HomeAway": "vs", "Venue": "Tottenham Hotspur Stadium", "Surface": "Turf", "GameTime": "9:30 AM", "Score": "35 - 16", "Result": "W", "Diff": 19, "TotalOffYds": 373, "FirstDowns": 25, "TurnoverDiff": "+1", "ThirdDownEff": "5/10 (50.0%)"},
+    {"Week": 8, "Date": "2024-10-27", "DayOfWeek": "Sun", "Opp": "WAS", "HomeAway": "@", "Venue": "Northwest Stadium", "Surface": "Grass", "GameTime": "4:25 PM", "Score": "15 - 18", "Result": "L", "Diff": -3, "TotalOffYds": 307, "FirstDowns": 15, "TurnoverDiff": "-1", "ThirdDownEff": "2/12 (16.7%)"},
+    {"Week": 9, "Date": "2024-11-03", "DayOfWeek": "Sun", "Opp": "ARI", "HomeAway": "@", "Venue": "State Farm Stadium", "Surface": "Grass", "GameTime": "4:05 PM", "Score": "9 - 29", "Result": "L", "Diff": -20, "TotalOffYds": 241, "FirstDowns": 16, "TurnoverDiff": "+2", "ThirdDownEff": "3/14 (21.4%)"},
+    {"Week": 10, "Date": "2024-11-10", "DayOfWeek": "Sun", "Opp": "NE", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "3 - 19", "Result": "L", "Diff": -16, "TotalOffYds": 142, "FirstDowns": 11, "TurnoverDiff": "+1", "ThirdDownEff": "1/14 (7.1%)"},
+    {"Week": 11, "Date": "2024-11-17", "DayOfWeek": "Sun", "Opp": "GB", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "19 - 20", "Result": "L", "Diff": -1, "TotalOffYds": 391, "FirstDowns": 23, "TurnoverDiff": "+1", "ThirdDownEff": "9/16 (56.3%)"},
+    {"Week": 12, "Date": "2024-11-24", "DayOfWeek": "Sun", "Opp": "MIN", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "27 - 30", "Result": "L", "Diff": -3, "TotalOffYds": 398, "FirstDowns": 20, "TurnoverDiff": "0", "ThirdDownEff": "7/17 (41.2%)"},
+    {"Week": 13, "Date": "2024-11-28", "DayOfWeek": "Thu", "Opp": "DET", "HomeAway": "@", "Venue": "Ford Field", "Surface": "Turf", "GameTime": "12:30 PM", "Score": "20 - 23", "Result": "L", "Diff": -3, "TotalOffYds": 301, "FirstDowns": 17, "TurnoverDiff": "0", "ThirdDownEff": "3/12 (25.0%)"},
+    {"Week": 14, "Date": "2024-12-08", "DayOfWeek": "Sun", "Opp": "SF", "HomeAway": "@", "Levi's Stadium": "Grass", "GameTime": "4:25 PM", "Score": "13 - 38", "Result": "L", "Diff": -25, "TotalOffYds": 162, "FirstDowns": 14, "TurnoverDiff": "-1", "ThirdDownEff": "3/10 (30.0%)"},
+    {"Week": 15, "Date": "2024-12-16", "DayOfWeek": "Mon", "Opp": "MIN", "HomeAway": "@", "Venue": "U.S. Bank Stadium", "Surface": "Turf", "GameTime": "8:00 PM", "Score": "12 - 30", "Result": "L", "Diff": -18, "TotalOffYds": 231, "FirstDowns": 14, "TurnoverDiff": "-1", "ThirdDownEff": "4/12 (33.3%)"},
+    {"Week": 16, "Date": "2024-12-22", "DayOfWeek": "Sun", "Opp": "DET", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "17 - 34", "Result": "L", "Diff": -17, "TotalOffYds": 372, "FirstDowns": 22, "TurnoverDiff": "-1", "ThirdDownEff": "6/13 (46.2%)"},
+    {"Week": 17, "Date": "2024-12-26", "DayOfWeek": "Thu", "Opp": "SEA", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "8:15 PM", "Score": "3 - 6", "Result": "L", "Diff": -3, "TotalOffYds": 168, "FirstDowns": 13, "TurnoverDiff": "-1", "ThirdDownEff": "2/13 (15.4%)"},
+    {"Week": 18, "Date": "2025-01-05", "DayOfWeek": "Sun", "Opp": "GB", "HomeAway": "@", "Venue": "Lambeau Field", "Surface": "Grass", "GameTime": "4:25 PM", "Score": "24 - 22", "Result": "W", "Diff": 2, "TotalOffYds": 284, "FirstDowns": 17, "TurnoverDiff": "0", "ThirdDownEff": "5/12 (41.7%)"}
 ]
 
 BEARS_1985_SLATE = [
-    {"Week": 1, "Date": "1985-09-08", "DayOfWeek": "Sun", "Opp": "TB", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "38 - 28", "Result": "W", "Diff": 10, "Spread": -7.0, "ATS": "Cover", "CoverMargin": 3.0, "TotalLine": 41.0, "OU": "Over", "TotalOffYds": 384, "FirstDowns": 22, "TurnoverDiff": "+1", "ThirdDownEff": "7/14 (50.0%)"},
-    {"Week": 2, "Date": "1985-09-15", "DayOfWeek": "Sun", "Opp": "NE", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "20 - 7", "Result": "W", "Diff": 13, "Spread": -6.5, "ATS": "Cover", "CoverMargin": 6.5, "TotalLine": 37.0, "OU": "Under", "TotalOffYds": 341, "FirstDowns": 19, "TurnoverDiff": "+2", "ThirdDownEff": "6/15 (40.0%)"},
-    {"Week": 3, "Date": "1985-09-19", "DayOfWeek": "Thu", "Opp": "MIN", "HomeAway": "@", "Venue": "Metrodome", "Surface": "Turf", "GameTime": "8:00 PM", "Score": "33 - 24", "Result": "W", "Diff": 9, "Spread": -4.0, "ATS": "Cover", "CoverMargin": 5.0, "TotalLine": 42.0, "OU": "Over", "TotalOffYds": 372, "FirstDowns": 23, "TurnoverDiff": "+2", "ThirdDownEff": "8/15 (53.3%)"},
-    {"Week": 4, "Date": "1985-09-29", "DayOfWeek": "Sun", "Opp": "WAS", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "45 - 10", "Result": "W", "Diff": 35, "Spread": -4.5, "ATS": "Cover", "CoverMargin": 30.5, "TotalLine": 41.5, "OU": "Over", "TotalOffYds": 412, "FirstDowns": 24, "TurnoverDiff": "+4", "ThirdDownEff": "7/13 (53.8%)"},
-    {"Week": 5, "Date": "1985-10-06", "DayOfWeek": "Sun", "Opp": "TB", "HomeAway": "@", "Venue": "Tampa Stadium", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "27 - 19", "Result": "W", "Diff": 8, "Spread": -6.0, "ATS": "Cover", "CoverMargin": 2.0, "TotalLine": 39.0, "OU": "Over", "TotalOffYds": 315, "FirstDowns": 18, "TurnoverDiff": "0", "ThirdDownEff": "5/12 (41.7%)"},
-    {"Week": 6, "Date": "1985-10-13", "DayOfWeek": "Sun", "Opp": "SF", "HomeAway": "@", "Venue": "Candlestick Park", "Surface": "Grass", "GameTime": "4:00 PM", "Score": "26 - 10", "Result": "W", "Diff": 16, "Spread": 2.5, "ATS": "Cover", "CoverMargin": 18.5, "TotalLine": 40.0, "OU": "Under", "TotalOffYds": 360, "FirstDowns": 21, "TurnoverDiff": "+3", "ThirdDownEff": "6/14 (42.9%)"},
-    {"Week": 7, "Date": "1985-10-21", "DayOfWeek": "Mon", "Opp": "GB", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "MNF", "Score": "23 - 7", "Result": "W", "Diff": 16, "Spread": -11.0, "ATS": "Cover", "CoverMargin": 5.0, "TotalLine": 43.0, "OU": "Under", "TotalOffYds": 390, "FirstDowns": 24, "TurnoverDiff": "+3", "ThirdDownEff": "8/16 (50.0%)"},
-    {"Week": 8, "Date": "1985-10-27", "DayOfWeek": "Sun", "Opp": "MIN", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "27 - 9", "Result": "W", "Diff": 18, "Spread": -10.5, "ATS": "Cover", "CoverMargin": 7.5, "TotalLine": 38.0, "OU": "Under", "TotalOffYds": 348, "FirstDowns": 20, "TurnoverDiff": "+2", "ThirdDownEff": "5/13 (38.5%)"},
-    {"Week": 9, "Date": "1985-11-03", "DayOfWeek": "Sun", "Opp": "GB", "HomeAway": "@", "Venue": "Lambeau Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "16 - 10", "Result": "W", "Diff": 6, "Spread": -7.5, "ATS": "No Cover", "CoverMargin": -1.5, "TotalLine": 41.0, "OU": "Under", "TotalOffYds": 298, "FirstDowns": 17, "TurnoverDiff": "+1", "ThirdDownEff": "4/12 (33.3%)"},
-    {"Week": 10, "Date": "1985-11-10", "DayOfWeek": "Sun", "Opp": "DET", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "24 - 3", "Result": "W", "Diff": 21, "Spread": -13.0, "ATS": "Cover", "CoverMargin": 8.0, "TotalLine": 37.5, "OU": "Under", "TotalOffYds": 382, "FirstDowns": 22, "TurnoverDiff": "+3", "ThirdDownEff": "7/14 (50.0%)"},
-    {"Week": 11, "Date": "1985-11-17", "DayOfWeek": "Sun", "Opp": "DAL", "HomeAway": "@", "Venue": "Texas Stadium", "Surface": "Turf", "GameTime": "1:00 PM", "Score": "44 - 0", "Result": "W", "Diff": 44, "Spread": -3.0, "ATS": "Cover", "CoverMargin": 41.0, "TotalLine": 40.5, "OU": "Over", "TotalOffYds": 425, "FirstDowns": 26, "TurnoverDiff": "+4", "ThirdDownEff": "9/15 (60.0%)"},
-    {"Week": 12, "Date": "1985-11-24", "DayOfWeek": "Sun", "Opp": "ATL", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "36 - 0", "Result": "W", "Diff": 36, "Spread": -16.5, "ATS": "Cover", "CoverMargin": 19.5, "TotalLine": 36.5, "OU": "Under", "TotalOffYds": 402, "FirstDowns": 25, "TurnoverDiff": "+3", "ThirdDownEff": "8/14 (57.1%)"},
-    {"Week": 13, "Date": "1985-12-02", "DayOfWeek": "Mon", "Opp": "MIA", "HomeAway": "@", "Venue": "Orange Bowl", "Surface": "Grass", "GameTime": "MNF", "Score": "24 - 38", "Result": "L", "Diff": -14, "Spread": -2.0, "ATS": "No Cover", "CoverMargin": -16.0, "TotalLine": 45.0, "OU": "Over", "TotalOffYds": 315, "FirstDowns": 19, "TurnoverDiff": "-3", "ThirdDownEff": "4/11 (36.4%)"},
-    {"Week": 14, "Date": "1985-12-08", "DayOfWeek": "Sun", "Opp": "IND", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "17 - 10", "Result": "W", "Diff": 7, "Spread": -18.0, "ATS": "No Cover", "CoverMargin": -11.0, "TotalLine": 39.5, "OU": "Under", "TotalOffYds": 330, "FirstDowns": 19, "TurnoverDiff": "+1", "ThirdDownEff": "5/13 (38.5%)"},
-    {"Week": 15, "Date": "1985-12-14", "DayOfWeek": "Sat", "Opp": "NYJ", "HomeAway": "@", "Venue": "Giants Stadium", "Surface": "Turf", "GameTime": "12:30 PM", "Score": "19 - 6", "Result": "W", "Diff": 13, "Spread": -3.5, "ATS": "Cover", "CoverMargin": 9.5, "TotalLine": 38.0, "OU": "Under", "TotalOffYds": 310, "FirstDowns": 18, "TurnoverDiff": "+2", "ThirdDownEff": "5/14 (35.7%)"},
-    {"Week": 16, "Date": "1985-12-22", "DayOfWeek": "Sun", "Opp": "DET", "HomeAway": "@", "Venue": "Pontiac Silverdome", "Surface": "Turf", "GameTime": "1:00 PM", "Score": "37 - 17", "Result": "W", "Diff": 20, "Spread": -7.5, "ATS": "Cover", "CoverMargin": 12.5, "TotalLine": 38.0, "OU": "Over", "TotalOffYds": 395, "FirstDowns": 23, "TurnoverDiff": "+3", "ThirdDownEff": "7/13 (53.8%)"}
+    {"Week": 1, "Date": "1985-09-08", "DayOfWeek": "Sun", "Opp": "TB", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "38 - 28", "Result": "W", "Diff": 10, "TotalOffYds": 384, "FirstDowns": 22, "TurnoverDiff": "+1", "ThirdDownEff": "7/14 (50.0%)"},
+    {"Week": 2, "Date": "1985-09-15", "DayOfWeek": "Sun", "Opp": "NE", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "20 - 7", "Result": "W", "Diff": 13, "TotalOffYds": 341, "FirstDowns": 19, "TurnoverDiff": "+2", "ThirdDownEff": "6/15 (40.0%)"},
+    {"Week": 3, "Date": "1985-09-19", "DayOfWeek": "Thu", "Opp": "MIN", "HomeAway": "@", "Venue": "Metrodome", "Surface": "Turf", "GameTime": "8:00 PM", "Score": "33 - 24", "Result": "W", "Diff": 9, "TotalOffYds": 372, "FirstDowns": 23, "TurnoverDiff": "+2", "ThirdDownEff": "8/15 (53.3%)"},
+    {"Week": 4, "Date": "1985-09-29", "DayOfWeek": "Sun", "Opp": "WAS", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "45 - 10", "Result": "W", "Diff": 35, "TotalOffYds": 412, "FirstDowns": 24, "TurnoverDiff": "+4", "ThirdDownEff": "7/13 (53.8%)"},
+    {"Week": 5, "Date": "1985-10-06", "DayOfWeek": "Sun", "Opp": "TB", "HomeAway": "@", "Venue": "Tampa Stadium", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "27 - 19", "Result": "W", "Diff": 8, "TotalOffYds": 315, "FirstDowns": 18, "TurnoverDiff": "0", "ThirdDownEff": "5/12 (41.7%)"},
+    {"Week": 6, "Date": "1985-10-13", "DayOfWeek": "Sun", "Opp": "SF", "HomeAway": "@", "Venue": "Candlestick Park", "Surface": "Grass", "GameTime": "4:00 PM", "Score": "26 - 10", "Result": "W", "Diff": 16, "TotalOffYds": 360, "FirstDowns": 21, "TurnoverDiff": "+3", "ThirdDownEff": "6/14 (42.9%)"},
+    {"Week": 7, "Date": "1985-10-21", "DayOfWeek": "Mon", "Opp": "GB", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "MNF", "Score": "23 - 7", "Result": "W", "Diff": 16, "TotalOffYds": 390, "FirstDowns": 24, "TurnoverDiff": "+3", "ThirdDownEff": "8/16 (50.0%)"},
+    {"Week": 8, "Date": "1985-10-27", "DayOfWeek": "Sun", "Opp": "MIN", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "27 - 9", "Result": "W", "Diff": 18, "TotalOffYds": 348, "FirstDowns": 20, "TurnoverDiff": "+2", "ThirdDownEff": "5/13 (38.5%)"},
+    {"Week": 9, "Date": "1985-11-03", "DayOfWeek": "Sun", "Opp": "GB", "HomeAway": "@", "Venue": "Lambeau Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "16 - 10", "Result": "W", "Diff": 6, "TotalOffYds": 298, "FirstDowns": 17, "TurnoverDiff": "+1", "ThirdDownEff": "4/12 (33.3%)"},
+    {"Week": 10, "Date": "1985-11-10", "DayOfWeek": "Sun", "Opp": "DET", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "24 - 3", "Result": "W", "Diff": 21, "TotalOffYds": 382, "FirstDowns": 22, "TurnoverDiff": "+3", "ThirdDownEff": "7/14 (50.0%)"},
+    {"Week": 11, "Date": "1985-11-17", "DayOfWeek": "Sun", "Opp": "DAL", "HomeAway": "@", "Venue": "Texas Stadium", "Surface": "Turf", "GameTime": "1:00 PM", "Score": "44 - 0", "Result": "W", "Diff": 44, "TotalOffYds": 425, "FirstDowns": 26, "TurnoverDiff": "+4", "ThirdDownEff": "9/15 (60.0%)"},
+    {"Week": 12, "Date": "1985-11-24", "DayOfWeek": "Sun", "Opp": "ATL", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "36 - 0", "Result": "W", "Diff": 36, "TotalOffYds": 402, "FirstDowns": 25, "TurnoverDiff": "+3", "ThirdDownEff": "8/14 (57.1%)"},
+    {"Week": 13, "Date": "1985-12-02", "DayOfWeek": "Mon", "Opp": "MIA", "HomeAway": "@", "Venue": "Orange Bowl", "Surface": "Grass", "GameTime": "MNF", "Score": "24 - 38", "Result": "L", "Diff": -14, "TotalOffYds": 315, "FirstDowns": 19, "TurnoverDiff": "-3", "ThirdDownEff": "4/11 (36.4%)"},
+    {"Week": 14, "Date": "1985-12-08", "DayOfWeek": "Sun", "Opp": "IND", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "17 - 10", "Result": "W", "Diff": 7, "TotalOffYds": 330, "FirstDowns": 19, "TurnoverDiff": "+1", "ThirdDownEff": "5/13 (38.5%)"},
+    {"Week": 15, "Date": "1985-12-14", "DayOfWeek": "Sat", "Opp": "NYJ", "HomeAway": "@", "Venue": "Giants Stadium", "Surface": "Turf", "GameTime": "12:30 PM", "Score": "19 - 6", "Result": "W", "Diff": 13, "TotalOffYds": 310, "FirstDowns": 18, "TurnoverDiff": "+2", "ThirdDownEff": "5/14 (35.7%)"},
+    {"Week": 16, "Date": "1985-12-22", "DayOfWeek": "Sun", "Opp": "DET", "HomeAway": "@", "Venue": "Pontiac Silverdome", "Surface": "Turf", "GameTime": "1:00 PM", "Score": "37 - 17", "Result": "W", "Diff": 20, "TotalOffYds": 395, "FirstDowns": 23, "TurnoverDiff": "+3", "ThirdDownEff": "7/13 (53.8%)"}
 ]
 
+# Starting Historical Knowledge Base with Key Figures
 DEFAULT_DB = {
     "Caleb Williams (QB - CHI)": {
         "category": "QB", "name": "Caleb Williams", "pos": "QB", "jersey": "#18",
@@ -228,6 +229,26 @@ DEFAULT_DB = {
         "category": "FRANCHISE", "name": "Chicago Bears", "pos": "Franchise", "jersey": "—",
         "birth_date": "1920-09-17", "team": "CHI", "exp": "104 Seasons (Charter APFA)",
         "seasons": {"2026": BEARS_2026_SLATE, "2024": BEARS_2024_SLATE, "1985": BEARS_1985_SLATE}
+    },
+    "Mike Ditka (Coach - CHI)": {
+        "category": "COACH", "name": "Mike Ditka", "pos": "Coach", "jersey": "HC",
+        "birth_date": "1939-10-18", "team": "CHI", "exp": "Hall of Fame Coach / TE",
+        "seasons": {}
+    },
+    "Matt Eberflus (Coach - CHI)": {
+        "category": "COACH", "name": "Matt Eberflus", "pos": "Coach", "jersey": "HC",
+        "birth_date": "1970-05-17", "team": "CHI", "exp": "Head Coach (2022-2024)",
+        "seasons": {}
+    },
+    "George Halas (Owner/Founder - CHI)": {
+        "category": "OWNER", "name": "George Halas", "pos": "Owner", "jersey": "Papa Bear",
+        "birth_date": "1895-02-02", "team": "CHI", "exp": "Founder & 6x Champion",
+        "seasons": {}
+    },
+    "Walter Payton (RB - CHI)": {
+        "category": "SKILL", "name": "Walter Payton", "pos": "RB", "jersey": "#34",
+        "birth_date": "1954-07-25", "team": "CHI", "exp": "Hall of Fame Legend",
+        "seasons": {}
     },
     "Seattle Seahawks (Franchise)": {
         "category": "FRANCHISE", "name": "Seattle Seahawks", "pos": "Franchise", "jersey": "—",
@@ -256,6 +277,11 @@ def load_database():
     if not loaded:
         loaded = DEFAULT_DB
 
+    # Sync default key figures if not yet present
+    for k, v in DEFAULT_DB.items():
+        if k not in loaded:
+            loaded[k] = v
+
     if "Caleb Williams (QB - CHI)" in loaded:
         loaded["Caleb Williams (QB - CHI)"]["seasons"]["2026"] = CALEB_2026_SLATE
         loaded["Caleb Williams (QB - CHI)"]["seasons"]["2024"] = CALEB_2024_SLATE
@@ -273,60 +299,34 @@ if "db_storage" not in st.session_state:
 db = st.session_state["db_storage"]
 
 # ==============================================================================
-# SECTION 1: ENTITY SELECTION, LIVE SYNC & METAPHYSICAL PROFILE
+# SECTION 1: SEARCH, ONBOARD & METAPHYSICAL READING
 # ==============================================================================
-st.subheader("1. Entity Selection & Metaphysical Baseline")
+st.subheader("1. Entity Search, Lookup & Metaphysical Baseline")
 
 top_col1, top_col2 = st.columns([3, 1])
 with top_col1:
-    selected_entity_key = st.selectbox("Search & Select Subject:", list(db.keys()), index=0)
+    selected_entity_key = st.selectbox(
+        "Search Any Player, Coach, Owner, or Franchise (Active or Historical):",
+        list(db.keys()),
+        index=0
+    )
 
 with top_col2:
-    with st.expander("➕ Onboard Custom Subject", expanded=False):
-        c_name = st.text_input("Full Name", value="Jayden Daniels")
-        c_pos = st.selectbox("Position / Role", ["QB", "SKILL", "COACH", "FRANCHISE"], index=0)
-        c_team = st.text_input("Team Abbreviation", value="WAS")
-        c_bdate = st.date_input("Birthdate / Inception", value=datetime.date(2000, 12, 18))
-        if st.button("Save to Persistent Storage"):
+    with st.expander("➕ Onboard Any Person or Team", expanded=False):
+        c_name = st.text_input("Full Name / Entity Name", value="Jim McMahon")
+        c_pos = st.selectbox("Role / Category", ["QB", "SKILL", "COACH", "OWNER", "FRANCHISE"], index=0)
+        c_team = st.text_input("Team Abbreviation", value="CHI")
+        c_bdate = st.date_input("Birthdate / Inception Date", value=datetime.date(1959, 8, 21))
+        if st.button("Save Entity to Database"):
             custom_key = f"{c_name} ({c_pos} - {c_team})"
             db[custom_key] = {
-                "category": c_pos, "name": c_name, "pos": c_pos, "jersey": "Custom",
+                "category": c_pos, "name": c_name, "pos": c_pos, "jersey": "Historical",
                 "birth_date": c_bdate.strftime("%Y-%m-%d"), "team": c_team,
-                "exp": "Custom Profile", "seasons": {}
+                "exp": f"{c_pos} Record", "seasons": {}
             }
             save_database(db)
-            st.success(f"✅ Saved {c_name} permanently to local storage!")
+            st.success(f"✅ Saved {c_name} to database!")
             st.rerun()
-
-# Step 11: Real-Time NFL Schedule & Roster Sync Toolbar
-with st.expander("📡 Automated Live NFL Schedule & Roster Sync", expanded=False):
-    s_col1, s_col2, s_col3 = st.columns(3)
-    with s_col1:
-        if st.button("🔄 Sync Active 2026 Game Logs", use_container_width=True):
-            save_database(db)
-            st.success("✅ Synced active 2026 game logs with official league database!")
-            st.rerun()
-    with s_col2:
-        if st.button("📅 Hydrate Remaining 2026 Schedule", use_container_width=True):
-            # Automated ingestion of remaining Weeks 10-18 for Chicago Bears
-            remaining_slates = [
-                {"Week": 10, "Date": "2026-11-15", "DayOfWeek": "Sun", "Opp": "GB", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "Pending", "Result": "Pending", "Diff": 0, "Spread": 1.0, "ATS": "Pending", "CoverMargin": 0.0, "TotalLine": 43.0, "OU": "Pending", "TotalOffYds": 0, "FirstDowns": 0, "TurnoverDiff": "0", "ThirdDownEff": "Pending"},
-                {"Week": 11, "Date": "2026-11-22", "DayOfWeek": "Sun", "Opp": "MIN", "HomeAway": "@", "Venue": "U.S. Bank Stadium", "Surface": "Turf", "GameTime": "1:00 PM", "Score": "Pending", "Result": "Pending", "Diff": 0, "Spread": 2.5, "ATS": "Pending", "CoverMargin": 0.0, "TotalLine": 44.0, "OU": "Pending", "TotalOffYds": 0, "FirstDowns": 0, "TurnoverDiff": "0", "ThirdDownEff": "Pending"},
-                {"Week": 12, "Date": "2026-11-26", "DayOfWeek": "Thu", "Opp": "DET", "HomeAway": "@", "Venue": "Ford Field", "Surface": "Turf", "GameTime": "12:30 PM", "Score": "Pending", "Result": "Pending", "Diff": 0, "Spread": 3.5, "ATS": "Pending", "CoverMargin": 0.0, "TotalLine": 48.5, "OU": "Pending", "TotalOffYds": 0, "FirstDowns": 0, "TurnoverDiff": "0", "ThirdDownEff": "Pending"},
-                {"Week": 14, "Date": "2026-12-13", "DayOfWeek": "Sun", "Opp": "LAR", "HomeAway": "vs", "Venue": "Soldier Field", "Surface": "Grass", "GameTime": "1:00 PM", "Score": "Pending", "Result": "Pending", "Diff": 0, "Spread": -1.5, "ATS": "Pending", "CoverMargin": 0.0, "TotalLine": 42.0, "OU": "Pending", "TotalOffYds": 0, "FirstDowns": 0, "TurnoverDiff": "0", "ThirdDownEff": "Pending"}
-            ]
-            if "Chicago Bears (Franchise)" in db:
-                current_wks = [g.get("Week") for g in db["Chicago Bears (Franchise)"]["seasons"].get("2026", [])]
-                for r in remaining_slates:
-                    if r["Week"] not in current_wks:
-                        db["Chicago Bears (Franchise)"]["seasons"]["2026"].append(r)
-                save_database(db)
-                st.success("✅ Hydrated Weeks 10-18 schedule for Chicago Bears into persistent storage!")
-                st.rerun()
-    with s_col3:
-        if st.button("🛡️ Auto-Sync Active NFL Rosters", use_container_width=True):
-            save_database(db)
-            st.success("✅ Verified all 32 NFL franchise inceptions and starting QB birthdates!")
 
 entity_data = db[selected_entity_key]
 raw_bdate = entity_data["birth_date"]
@@ -340,17 +340,67 @@ base_number = reduce_digits(natal_birth_date.month + reduce_digits(natal_birth_d
 
 c1, c2, c3, c4, c5, c6 = st.columns(6)
 c1.metric("Name", entity_data["name"])
-c2.metric("Position / Role", entity_data["pos"])
-c3.metric("Jersey / ID", entity_data["jersey"])
+c2.metric("Category / Role", entity_data["pos"])
+c3.metric("Team ID", entity_data["team"])
 c4.metric("Birthdate / Inception", natal_birth_date.strftime("%B %d, %Y"))
 c5.metric("Life Path Number", f"{natal_lp}")
 c6.metric("Chinese Zodiac", f"{natal_element} {natal_animal}")
 
 # ==============================================================================
-# SECTION 2: MULTI-SEASON CAREER LEDGER & LIVE FINALIZER
+# SECTION 2: INSTANT METAPHYSICAL EVALUATOR FOR ANY DAY YOU CHOOSE
 # ==============================================================================
 st.markdown("---")
-st.subheader(f"2. Multi-Season Career Ledger for {entity_data['name']}")
+st.subheader(f"2. 🔮 Instant Metaphysical Reading for {entity_data['name']} on ANY Day You Choose")
+st.caption("Pick any past game, future contest, or custom calendar date to see their full cosmic vibration for that day.")
+
+eval_col1, eval_col2, eval_col3 = st.columns(3)
+with eval_col1:
+    chosen_eval_date = st.date_input("Select Target Date:", value=datetime.date(2026, 11, 2), key="custom_date_eval")
+
+# Compute Exact Reading for Target Date
+bday_this_year = datetime.date(chosen_eval_date.year, natal_birth_date.month, natal_birth_date.day)
+is_flipped = chosen_eval_date >= bday_this_year
+calc_cycle_year = chosen_eval_date.year if is_flipped else chosen_eval_date.year - 1
+calc_cycle_red = reduce_digits(calc_cycle_year, False)
+
+calc_py = reduce_digits(base_number + calc_cycle_red, False)
+calc_pm = reduce_digits(calc_py + chosen_eval_date.month, False)
+calc_pd = reduce_digits(calc_pm + reduce_digits(chosen_eval_date.day, False), False)
+
+target_power = reduce_digits(chosen_eval_date.day, True)
+target_uy = reduce_digits(chosen_eval_date.year, False)
+target_um = reduce_digits(target_uy + chosen_eval_date.month, False)
+target_ud = reduce_digits(target_um + reduce_digits(chosen_eval_date.day, False), False)
+target_g_lp = compute_life_path(chosen_eval_date, True)
+
+target_animal, target_elem, _ = get_chinese_profile(chosen_eval_date.year)
+eval_affinity = evaluate_affinity(natal_animal, target_animal)
+
+with eval_col2:
+    st.metric("Personal Day (PD)", f"{calc_pd}")
+    st.metric("Personal Year (PY)", f"{calc_py} ({'Flipped' if is_flipped else 'Pre-Flip'})")
+
+with eval_col3:
+    st.metric("Kickoff Power#", f"{target_power}")
+    st.metric("Universal Day (UD)", f"{target_ud}")
+
+# Resonance Check on Target Date
+if calc_pd == target_power and calc_pd == target_ud:
+    st.success(f"⚡ **DUAL RESONANCE:** {entity_data['name']}'s Personal Day ({calc_pd}) matches both Power# and Universal Day on this date!")
+elif calc_pd == target_power:
+    st.success(f"⚡ **POWER# HARMONY:** Personal Day ({calc_pd}) directly matches the day's Power# ({target_power})!")
+elif calc_pd == target_ud:
+    st.info(f"🌐 **UNIVERSAL HARMONY:** Personal Day ({calc_pd}) matches the Universal Day ({target_ud})!")
+else:
+    st.write(f"Vibrational Alignment: Neutral flow ({calc_pd}) relative to day vibration ({target_power}).")
+
+st.write(f"**Chinese Astrology Alignment on This Date:** {eval_affinity} ({target_elem} {target_animal} Year)")
+
+# ==============================================================================
+# SECTION 3: MULTI-SEASON CAREER LEDGER & GAME LOGS
+# ==============================================================================
+st.markdown("---")
+st.subheader(f"3. Multi-Season Career Ledger for {entity_data['name']}")
 
 available_seasons = sorted(list(entity_data["seasons"].keys()), key=lambda x: int(x) if x.isdigit() else 0, reverse=True)
 if available_seasons:
@@ -365,86 +415,6 @@ elif selected_season_choice in available_seasons:
     target_seasons = [selected_season_choice]
 else:
     target_seasons = []
-
-active_season_key = target_seasons[0] if target_seasons else None
-if active_season_key:
-    season_games = entity_data["seasons"].get(active_season_key, [])
-    pending_games = [g for g in season_games if g.get("Result") == "Pending"]
-    if pending_games:
-        with st.expander("⚡ Finalize Pending Game-Day Box Score", expanded=False):
-            st.caption("Convert an upcoming game to a finalized official box score upon game completion.")
-            selected_pending_label = st.selectbox(
-                "Select Pending Matchup to Finalize:",
-                [f"Week {g.get('Week')} - {g.get('Opp')} ({g.get('Date')})" for g in pending_games]
-            )
-            target_wk = int(selected_pending_label.split(" - ")[0].replace("Week ", ""))
-            
-            p_c1, p_c2, p_c3 = st.columns(3)
-            with p_c1:
-                fin_res = st.selectbox("Outcome:", ["W", "L"], index=0)
-                fin_score = st.text_input("Final Score (e.g., 27 - 20):", value="24 - 20")
-                fin_diff = st.number_input("Point Differential (e.g. +4 or -4):", value=4, step=1)
-                fin_spread = st.number_input("Closing Spread (e.g., -3.5):", value=-3.5, step=0.5)
-                fin_tot_line = st.number_input("Total Line (O/U):", value=44.5, step=0.5)
-            
-            cat = entity_data["category"]
-            if cat == "QB":
-                with p_c2:
-                    fin_cmp = st.number_input("Completions (CMP):", value=22, step=1)
-                    fin_att = st.number_input("Attempts (ATT):", value=32, step=1)
-                    fin_pass_yds = st.number_input("Passing Yards:", value=275, step=1)
-                    fin_pass_td = st.number_input("Passing Touchdowns:", value=2, step=1)
-                    fin_int = st.number_input("Interceptions:", value=0, step=1)
-                with p_c3:
-                    fin_sck = st.number_input("Sacks Taken:", value=2, step=1)
-                    fin_sck_yds = st.number_input("Sack Yards Lost:", value=14, step=1)
-                    fin_rating = st.number_input("Passer Rating:", value=108.2, step=0.1)
-                    fin_qbr = st.number_input("QBR:", value=75.4, step=0.1)
-                    fin_rush_yds = st.number_input("Rushing Yards:", value=25, step=1)
-            elif cat == "FRANCHISE":
-                with p_c2:
-                    fin_tot_yds = st.number_input("Total Offensive Yards:", value=380, step=1)
-                    fin_first_downs = st.number_input("First Downs:", value=21, step=1)
-                with p_c3:
-                    fin_to_diff = st.text_input("Turnover Differential:", value="+1")
-                    fin_3rd_eff = st.text_input("3rd Down Efficiency:", value="6/13 (46.2%)")
-
-            if st.button("💾 Lock & Finalize Game Box Score"):
-                for game_entry in season_games:
-                    if game_entry.get("Week") == target_wk:
-                        game_entry["Result"] = fin_res
-                        game_entry["Score"] = fin_score
-                        game_entry["Diff"] = int(fin_diff)
-                        game_entry["Spread"] = float(fin_spread)
-                        game_entry["TotalLine"] = float(fin_tot_line)
-                        cov_m = float(fin_diff) + float(fin_spread)
-                        game_entry["CoverMargin"] = cov_m
-                        game_entry["ATS"] = "Cover" if cov_m > 0 else ("No Cover" if cov_m < 0 else "Push")
-                        
-                        s_parts = fin_score.split("-")
-                        tot_pts = sum([int(p.strip()) for p in s_parts if p.strip().isdigit()])
-                        game_entry["OU"] = "Over" if tot_pts > fin_tot_line else ("Under" if tot_pts < fin_tot_line else "Push")
-
-                        if cat == "QB":
-                            cmp_pct = round((fin_cmp / fin_att) * 100, 1) if fin_att > 0 else 0.0
-                            ya_val = round(fin_pass_yds / fin_att, 1) if fin_att > 0 else 0.0
-                            game_entry.update({
-                                "CMP": int(fin_cmp), "ATT": int(fin_att), "CMP%": cmp_pct,
-                                "Pass Yds": int(fin_pass_yds), "Pass TD": int(fin_pass_td), "Y/A": ya_val,
-                                "INT": int(fin_int), "SCK": int(fin_sck), "Sack Yds Lost": int(fin_sck_yds),
-                                "Fumbles": 0, "Fumbles Lost": 0,
-                                "Passer Rating": float(fin_rating), "QBR": float(fin_qbr),
-                                "Rush Att": 4, "Rush Yds": int(fin_rush_yds), "YPC": 5.0, "Rush TD": 0
-                            })
-                        elif cat == "FRANCHISE":
-                            game_entry.update({
-                                "TotalOffYds": int(fin_tot_yds), "FirstDowns": int(fin_first_downs),
-                                "TurnoverDiff": fin_to_diff, "ThirdDownEff": fin_3rd_eff
-                            })
-                        break
-                save_database(db)
-                st.success(f"✅ Finalized Week {target_wk} with betting outcomes!")
-                st.rerun()
 
 raw_logs = []
 for s in target_seasons:
@@ -490,11 +460,6 @@ for g in raw_logs:
         "Final Score": g.get("Score"),
         "Result": g.get("Result"),
         "Point Diff": g.get("Diff"),
-        "Spread": g.get("Spread", "—"),
-        "ATS Result": g.get("ATS", "—"),
-        "Cover Margin": g.get("CoverMargin", "—"),
-        "Total Line": g.get("TotalLine", "—"),
-        "OU Result": g.get("OU", "—"),
         "Life Path Number": str(natal_lp),
         "Day of Birth Reduced": str(natal_dob_red),
         "Chinese Zodiac Animal": natal_animal,
@@ -570,14 +535,14 @@ if not df.empty:
         mime="text/csv",
     )
 else:
-    st.info("No game logs currently populated for this subject.")
+    st.info("No game logs currently populated for this subject. Use Section 2 to evaluate any date.")
 
 # ==============================================================================
-# SECTION 3: CHECKMARK CORRELATION BOX
+# SECTION 4: CHECKMARK CORRELATION MATRIX (SELECT ANY VARIABLES)
 # ==============================================================================
 st.markdown("---")
-st.subheader("⚡ Checkmark Correlation & Trend Matrix")
-st.caption("Place a checkmark next to any metrics, stats, or betting lines to isolate them in the correlation view.")
+st.subheader("4. ⚡ Checkmark Correlation Matrix")
+st.caption("Place a checkmark next to any metrics or stats to isolate and correlate trends.")
 
 metaphysical_metrics = [
     "Life Path Number", "Day of Birth Reduced", "Chinese Zodiac Animal",
@@ -591,20 +556,19 @@ metaphysical_metrics = [
     "Uranus Transit", "Neptune Transit", "Pluto Transit"
 ]
 
-betting_and_stat_metrics = [
+stat_metrics = [
     "Week", "Day of Week", "Opponent", "Home/Away", "Stadium / Venue", "Surface",
-    "Final Score", "Result", "Point Diff",
-    "Spread", "ATS Result", "Cover Margin", "Total Line", "OU Result"
+    "Final Score", "Result", "Point Diff"
 ]
 
 if entity_data["category"] == "QB":
-    betting_and_stat_metrics += [
+    stat_metrics += [
         "CMP", "ATT", "CMP%", "Pass Yds", "Pass TD", "Y/A", "INT", "SCK",
         "Sack Yds Lost", "Fumbles", "Fumbles Lost", "Passer Rating", "QBR",
         "Rush Att", "Rush Yds", "YPC", "Rush TD"
     ]
-else:
-    betting_and_stat_metrics += [
+elif entity_data["category"] == "FRANCHISE":
+    stat_metrics += [
         "Total Offense Yds", "First Downs", "Turnover Diff", "3rd Down Eff"
     ]
 
@@ -613,10 +577,10 @@ for m in metaphysical_metrics:
     if k not in st.session_state:
         st.session_state[k] = (m in ["Power#", "Personal Day (PD)"])
 
-for s in betting_and_stat_metrics:
+for s in stat_metrics:
     k = f"chk_s_{s}"
     if k not in st.session_state:
-        st.session_state[k] = (s in ["Opponent", "Result", "Spread", "ATS Result", "Cover Margin"])
+        st.session_state[k] = (s in ["Opponent", "Result", "Point Diff"])
 
 def select_all_meta():
     for m in metaphysical_metrics:
@@ -627,17 +591,17 @@ def uncheck_all_meta():
         st.session_state[f"chk_m_{m}"] = False
 
 def select_all_stats():
-    for s in betting_and_stat_metrics:
+    for s in stat_metrics:
         st.session_state[f"chk_s_{s}"] = True
 
 def uncheck_all_stats():
-    for s in betting_and_stat_metrics:
+    for s in stat_metrics:
         st.session_state[f"chk_s_{s}"] = False
 
 def clear_everything():
     for m in metaphysical_metrics:
         st.session_state[f"chk_m_{m}"] = False
-    for s in betting_and_stat_metrics:
+    for s in stat_metrics:
         st.session_state[f"chk_s_{s}"] = False
 
 b_col1, b_col2, b_col3, b_col4, b_col5 = st.columns(5)
@@ -646,9 +610,9 @@ with b_col1:
 with b_col2:
     st.button("❌ Uncheck All Metaphysics", on_click=uncheck_all_meta, use_container_width=True)
 with b_col3:
-    st.button("✅ Select All Stats & Lines", on_click=select_all_stats, use_container_width=True)
+    st.button("✅ Select All Stats", on_click=select_all_stats, use_container_width=True)
 with b_col4:
-    st.button("❌ Uncheck All Stats & Lines", on_click=uncheck_all_stats, use_container_width=True)
+    st.button("❌ Uncheck All Stats", on_click=uncheck_all_stats, use_container_width=True)
 with b_col5:
     st.button("🧹 Clear All Selections", on_click=clear_everything, use_container_width=True)
 
@@ -659,10 +623,10 @@ with st.container():
         col = meta_cols[idx % 4]
         col.checkbox(m, key=f"chk_m_{m}")
 
-st.markdown("#### 🏈 Box 2: Game Log, Stats & Vegas Lines")
+st.markdown("#### 🏈 Box 2: Game Log & Performance Stats")
 with st.container():
     stat_cols = st.columns(4)
-    for idx, s in enumerate(betting_and_stat_metrics):
+    for idx, s in enumerate(stat_metrics):
         col = stat_cols[idx % 4]
         col.checkbox(s, key=f"chk_s_{s}")
 
@@ -671,15 +635,15 @@ for m in metaphysical_metrics:
     if st.session_state.get(f"chk_m_{m}", False):
         selected_columns.append(m)
 
-for s in betting_and_stat_metrics:
+for s in stat_metrics:
     if st.session_state.get(f"chk_s_{s}", False):
         selected_columns.append(s)
 
 # ==============================================================================
-# SECTION 4: CORRELATION VIEW OF SELECTED CHECKED METRICS
+# SECTION 5: CORRELATION VIEW & TREND FILTER
 # ==============================================================================
 st.markdown("---")
-st.subheader("📊 Active Correlation Matrix & Multi-Variable Query Filter")
+st.subheader("5. 📊 Correlated Output View")
 
 valid_selected = [c for c in selected_columns if c in df.columns]
 
@@ -714,302 +678,15 @@ if len(valid_selected) >= 2:
     win_pct = round((wins / len(completed) * 100), 1) if len(completed) > 0 else 0.0
 
     rc1, rc2, rc3, rc4 = st.columns(4)
-    rc1.metric("Games Filtered", f"{len(filtered_view_df)} / {len(df)}")
+    rc1.metric("Games Displayed", f"{len(filtered_view_df)} / {len(df)}")
     rc2.metric("Straight-Up Record", f"{wins} - {losses}")
     rc3.metric("Straight-Up Win %", f"{win_pct}%")
     
-    if "Cover Margin" in df.columns:
-        cov_vals = pd.to_numeric(df.iloc[filtered_view_df.index]["Cover Margin"], errors="coerce").dropna()
-        avg_cov = round(cov_vals.mean(), 1) if len(cov_vals) > 0 else 0.0
-        rc4.metric("Avg ATS Cover Margin", f"{'+' if avg_cov > 0 else ''}{avg_cov}")
+    if "Point Diff" in df.columns:
+        diff_vals = pd.to_numeric(df.iloc[filtered_view_df.index]["Point Diff"], errors="coerce").dropna()
+        avg_diff = round(diff_vals.mean(), 1) if len(diff_vals) > 0 else 0.0
+        rc4.metric("Avg Point Margin", f"{'+' if avg_diff > 0 else ''}{avg_diff}")
     else:
-        rc4.metric("Avg ATS Cover Margin", "—")
+        rc4.metric("Avg Point Margin", "—")
 else:
     st.info("Place a checkmark next to at least two metrics above to display the active correlation matrix.")
-
-# ==============================================================================
-# SECTION 5: HEAD-TO-HEAD CLASH & MATCHUP FORECASTER
-# ==============================================================================
-st.markdown("---")
-st.subheader("5. ⚔️ Head-to-Head Clash & Matchup Edge Forecaster")
-st.caption("Compare two teams, coaches, or players side-by-side to calculate pre-game metaphysical advantages.")
-
-with st.expander("⚡ Quick-Load Active 2026 Matchups", expanded=True):
-    quick_m = st.selectbox(
-        "Select Active Slate Matchup:",
-        [
-            "Week 8: Chicago Bears @ Seattle Seahawks (MNF - Nov 2, 2026)",
-            "Week 9: Tampa Bay Buccaneers @ Chicago Bears (SNF - Nov 8, 2026)"
-        ]
-    )
-    if st.button("Load Matchup Directly"):
-        if "Week 8" in quick_m:
-            st.session_state["h2h_side_a"] = "Chicago Bears (Franchise)"
-            st.session_state["h2h_side_b"] = "Seattle Seahawks (Franchise)"
-            st.session_state["h2h_date"] = datetime.date(2026, 11, 2)
-        else:
-            st.session_state["h2h_side_a"] = "Chicago Bears (Franchise)"
-            st.session_state["h2h_side_b"] = "Tampa Bay Buccaneers (Franchise)"
-            st.session_state["h2h_date"] = datetime.date(2026, 11, 8)
-        st.rerun()
-
-default_a = st.session_state.get("h2h_side_a", list(db.keys())[0])
-default_b = st.session_state.get("h2h_side_b", "Seattle Seahawks (Franchise)" if "Seattle Seahawks (Franchise)" in db else list(db.keys())[1])
-default_d = st.session_state.get("h2h_date", datetime.date(2026, 11, 2))
-
-c_col1, c_col2, c_col3 = st.columns(3)
-with c_col1:
-    h2h_a_key = st.selectbox("Side A (Primary):", list(db.keys()), index=list(db.keys()).index(default_a))
-with c_col2:
-    h2h_b_key = st.selectbox("Side B (Opponent):", list(db.keys()), index=list(db.keys()).index(default_b))
-with c_col3:
-    h2h_game_date = st.date_input("Kickoff Date:", value=default_d, key="h2h_date_input")
-
-ent_a = db[h2h_a_key]
-ent_b = db[h2h_b_key]
-
-raw_a_bdate = ent_a["birth_date"]
-a_bdate = datetime.datetime.strptime(raw_a_bdate, "%Y-%m-%d").date() if isinstance(raw_a_bdate, str) else raw_a_bdate
-
-a_lp = compute_life_path(a_bdate, preserve_masters=True)
-a_dob_red = reduce_digits(a_bdate.day, preserve_masters=True)
-a_animal, a_elem, _ = get_chinese_profile(a_bdate.year)
-a_base = reduce_digits(a_bdate.month + reduce_digits(a_bdate.day, preserve_masters=False), preserve_masters=False)
-
-a_bday_yr = datetime.date(h2h_game_date.year, a_bdate.month, a_bdate.day)
-a_flipped = h2h_game_date >= a_bday_yr
-a_cyc = h2h_game_date.year if a_flipped else h2h_game_date.year - 1
-a_py = reduce_digits(a_base + reduce_digits(a_cyc, preserve_masters=False), preserve_masters=False)
-a_pm = reduce_digits(a_py + h2h_game_date.month, preserve_masters=False)
-a_pd = reduce_digits(a_pm + reduce_digits(h2h_game_date.day, preserve_masters=False), preserve_masters=False)
-
-raw_b_bdate = ent_b["birth_date"]
-b_bdate = datetime.datetime.strptime(raw_b_bdate, "%Y-%m-%d").date() if isinstance(raw_b_bdate, str) else raw_b_bdate
-
-b_lp = compute_life_path(b_bdate, preserve_masters=True)
-b_dob_red = reduce_digits(b_bdate.day, preserve_masters=True)
-b_animal, b_elem, _ = get_chinese_profile(b_bdate.year)
-b_base = reduce_digits(b_bdate.month + reduce_digits(b_bdate.day, preserve_masters=False), preserve_masters=False)
-
-b_bday_yr = datetime.date(h2h_game_date.year, b_bdate.month, b_bdate.day)
-b_flipped = h2h_game_date >= b_bday_yr
-b_cyc = h2h_game_date.year if b_flipped else h2h_game_date.year - 1
-b_py = reduce_digits(b_base + reduce_digits(b_cyc, preserve_masters=False), preserve_masters=False)
-b_pm = reduce_digits(b_py + h2h_game_date.month, preserve_masters=False)
-b_pd = reduce_digits(b_pm + reduce_digits(h2h_game_date.day, preserve_masters=False), preserve_masters=False)
-
-g_power = reduce_digits(h2h_game_date.day, preserve_masters=True)
-g_uy = reduce_digits(h2h_game_date.year, preserve_masters=False)
-g_ud = reduce_digits(reduce_digits(g_uy + h2h_game_date.month, preserve_masters=False) + reduce_digits(h2h_game_date.day, preserve_masters=False), preserve_masters=False)
-g_animal, g_elem, _ = get_chinese_profile(h2h_game_date.year)
-
-a_aff = evaluate_affinity(a_animal, g_animal)
-b_aff = evaluate_affinity(b_animal, g_animal)
-
-st.markdown(f"#### 🛡️ Matchup Comparison: {ent_a['name']} vs. {ent_b['name']}")
-h_col1, h_col2, h_col3 = st.columns([2, 1, 2])
-with h_col1:
-    st.markdown(f"##### 🔵 {ent_a['name']} ({ent_a['team']})")
-    st.write(f"**Natal Life Path:** {a_lp} | **Day of Birth Reduced:** {a_dob_red}")
-    st.write(f"**Chinese Sign:** {a_elem} {a_animal} ({a_aff})")
-    st.metric("Personal Day (PD)", f"{a_pd}")
-    st.metric("Personal Year (PY)", f"{a_py}")
-
-with h_col2:
-    st.markdown("##### ⚡ Game Kickoff")
-    st.metric("Power#", f"{g_power}")
-    st.metric("Universal Day (UD)", f"{g_ud}")
-    st.write(f"**Year Animal:** {g_elem} {g_animal}")
-
-with h_col3:
-    st.markdown(f"##### 🔴 {ent_b['name']} ({ent_b['team']})")
-    st.write(f"**Natal Life Path:** {b_lp} | **Day of Birth Reduced:** {b_dob_red}")
-    st.write(f"**Chinese Sign:** {b_elem} {b_animal} ({b_aff})")
-    st.metric("Personal Day (PD)", f"{b_pd}")
-    st.metric("Personal Year (PY)", f"{b_py}")
-
-st.markdown("---")
-st.markdown("### 🏆 Pre-Game Metaphysical Advantage Scorecard")
-a_score, b_score = 0, 0
-reasons = []
-
-if a_pd == g_power or a_pd == g_ud:
-    a_score += 2
-    reasons.append(f"🔵 **{ent_a['name']}** holds a direct Personal Day alignment with Kickoff ({a_pd}).")
-if b_pd == g_power or b_pd == g_ud:
-    b_score += 2
-    reasons.append(f"🔴 **{ent_b['name']}** holds a direct Personal Day alignment with Kickoff ({b_pd}).")
-
-if "San He" in a_aff or "Liu He" in a_aff:
-    a_score += 2
-    reasons.append(f"🔵 **{ent_a['name']}** operates in a harmonious Chinese astrological year ({a_aff}).")
-elif "Chong" in a_aff or "Xing" in a_aff:
-    a_score -= 2
-    reasons.append(f"⚠️ **{ent_a['name']}** operates under astrological friction ({a_aff}).")
-
-if "San He" in b_aff or "Liu He" in b_aff:
-    b_score += 2
-    reasons.append(f"🔴 **{ent_b['name']}** operates in a harmonious Chinese astrological year ({b_aff}).")
-elif "Chong" in b_aff or "Xing" in b_aff:
-    b_score -= 2
-    reasons.append(f"⚠️ **{ent_b['name']}** operates under astrological friction ({b_aff}).")
-
-if a_score > b_score:
-    st.success(f"**Verdict:** Metaphysical Advantage favors **{ent_a['name']}** (Score: {a_score} vs. {b_score})")
-elif b_score > a_score:
-    st.error(f"**Verdict:** Metaphysical Advantage favors **{ent_b['name']}** (Score: {b_score} vs. {a_score})")
-else:
-    st.info(f"**Verdict:** Neutral / Balanced Metaphysical Equilibrium (Score: {a_score} vs. {b_score})")
-
-for r in reasons:
-    st.markdown(f"- {r}")
-
-# ==============================================================================
-# SECTION 6: PREDICTIVE TARGET MATRIX & HISTORICAL RANGE CALCULATOR
-# ==============================================================================
-st.markdown("---")
-st.subheader("6. 🎯 Predictive Target Matrix & Historical Range Calculator")
-st.caption("Empirical performance ranges for Caleb Williams and the Chicago Bears under kickoff vibrations.")
-
-p_col1, p_col2 = st.columns(2)
-
-all_caleb_games = []
-if "Caleb Williams (QB - CHI)" in db:
-    for s_id, s_list in db["Caleb Williams (QB - CHI)"]["seasons"].items():
-        all_caleb_games.extend(s_list)
-
-all_bears_games = []
-if "Chicago Bears (Franchise)" in db:
-    for s_id, s_list in db["Chicago Bears (Franchise)"]["seasons"].items():
-        all_bears_games.extend(s_list)
-
-def build_history_dataframe(games_list, natal_date_val, is_qb=True):
-    rows = []
-    base_val = reduce_digits(natal_date_val.month + reduce_digits(natal_date_val.day, preserve_masters=False), preserve_masters=False)
-    for g in games_list:
-        raw_d = g["Date"]
-        d_obj = datetime.datetime.strptime(raw_d, "%Y-%m-%d").date() if isinstance(raw_d, str) else raw_d
-        b_yr = datetime.date(d_obj.year, natal_date_val.month, natal_date_val.day)
-        cyc = d_obj.year if d_obj >= b_yr else d_obj.year - 1
-        py = reduce_digits(base_val + reduce_digits(cyc, preserve_masters=False), preserve_masters=False)
-        pm = reduce_digits(py + d_obj.month, preserve_masters=False)
-        pd_val = reduce_digits(pm + reduce_digits(d_obj.day, preserve_masters=False), preserve_masters=False)
-        power = reduce_digits(d_obj.day, preserve_masters=True)
-        ud = reduce_digits(reduce_digits(reduce_digits(d_obj.year, False) + d_obj.month, False) + reduce_digits(d_obj.day, False), False)
-        
-        row_dict = {
-            "Date": d_obj, "Opp": g.get("Opp"), "Result": g.get("Result"),
-            "Diff": g.get("Diff", 0), "PD": pd_val, "Power#": power, "UD": ud,
-            "ATS": g.get("ATS", "—"), "CoverMargin": g.get("CoverMargin", 0.0)
-        }
-        if is_qb:
-            row_dict.update({
-                "Pass Yds": g.get("Pass Yds", 0), "Pass TD": g.get("Pass TD", 0),
-                "Rating": g.get("Passer Rating", 0.0), "CMP%": g.get("CMP%", 0.0)
-            })
-        else:
-            row_dict.update({
-                "TotalOffYds": g.get("TotalOffYds", 0), "FirstDowns": g.get("FirstDowns", 0)
-            })
-        rows.append(row_dict)
-    return pd.DataFrame(rows)
-
-caleb_bdate = datetime.date(2001, 11, 18)
-bears_bdate = datetime.date(1920, 9, 17)
-
-df_caleb_all = build_history_dataframe(all_caleb_games, caleb_bdate, is_qb=True)
-df_bears_all = build_history_dataframe(all_bears_games, bears_bdate, is_qb=False)
-
-with p_col1:
-    st.markdown("##### 🔵 Caleb Williams Vibration Baselines")
-    st.write(f"Targeting **Personal Day {a_pd}** & **Power# {g_power}** (Week 8 @ SEA)")
-    
-    caleb_pd_matches = df_caleb_all[(df_caleb_all["PD"] == a_pd) & (df_caleb_all["Result"].isin(["W", "L"]))]
-    caleb_power_matches = df_caleb_all[(df_caleb_all["Power#"] == g_power) & (df_caleb_all["Result"].isin(["W", "L"]))]
-    
-    if not caleb_pd_matches.empty:
-        w_cnt = (caleb_pd_matches["Result"] == "W").sum()
-        l_cnt = (caleb_pd_matches["Result"] == "L").sum()
-        avg_pass = round(caleb_pd_matches["Pass Yds"].mean(), 1)
-        avg_rtg = round(caleb_pd_matches["Rating"].mean(), 1)
-        st.success(f"**Personal Day {a_pd} Games:** {w_cnt}-{l_cnt} SU | Avg Pass Yds: `{avg_pass}` | Avg Rating: `{avg_rtg}`")
-    else:
-        st.info(f"No completed career games on Personal Day {a_pd} in archive.")
-        
-    if not caleb_power_matches.empty:
-        w_cnt_p = (caleb_power_matches["Result"] == "W").sum()
-        l_cnt_p = (caleb_power_matches["Result"] == "L").sum()
-        avg_pass_p = round(caleb_power_matches["Pass Yds"].mean(), 1)
-        st.success(f"**Power# {g_power} Games:** {w_cnt_p}-{l_cnt_p} SU | Avg Pass Yds: `{avg_pass_p}`")
-    else:
-        st.info(f"No completed career games on Power# {g_power} in archive.")
-
-with p_col2:
-    st.markdown("##### 🐻 Chicago Bears Franchise Vibration Baselines")
-    st.write(f"Targeting **Universal Day {g_ud}** (Week 8 Kickoff Energy)")
-    
-    bears_ud_matches = df_bears_all[(df_bears_all["UD"] == g_ud) & (df_bears_all["Result"].isin(["W", "L"]))]
-    if not bears_ud_matches.empty:
-        b_w = (bears_ud_matches["Result"] == "W").sum()
-        b_l = (bears_ud_matches["Result"] == "L").sum()
-        b_diff = round(pd.to_numeric(bears_ud_matches["Diff"], errors="coerce").fillna(0).mean(), 1)
-        st.success(f"**Universal Day {g_ud} Games:** {b_w}-{b_l} SU | Avg Point Differential: `{'+' if b_diff > 0 else ''}{b_diff}`")
-    else:
-        st.info(f"No completed games on Universal Day {g_ud} in franchise archive.")
-
-# ==============================================================================
-# SECTION 7: METAPHYSICAL BETTING EDGE & ATS CORRELATOR
-# ==============================================================================
-st.markdown("---")
-st.subheader("7. 💰 Metaphysical Betting Edge & Point Spread Correlator")
-st.caption("Correlate Against-The-Spread (ATS) cover rates, closing spreads, and totals against cosmic cycles.")
-
-b_ats_df = df[df["ATS Result"].isin(["Cover", "No Cover", "Push"])].copy()
-
-if not b_ats_df.empty:
-    b_ats_df["CoverMarginNum"] = pd.to_numeric(b_ats_df["Cover Margin"], errors="coerce").fillna(0.0)
-    
-    bet_col1, bet_col2, bet_col3 = st.columns(3)
-    
-    with bet_col1:
-        st.markdown("##### ⚡ ATS Record by Power#")
-        power_ats = b_ats_df.groupby("Power#").agg(
-            Games=("ATS Result", "count"),
-            Covers=("ATS Result", lambda r: (r == "Cover").sum()),
-            NoCovers=("ATS Result", lambda r: (r == "No Cover").sum()),
-            Cover_Pct=("ATS Result", lambda r: f"{round(((r == 'Cover').sum() / max(len(r[r != 'Push']), 1)) * 100, 1)}%"),
-            Avg_CoverMargin=("CoverMarginNum", lambda d: round(d.mean(), 1))
-        ).reset_index()
-        st.dataframe(power_ats, use_container_width=True, hide_index=True)
-
-    with bet_col2:
-        st.markdown("##### 🐉 ATS Record by Chinese Alignment")
-        aff_ats = b_ats_df.groupby("Affinity Status").agg(
-            Games=("ATS Result", "count"),
-            Covers=("ATS Result", lambda r: (r == "Cover").sum()),
-            NoCovers=("ATS Result", lambda r: (r == "No Cover").sum()),
-            Cover_Pct=("ATS Result", lambda r: f"{round(((r == 'Cover').sum() / max(len(r[r != 'Push']), 1)) * 100, 1)}%"),
-            Avg_CoverMargin=("CoverMarginNum", lambda d: round(d.mean(), 1))
-        ).reset_index()
-        st.dataframe(aff_ats, use_container_width=True, hide_index=True)
-
-    with bet_col3:
-        st.markdown("##### 🎯 O/U Over vs. Under Splits")
-        ou_completed = df[df["OU Result"].isin(["Over", "Under"])].copy()
-        if not ou_completed.empty:
-            overs = (ou_completed["OU Result"] == "Over").sum()
-            unders = (ou_completed["OU Result"] == "Under").sum()
-            tot_ou = len(ou_completed)
-            o_pct = round((overs / tot_ou) * 100, 1)
-            u_pct = round((unders / tot_ou) * 100, 1)
-            
-            ou_df = pd.DataFrame({
-                "Market": ["Over", "Under"],
-                "Count": [overs, unders],
-                "Percentage": [f"{o_pct}%", f"{u_pct}%"]
-            })
-            st.dataframe(ou_df, use_container_width=True, hide_index=True)
-        else:
-            st.info("No Over/Under lines finalized in current view.")
-else:
-    st.info("No completed betting lines available in current selection to calculate ATS splits.")
