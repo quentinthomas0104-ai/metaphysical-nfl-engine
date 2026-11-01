@@ -82,7 +82,7 @@ def evaluate_affinity(natal_animal: str, game_year_animal: str) -> str:
     return "Neutral Alignment"
 
 # ==============================================================================
-# 3. WESTERN ASTROLOGY (10 BODIES)
+# 3. WESTERN ASTROLOGY (ALL 10 BODIES)
 # ==============================================================================
 SIGNS_ORDER = [
     "Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo",
@@ -287,7 +287,7 @@ c5.metric("Life Path Number", f"{natal_lp}")
 c6.metric("Chinese Zodiac", f"{natal_element} {natal_animal}")
 
 # ==============================================================================
-# SECTION 2: CAREER LEDGER & STEP 6 LIVE GAME RECONCILIATION
+# SECTION 2: CAREER LEDGER & LIVE GAME RECONCILIATION
 # ==============================================================================
 st.markdown("---")
 st.subheader(f"2. Multi-Season Career Ledger for {entity_data['name']}")
@@ -306,7 +306,6 @@ elif selected_season_choice in available_seasons:
 else:
     target_seasons = []
 
-# Step 6: Live Pending-to-Final Box Score Finalizer
 active_season_key = target_seasons[0] if target_seasons else None
 if active_season_key:
     season_games = entity_data["seasons"].get(active_season_key, [])
@@ -530,7 +529,6 @@ else:
         "Total Offense Yds", "First Downs", "Turnover Diff", "3rd Down Eff"
     ]
 
-# Initialize individual session state checkbox keys if not set
 for m in metaphysical_metrics:
     k = f"chk_m_{m}"
     if k not in st.session_state:
@@ -541,7 +539,6 @@ for s in stat_metrics:
     if k not in st.session_state:
         st.session_state[k] = (s in ["Opponent", "Result", "Point Diff"])
 
-# Callback Functions for Instant Checking / Unchecking
 def select_all_meta():
     for m in metaphysical_metrics:
         st.session_state[f"chk_m_{m}"] = True
@@ -564,7 +561,6 @@ def clear_everything():
     for s in stat_metrics:
         st.session_state[f"chk_s_{s}"] = False
 
-# Action Buttons Bar
 b_col1, b_col2, b_col3, b_col4, b_col5 = st.columns(5)
 with b_col1:
     st.button("✅ Select All Metaphysics", on_click=select_all_meta, use_container_width=True)
@@ -575,4 +571,191 @@ with b_col3:
 with b_col4:
     st.button("❌ Uncheck All Stats", on_click=uncheck_all_stats, use_container_width=True)
 with b_col5:
-    st.button("🧹 Clear All Selections", on_click=clear_everything,
+    st.button("🧹 Clear All Selections", on_click=clear_everything, use_container_width=True)
+
+st.markdown("#### 🔮 Box 1: Metaphysical & Cosmic Metrics")
+with st.container():
+    meta_cols = st.columns(4)
+    for idx, m in enumerate(metaphysical_metrics):
+        col = meta_cols[idx % 4]
+        col.checkbox(m, key=f"chk_m_{m}")
+
+st.markdown("#### 🏈 Box 2: Game Log & Box Score Stats")
+with st.container():
+    stat_cols = st.columns(4)
+    for idx, s in enumerate(stat_metrics):
+        col = stat_cols[idx % 4]
+        col.checkbox(s, key=f"chk_s_{s}")
+
+selected_columns = []
+for m in metaphysical_metrics:
+    if st.session_state.get(f"chk_m_{m}", False):
+        selected_columns.append(m)
+
+for s in stat_metrics:
+    if st.session_state.get(f"chk_s_{s}", False):
+        selected_columns.append(s)
+
+# ==============================================================================
+# SECTION 4: CORRELATION VIEW OF SELECTED CHECKED METRICS
+# ==============================================================================
+st.markdown("---")
+st.subheader("📊 Active Correlation Matrix (Your Checked Selections)")
+
+valid_selected = [c for c in selected_columns if c in df.columns]
+
+if len(valid_selected) >= 2:
+    st.write(f"**Currently Correlating ({len(valid_selected)} Checked Metrics):** `{', '.join(valid_selected)}`")
+    
+    correlation_df = df[valid_selected].copy()
+    st.dataframe(correlation_df, use_container_width=True)
+
+    if "Result" in valid_selected:
+        completed = df[df["Result"].isin(["W", "L"])]
+        wins = (completed["Result"] == "W").sum()
+        losses = (completed["Result"] == "L").sum()
+        win_pct = round((wins / len(completed) * 100), 1) if len(completed) > 0 else 0.0
+
+        rc1, rc2, rc3 = st.columns(3)
+        rc1.metric("Games in Dataset", f"{len(df)}")
+        rc2.metric("Straight-Up Record (W - L)", f"{wins} - {losses}")
+        rc3.metric("Straight-Up Win %", f"{win_pct}%")
+else:
+    st.info("Place a checkmark next to at least two metrics above to display the active correlation matrix.")
+
+# ==============================================================================
+# SECTION 5: HEAD-TO-HEAD CLASH & MATCHUP FORECASTER
+# ==============================================================================
+st.markdown("---")
+st.subheader("5. ⚔️ Head-to-Head Clash & Matchup Edge Forecaster")
+st.caption("Compare two teams, coaches, or players side-by-side to calculate pre-game metaphysical advantages.")
+
+with st.expander("⚡ Quick-Load Active 2026 Matchups", expanded=True):
+    quick_m = st.selectbox(
+        "Select Active Slate Matchup:",
+        [
+            "Week 8: Chicago Bears @ Seattle Seahawks (MNF - Nov 2, 2026)",
+            "Week 9: Tampa Bay Buccaneers @ Chicago Bears (SNF - Nov 8, 2026)"
+        ]
+    )
+    if st.button("Load Matchup Directly"):
+        if "Week 8" in quick_m:
+            st.session_state["h2h_side_a"] = "Chicago Bears (Franchise)"
+            st.session_state["h2h_side_b"] = "Seattle Seahawks (Franchise)"
+            st.session_state["h2h_date"] = datetime.date(2026, 11, 2)
+        else:
+            st.session_state["h2h_side_a"] = "Chicago Bears (Franchise)"
+            st.session_state["h2h_side_b"] = "Tampa Bay Buccaneers (Franchise)"
+            st.session_state["h2h_date"] = datetime.date(2026, 11, 8)
+        st.rerun()
+
+default_a = st.session_state.get("h2h_side_a", list(db.keys())[0])
+default_b = st.session_state.get("h2h_side_b", "Seattle Seahawks (Franchise)" if "Seattle Seahawks (Franchise)" in db else list(db.keys())[1])
+default_d = st.session_state.get("h2h_date", datetime.date(2026, 11, 2))
+
+c_col1, c_col2, c_col3 = st.columns(3)
+with c_col1:
+    h2h_a_key = st.selectbox("Side A (Primary):", list(db.keys()), index=list(db.keys()).index(default_a))
+with c_col2:
+    h2h_b_key = st.selectbox("Side B (Opponent):", list(db.keys()), index=list(db.keys()).index(default_b))
+with c_col3:
+    h2h_game_date = st.date_input("Kickoff Date:", value=default_d, key="h2h_date_input")
+
+ent_a = db[h2h_a_key]
+ent_b = db[h2h_b_key]
+
+raw_a_bdate = ent_a["birth_date"]
+a_bdate = datetime.datetime.strptime(raw_a_bdate, "%Y-%m-%d").date() if isinstance(raw_a_bdate, str) else raw_a_bdate
+
+a_lp = compute_life_path(a_bdate, preserve_masters=True)
+a_dob_red = reduce_digits(a_bdate.day, preserve_masters=True)
+a_animal, a_elem, _ = get_chinese_profile(a_bdate.year)
+a_base = reduce_digits(a_bdate.month + reduce_digits(a_bdate.day, preserve_masters=False), preserve_masters=False)
+
+a_bday_yr = datetime.date(h2h_game_date.year, a_bdate.month, a_bdate.day)
+a_flipped = h2h_game_date >= a_bday_yr
+a_cyc = h2h_game_date.year if a_flipped else h2h_game_date.year - 1
+a_py = reduce_digits(a_base + reduce_digits(a_cyc, preserve_masters=False), preserve_masters=False)
+a_pm = reduce_digits(a_py + h2h_game_date.month, preserve_masters=False)
+a_pd = reduce_digits(a_pm + reduce_digits(h2h_game_date.day, preserve_masters=False), preserve_masters=False)
+
+raw_b_bdate = ent_b["birth_date"]
+b_bdate = datetime.datetime.strptime(raw_b_bdate, "%Y-%m-%d").date() if isinstance(raw_b_bdate, str) else raw_b_bdate
+
+b_lp = compute_life_path(b_bdate, preserve_masters=True)
+b_dob_red = reduce_digits(b_bdate.day, preserve_masters=True)
+b_animal, b_elem, _ = get_chinese_profile(b_bdate.year)
+b_base = reduce_digits(b_bdate.month + reduce_digits(b_bdate.day, preserve_masters=False), preserve_masters=False)
+
+b_bday_yr = datetime.date(h2h_game_date.year, b_bdate.month, b_bdate.day)
+b_flipped = h2h_game_date >= b_bday_yr
+b_cyc = h2h_game_date.year if b_flipped else h2h_game_date.year - 1
+b_py = reduce_digits(b_base + reduce_digits(b_cyc, preserve_masters=False), preserve_masters=False)
+b_pm = reduce_digits(b_py + h2h_game_date.month, preserve_masters=False)
+b_pd = reduce_digits(b_pm + reduce_digits(h2h_game_date.day, preserve_masters=False), preserve_masters=False)
+
+g_power = reduce_digits(h2h_game_date.day, preserve_masters=True)
+g_uy = reduce_digits(h2h_game_date.year, preserve_masters=False)
+g_ud = reduce_digits(reduce_digits(g_uy + h2h_game_date.month, preserve_masters=False) + reduce_digits(h2h_game_date.day, preserve_masters=False), preserve_masters=False)
+g_animal, g_elem, _ = get_chinese_profile(h2h_game_date.year)
+
+a_aff = evaluate_affinity(a_animal, g_animal)
+b_aff = evaluate_affinity(b_animal, g_animal)
+
+st.markdown(f"#### 🛡️ Matchup Comparison: {ent_a['name']} vs. {ent_b['name']}")
+h_col1, h_col2, h_col3 = st.columns([2, 1, 2])
+with h_col1:
+    st.markdown(f"##### 🔵 {ent_a['name']} ({ent_a['team']})")
+    st.write(f"**Natal Life Path:** {a_lp} | **Day of Birth Reduced:** {a_dob_red}")
+    st.write(f"**Chinese Sign:** {a_elem} {a_animal} ({a_aff})")
+    st.metric("Personal Day (PD)", f"{a_pd}")
+    st.metric("Personal Year (PY)", f"{a_py}")
+
+with h_col2:
+    st.markdown("##### ⚡ Game Kickoff")
+    st.metric("Power#", f"{g_power}")
+    st.metric("Universal Day (UD)", f"{g_ud}")
+    st.write(f"**Year Animal:** {g_elem} {g_animal}")
+
+with h_col3:
+    st.markdown(f"##### 🔴 {ent_b['name']} ({ent_b['team']})")
+    st.write(f"**Natal Life Path:** {b_lp} | **Day of Birth Reduced:** {b_dob_red}")
+    st.write(f"**Chinese Sign:** {b_elem} {b_animal} ({b_aff})")
+    st.metric("Personal Day (PD)", f"{b_pd}")
+    st.metric("Personal Year (PY)", f"{b_py}")
+
+st.markdown("---")
+st.markdown("### 🏆 Pre-Game Metaphysical Advantage Scorecard")
+a_score, b_score = 0, 0
+reasons = []
+
+if a_pd == g_power or a_pd == g_ud:
+    a_score += 2
+    reasons.append(f"🔵 **{ent_a['name']}** holds a direct Personal Day alignment with Kickoff ({a_pd}).")
+if b_pd == g_power or b_pd == g_ud:
+    b_score += 2
+    reasons.append(f"🔴 **{ent_b['name']}** holds a direct Personal Day alignment with Kickoff ({b_pd}).")
+
+if "San He" in a_aff or "Liu He" in a_aff:
+    a_score += 2
+    reasons.append(f"🔵 **{ent_a['name']}** operates in a harmonious Chinese astrological year ({a_aff}).")
+elif "Chong" in a_aff or "Xing" in a_aff:
+    a_score -= 2
+    reasons.append(f"⚠️ **{ent_a['name']}** operates under astrological friction ({a_aff}).")
+
+if "San He" in b_aff or "Liu He" in b_aff:
+    b_score += 2
+    reasons.append(f"🔴 **{ent_b['name']}** operates in a harmonious Chinese astrological year ({b_aff}).")
+elif "Chong" in b_aff or "Xing" in b_aff:
+    b_score -= 2
+    reasons.append(f"⚠️ **{ent_b['name']}** operates under astrological friction ({b_aff}).")
+
+if a_score > b_score:
+    st.success(f"**Verdict:** Metaphysical Advantage favors **{ent_a['name']}** (Score: {a_score} vs. {b_score})")
+elif b_score > a_score:
+    st.error(f"**Verdict:** Metaphysical Advantage favors **{ent_b['name']}** (Score: {b_score} vs. {a_score})")
+else:
+    st.info(f"**Verdict:** Neutral / Balanced Metaphysical Equilibrium (Score: {a_score} vs. {b_score})")
+
+for r in reasons:
+    st.markdown(f"- {r}")
